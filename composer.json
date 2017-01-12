@@ -1,5 +1,5 @@
 {
-    "name": "printful/printful-php-api-sdk",
+    "name": "printful/php-api-sdk",
     "description": "Printful API wrapper",
     "type": "library",
     "authors": [
