@@ -9,6 +9,6 @@ API endpoint documentation can be found here: https://www.theprintful.com/docs
 
 # Installation
 
-Using composer, run `composer require printful/printful-php-api-sdk`
+Using composer, run `composer require printful/php-api-sdk`
 
 Check out example directory for more specific usage examples
