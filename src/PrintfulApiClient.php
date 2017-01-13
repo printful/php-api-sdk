@@ -8,7 +8,7 @@ use Printful\PrintfulApi\Exceptions\PrintfulException;
 /**
  * Class PrintfulClient
  */
-class PrintfulClient
+class PrintfulApiClient
 {
     /**
      * Printful API key
@@ -20,7 +20,7 @@ class PrintfulClient
 
     private $lastResponse;
 
-    const API_URL = 'https://api.theprintful.com/';
+    public $url = 'https://api.theprintful.com/';
 
     const USER_AGENT = 'Printful API PHP Library 1.0';
 
@@ -140,7 +140,7 @@ class PrintfulClient
             $url .= '?' . http_build_query($params);
         }
 
-        $curl = curl_init(self::API_URL . $url);
+        $curl = curl_init($this->url . $url);
 
         curl_setopt($curl, CURLOPT_USERPWD, $this->key);
         curl_setopt($curl, CURLOPT_CUSTOMREQUEST, $method);

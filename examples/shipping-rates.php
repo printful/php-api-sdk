@@ -1,14 +1,14 @@
 <?php
 use Printful\PrintfulApi\Exceptions\PrintfulApiException;
 use Printful\PrintfulApi\Exceptions\PrintfulException;
-use Printful\PrintfulApi\PrintfulClient;
+use Printful\PrintfulApi\PrintfulApiClient;
 
 require_once __DIR__ . '../vendor/autoload.php';
 
 // Replace this with your API key
 $apiKey = '';
 
-$pf = new PrintfulClient($apiKey);
+$pf = new PrintfulApiClient($apiKey);
 
 try {
     // Calculate shipping rates for an order
