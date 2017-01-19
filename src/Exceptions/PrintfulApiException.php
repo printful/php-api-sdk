@@ -1,6 +1,6 @@
 <?php
 
-namespace Printful\PrintfulApi\Exceptions;
+namespace Printful\Exceptions;
 
 /**
  * Printful exception returned from the API

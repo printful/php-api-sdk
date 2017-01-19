@@ -1,9 +1,9 @@
 <?php
 
-namespace Printful\PrintfulApi;
+namespace Printful;
 
-use Printful\PrintfulApi\Exceptions\PrintfulApiException;
-use Printful\PrintfulApi\Exceptions\PrintfulException;
+use Printful\Exceptions\PrintfulApiException;
+use Printful\Exceptions\PrintfulException;
 
 /**
  * Class PrintfulClient
@@ -26,7 +26,7 @@ class PrintfulApiClient
 
     /**
      * @param string $key Printful Store API key
-     * @throws PrintfulException if the library failed to initialize
+     * @throws \Printful\Exceptions\PrintfulException if the library failed to initialize
      */
     public function __construct($key)
     {
@@ -52,7 +52,7 @@ class PrintfulApiClient
      * @param string $path Request path (e.g. 'orders' or 'orders/123')
      * @param array $params Additional GET parameters as an associative array
      * @return mixed API response
-     * @throws PrintfulApiException if the API call status code is not in the 2xx range
+     * @throws \Printful\Exceptions\PrintfulApiException if the API call status code is not in the 2xx range
      * @throws PrintfulException if the API call has failed or the response is invalid
      */
     public function get($path, $params = [])
@@ -65,8 +65,8 @@ class PrintfulApiClient
      * @param string $path Request path (e.g. 'orders' or 'orders/123')
      * @param array $params Additional GET parameters as an associative array
      * @return mixed API response
-     * @throws PrintfulApiException if the API call status code is not in the 2xx range
-     * @throws PrintfulException if the API call has failed or the response is invalid
+     * @throws \Printful\Exceptions\PrintfulApiException if the API call status code is not in the 2xx range
+     * @throws \Printful\Exceptions\PrintfulException if the API call has failed or the response is invalid
      */
     public function delete($path, $params = [])
     {
@@ -79,7 +79,7 @@ class PrintfulApiClient
      * @param array $data Request body data as an associative array
      * @param array $params Additional GET parameters as an associative array
      * @return mixed API response
-     * @throws PrintfulApiException if the API call status code is not in the 2xx range
+     * @throws \Printful\Exceptions\PrintfulApiException if the API call status code is not in the 2xx range
      * @throws PrintfulException if the API call has failed or the response is invalid
      */
     public function post($path, $data = [], $params = [])
@@ -93,8 +93,8 @@ class PrintfulApiClient
      * @param array $data Request body data as an associative array
      * @param array $params Additional GET parameters as an associative array
      * @return mixed API response
-     * @throws PrintfulApiException if the API call status code is not in the 2xx range
-     * @throws PrintfulException if the API call has failed or the response is invalid
+     * @throws \Printful\Exceptions\PrintfulApiException if the API call status code is not in the 2xx range
+     * @throws \Printful\Exceptions\PrintfulException if the API call has failed or the response is invalid
      */
     public function put($path, $data = [], $params = [])
     {
@@ -126,8 +126,8 @@ class PrintfulApiClient
      * @param array $params
      * @param mixed $data
      * @return
-     * @throws PrintfulApiException
-     * @throws PrintfulException
+     * @throws \Printful\Exceptions\PrintfulApiException
+     * @throws \Printful\Exceptions\PrintfulException
      */
     private function request($method, $path, array $params = [], $data = null)
     {
@@ -159,12 +159,12 @@ class PrintfulApiClient
 
         $this->lastResponseRaw = curl_exec($curl);
 
-        $errno = curl_errno($curl);
+        $errorNumber = curl_errno($curl);
         $error = curl_error($curl);
         curl_close($curl);
 
-        if ($errno) {
-            throw new PrintfulException('CURL: ' . $error, $errno);
+        if ($errorNumber) {
+            throw new PrintfulException('CURL: ' . $error, $errorNumber);
         }
 
         $this->lastResponse = $response = json_decode($this->lastResponseRaw, true);

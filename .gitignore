@@ -1,4 +1,4 @@
 vendor/
 composer.lock
 .idea
-tests/PrintfulTestCredentials.php
+tests/Credentials.php

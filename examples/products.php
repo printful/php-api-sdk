@@ -1,7 +1,7 @@
 <?php
-use Printful\PrintfulApi\Exceptions\PrintfulApiException;
-use Printful\PrintfulApi\Exceptions\PrintfulException;
-use Printful\PrintfulApi\PrintfulApiClient;
+use Printful\Exceptions\PrintfulApiException;
+use Printful\Exceptions\PrintfulException;
+use Printful\PrintfulApiClient;
 
 require_once __DIR__ . '../vendor/autoload.php';
 
