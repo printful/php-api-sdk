@@ -6,8 +6,8 @@ use Printful\PrintfulApiClient;
 
 abstract class TestCase extends \PHPUnit_Framework_TestCase
 {
-    /** @var \Printful\PrintfulApiClient */
-    protected $apiClient;
+    /** @var PrintfulApiClient */
+    protected $api;
 
     protected function setUp()
     {
@@ -17,6 +17,11 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase
             throw new \Exception('Printful test credentials are not set. Copy "tests/Credentials.php.dist" to "tests/Credentials.php and enter the API key');
         }
 
-        $this->apiClient = new PrintfulApiClient(Credentials::$apiKey);
+        $this->api = new PrintfulApiClient(Credentials::$apiKey);
+
+        // Override API URL if is set
+        if (Credentials::$apiUrlOverride) {
+            $this->api->url = Credentials::$apiUrlOverride;
+        }
     }
 }
