@@ -2,6 +2,7 @@
 
 namespace Printful\Tests;
 
+use Printful\MockupGenerator;
 use Printful\PrintfulApiClient;
 
 abstract class TestCase extends \PHPUnit_Framework_TestCase
@@ -23,5 +24,13 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase
         if (Credentials::$apiUrlOverride) {
             $this->api->url = Credentials::$apiUrlOverride;
         }
+    }
+
+    /**
+     * @return MockupGenerator
+     */
+    protected function generator()
+    {
+        return new MockupGenerator($this->api);
     }
 }

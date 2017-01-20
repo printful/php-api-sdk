@@ -6,6 +6,7 @@ namespace Printful;
 
 use Printful\Structures\Generator\PrintfileItem;
 use Printful\Structures\Generator\ProductPrintfiles;
+use Printful\Structures\Generator\VariantPlacementGroup;
 use Printful\Structures\Generator\VariantPrintfileItem;
 
 class MockupGenerator
@@ -49,5 +50,29 @@ class MockupGenerator
         }
 
         return $productPrintfiles;
+    }
+
+    /**
+     * @param ProductPrintfiles $productPrintfiles
+     * @return VariantPlacementGroup[]
+     */
+    public function groupPrintfiles(ProductPrintfiles $productPrintfiles)
+    {
+        $re = [];
+
+        foreach ($productPrintfiles->variantPrintfiles as $v) {
+            foreach ($v->placements as $k2 => $v2) {
+                $key = $k2 . '|' . $v2;
+
+                $item = isset($re[$key]) ? $re[$key] : new VariantPlacementGroup;
+                $item->placement = $k2;
+                $item->variantIds[] = $v->variantId;
+                $item->printfile = $productPrintfiles->printfiles[$v2];
+
+                $re[$key] = $item;
+            }
+        }
+
+        return array_values($re);
     }
 }
