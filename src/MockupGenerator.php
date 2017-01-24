@@ -53,6 +53,9 @@ class MockupGenerator
     }
 
     /**
+     * Merge variants in to unique printfile + placement groups.
+     * This group can be used for positioning, that covers a list of variants
+     *
      * @param ProductPrintfiles $productPrintfiles
      * @return VariantPlacementGroup[]
      */
