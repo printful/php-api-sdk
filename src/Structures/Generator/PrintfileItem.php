@@ -52,6 +52,15 @@ class PrintfileItem extends BaseItem
     public $fillMode;
 
     /**
+     * Indicates if printfile can be printed horizontal or vertical.
+     * This is useful for posters, canvas, where the orientation of the actual print can be changed to accommodate image orientation.
+     * That is, a 20x30 poster can be printed as 30x20 vertical poster if the image is vertical.
+     *
+     * @var bool
+     */
+    public $canRotate;
+
+    /**
      * @param array $raw
      * @return PrintfileItem
      */
@@ -64,7 +73,17 @@ class PrintfileItem extends BaseItem
         $item->height = (int)$raw['height'];
         $item->dpi = (int)$raw['dpi'];
         $item->fillMode = $raw['fill_mode'];
+        $item->canRotate = (bool)$raw['can_rotate'];
 
         return $item;
+    }
+
+    /**
+     * Width / height ratio
+     * @return float
+     */
+    public function getRatio()
+    {
+        return $this->width / $this->height;
     }
 }
