@@ -9,9 +9,10 @@ class TaxRatesTest extends TestCase
 {
     /**
      * @param array $recipient
+     * @param bool $isTaxRequired - Expected result
      * @dataProvider addressDataProvider
      */
-    public function testTaxRatesCalculation(array $recipient)
+    public function testTaxRatesCalculation(array $recipient, $isTaxRequired)
     {
         $rates = new TaxRates($this->api);
         $countryCode = $recipient['country_code'];
@@ -21,6 +22,7 @@ class TaxRatesTest extends TestCase
 
         $taxRate = $rates->getTaxRate($countryCode, $stateCode, $city, $zipCode);
         self::assertInstanceOf(TaxRateItem::class, $taxRate);
+        self::assertEquals($isTaxRequired, $taxRate->required);
     }
 
     public function testTaxableCountriesListRetrieved()
@@ -46,6 +48,7 @@ class TaxRatesTest extends TestCase
                     'city' => 'California',
                     'zip' => '91311',
                 ],
+                true,
             ],
             [
                 [
@@ -54,6 +57,7 @@ class TaxRatesTest extends TestCase
                     'city' => 'Charlotte',
                     'zip' => '28273',
                 ],
+                true,
             ],
             [
                 [
@@ -62,6 +66,7 @@ class TaxRatesTest extends TestCase
                     'city' => 'Ottawa',
                     'zip' => 'K1A 0G9',
                 ],
+                false,
             ],
         ];
     }
