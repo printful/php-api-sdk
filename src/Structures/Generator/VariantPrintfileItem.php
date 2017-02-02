@@ -30,7 +30,7 @@ class VariantPrintfileItem extends BaseItem
     {
         $item = new self;
 
-        $item->variantId = (int)$raw['id'];
+        $item->variantId = (int)$raw['variant_id'];
         $item->placements = $raw['placements'];
 
         return $item;

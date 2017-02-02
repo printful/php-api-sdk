@@ -68,7 +68,7 @@ class PrintfileItem extends BaseItem
     {
         $item = new PrintfileItem;
 
-        $item->printfileId = (int)$raw['id'];
+        $item->printfileId = (int)$raw['printfile_id'];
         $item->width = (int)$raw['width'];
         $item->height = (int)$raw['height'];
         $item->dpi = (int)$raw['dpi'];
