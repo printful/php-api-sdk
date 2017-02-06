@@ -14,6 +14,11 @@ class StateItem extends BaseItem
     public $name;
 
     /**
+     * @var bool - In some states shipping price is also included in tax calculation
+     */
+    public $isShippingTaxable;
+
+    /**
      * @param array $raw
      * @return StateItem
      */
@@ -23,6 +28,7 @@ class StateItem extends BaseItem
 
         $item->code = $raw['code'];
         $item->name = $raw['name'];
+        $item->isShippingTaxable = (bool)$raw['shipping_taxable'];
 
         return $item;
     }

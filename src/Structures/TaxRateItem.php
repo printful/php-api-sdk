@@ -14,6 +14,11 @@ class TaxRateItem extends BaseItem
     public $rate;
 
     /**
+     * @var bool - In some states shipping price is also included in tax calculation
+     */
+    public $isShippingTaxable;
+
+    /**
      * @param array $raw
      * @return TaxRateItem
      */
@@ -23,6 +28,7 @@ class TaxRateItem extends BaseItem
 
         $item->rate = (float)$raw['rate'];
         $item->required = (bool)$raw['required'];
+        $item->isShippingTaxable = (bool)$raw['shipping_taxable'];
 
         return $item;
     }
