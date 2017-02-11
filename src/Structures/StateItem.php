@@ -1,4 +1,5 @@
 <?php
+
 namespace Printful\Structures;
 
 class StateItem extends BaseItem

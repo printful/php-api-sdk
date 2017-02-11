@@ -1,4 +1,5 @@
 <?php
+
 namespace Printful\Structures;
 
 class TaxRateItem extends BaseItem

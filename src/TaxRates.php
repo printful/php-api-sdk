@@ -1,4 +1,5 @@
 <?php
+
 namespace Printful;
 
 use Printful\Structures\CountryItem;
