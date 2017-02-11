@@ -4,6 +4,10 @@
 namespace Printful;
 
 
+use Printful\Structures\Generator\MockupGenerationFile;
+use Printful\Structures\Generator\MockupGenerationParameters;
+use Printful\Structures\Generator\MockupItem;
+use Printful\Structures\Generator\MockupList;
 use Printful\Structures\Generator\PrintfileItem;
 use Printful\Structures\Generator\ProductPrintfiles;
 use Printful\Structures\Generator\VariantPlacementGroup;
@@ -77,5 +81,39 @@ class MockupGenerator
         }
 
         return array_values($re);
+    }
+
+    /**
+     * Generate mockup images for given Printful product and variants.
+     * This request can take up to multiple seconds!
+     *
+     * @param MockupGenerationParameters $parameters
+     * @return MockupList
+     */
+    public function generateMockups(MockupGenerationParameters $parameters)
+    {
+        $files = array_map(function (MockupGenerationFile $file) {
+            return [
+                'placement' => $file->placement,
+                'image_url' => $file->imageUrl,
+            ];
+        }, $parameters->getFiles());
+
+        $data = [
+            'variant_ids' => $parameters->variantIds,
+            'files' => $files,
+        ];
+
+        $response = $this->printfulClient->post('/mockup-generator/generate/' . $parameters->productId, $data);
+
+        $mockupList = new MockupList;
+
+        $mockupList->productId = (int)$response['product_id'];
+
+        $mockupList->mockups = array_map(function (array $rawMockup) {
+            return MockupItem::fromArray($rawMockup);
+        }, $response['mockups']);
+
+        return $mockupList;
     }
 }
