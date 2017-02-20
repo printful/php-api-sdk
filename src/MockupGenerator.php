@@ -102,6 +102,7 @@ class MockupGenerator
         $data = [
             'variant_ids' => $parameters->variantIds,
             'files' => $files,
+            'format' => $parameters->format,
         ];
 
         $response = $this->printfulClient->post('/mockup-generator/generate/' . $parameters->productId, $data);

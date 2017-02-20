@@ -8,6 +8,10 @@ namespace Printful\Structures\Generator;
  */
 class MockupGenerationParameters
 {
+    const FORMAT_JPG = 'jpg';
+
+    const FORMAT_PNG = 'png';
+
     /**
      * Printful product id
      * @var int
@@ -24,6 +28,12 @@ class MockupGenerationParameters
      * @var MockupGenerationFile[]
      */
     private $files = [];
+
+    /**
+     * Desired format. PNG supports transparent background. JPG is faster.
+     * @var string
+     */
+    public $format = self::FORMAT_JPG;
 
     /**
      * Add a file for a specific placement
