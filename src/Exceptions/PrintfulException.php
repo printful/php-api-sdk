@@ -1,6 +1,6 @@
 <?php
 
-namespace Printful\PrintfulApi\Exceptions;
+namespace Printful\Exceptions;
 
 use Exception;
 

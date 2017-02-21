@@ -1,14 +1,14 @@
 <?php
-use Printful\PrintfulApi\Exceptions\PrintfulApiException;
-use Printful\PrintfulApi\Exceptions\PrintfulException;
-use Printful\PrintfulApi\PrintfulClient;
+use Printful\Exceptions\PrintfulApiException;
+use Printful\Exceptions\PrintfulException;
+use Printful\PrintfulApiClient;
 
 require_once __DIR__ . '../vendor/autoload.php';
 
 // Replace this with your API key
 $apiKey = '';
 
-$pf = new PrintfulClient($apiKey);
+$pf = new PrintfulApiClient($apiKey);
 
 try {
     // Get information about the store

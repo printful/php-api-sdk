@@ -13,9 +13,17 @@
         "ext-curl": "*",
         "ext-json": "*"
     },
+    "require-dev": {
+        "phpunit/phpunit": "^5.7"
+    },
     "autoload": {
-        "psr-0": {
-            "Printful\\PrintfulApi": "src/"
+        "psr-4": {
+            "Printful\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Printful\\Tests\\": "tests/"
         }
     },
     "minimum-stability": "stable"
