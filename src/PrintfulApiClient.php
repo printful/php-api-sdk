@@ -22,7 +22,7 @@ class PrintfulApiClient
 
     public $url = 'https://api.theprintful.com/';
 
-    const USER_AGENT = 'Printful API PHP Library 1.0';
+    const USER_AGENT = 'Printful PHP API SDK 1.0';
 
     /**
      * @param string $key Printful Store API key
