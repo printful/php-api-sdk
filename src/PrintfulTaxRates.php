@@ -6,7 +6,7 @@ use Printful\Structures\CountryItem;
 use Printful\Structures\StateItem;
 use Printful\Structures\TaxRateItem;
 
-class TaxRates
+class PrintfulTaxRates
 {
     /**
      * @var PrintfulApiClient

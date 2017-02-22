@@ -2,8 +2,8 @@
 
 namespace Printful\Tests;
 
-use Printful\MockupGenerator;
 use Printful\PrintfulApiClient;
+use Printful\PrintfulMockupGenerator;
 
 abstract class TestCase extends \PHPUnit_Framework_TestCase
 {
@@ -27,10 +27,10 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return MockupGenerator
+     * @return PrintfulMockupGenerator
      */
     protected function generator()
     {
-        return new MockupGenerator($this->api);
+        return new PrintfulMockupGenerator($this->api);
     }
 }
