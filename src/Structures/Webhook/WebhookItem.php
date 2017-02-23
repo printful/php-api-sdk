@@ -2,6 +2,8 @@
 namespace Printful\Structures\Webhook;
 
 use Printful\Structures\BaseItem;
+use Printful\Structures\Order\Order;
+use Printful\Structures\Shipment\Shipment;
 
 class WebhookItem extends BaseItem
 {
@@ -39,7 +41,22 @@ class WebhookItem extends BaseItem
     /**
      * @var mixed
      */
-    public $data;
+    public $rawData;
+
+    /**
+     * @var string|null - Reason why webhook was triggered. Present for some webhooks
+     */
+    public $reason;
+
+    /**
+     * @var Order|null - Present only for webhooks that contain order data
+     */
+    public $order;
+
+    /**
+     * @var Shipment|null - Present only for webhooks that contain shipment data
+     */
+    public $shipment;
 
     /**
      * @param array $raw
@@ -53,7 +70,19 @@ class WebhookItem extends BaseItem
         $item->created = $raw['created'];
         $item->retries = $raw['retries'];
         $item->store = $raw['store'];
-        $item->data = $raw['data'];
+        $item->rawData = $raw['data'];
+
+        if (isset($raw['data']['order'])) {
+            $item->order = Order::fromArray($raw['data']['order']);
+        }
+
+        if (isset($raw['data']['shipment'])) {
+            $item->shipment = Shipment::fromArray($raw['data']['shipment']);
+        }
+
+        if (isset($raw['data']['reason'])) {
+            $item->reason = $raw['data']['reason'];
+        }
 
         return $item;
     }
