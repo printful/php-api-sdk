@@ -29,10 +29,50 @@ class PrintfulOrder
     public function create(OrderCreationParameters $parameters, $confirm = false)
     {
         $request = $this->getRequestBodyFromParams($parameters);
-        $request['confirm'] = $confirm;
+        $params['confirm'] = $confirm;
 
-        $raw = $this->printfulClient->post('orders', $request);
+        $raw = $this->printfulClient->post('orders', $request, $params);
 
+        return Order::fromArray($raw);
+    }
+
+    /**
+     * Updates unsubmitted order and optionally submits it for the fulfillment.
+     * Post only the fields that need to be changed, not all required fields.
+     *
+     * @param OrderCreationParameters $parameters
+     * @param string|int $orderId - Order ID (integer) or External ID (prefixed with @)
+     * @param bool $confirm - Automatically submit the newly created order for fulfillment (skip the Draft phase)
+     * @return Order
+     */
+    public function update(OrderCreationParameters $parameters, $orderId, $confirm = false)
+    {
+        $request = $this->getRequestBodyFromParams($parameters);
+        $params['confirm'] = $confirm;
+
+        $raw = $this->printfulClient->put('orders/' . $orderId, $request, $params);
+        return Order::fromArray($raw);
+    }
+
+    /**
+     * Sets the order status to CANCELED
+     * @param string|int $orderId - Order ID (integer) or External ID (prefixed with @)
+     * @return Order
+     */
+    public function cancel($orderId)
+    {
+        $raw = $this->printfulClient->delete('orders/' . $orderId);
+        return Order::fromArray($raw);
+    }
+
+    /**
+     * Approves for fulfillment an order that was saved as a draft
+     * @param string|int $orderId - Order ID (integer) or External ID (prefixed with @)
+     * @return Order
+     */
+    public function confirm($orderId)
+    {
+        $raw = $this->printfulClient->post('orders/' . $orderId . '/confirm');
         return Order::fromArray($raw);
     }
 
@@ -83,46 +123,6 @@ class PrintfulOrder
         $total = $this->printfulClient->getItemCount();
 
         return new OrderList($rawOrders, $total, $offset);
-    }
-
-    /**
-     * Updates unsubmitted order and optionally submits it for the fulfillment.
-     * Post only the fields that need to be changed, not all required fields.
-     *
-     * @param OrderCreationParameters $parameters
-     * @param string|int $orderId - Order ID (integer) or External ID (prefixed with @)
-     * @param bool $confirm - Automatically submit the newly created order for fulfillment (skip the Draft phase)
-     * @return Order
-     */
-    public function update(OrderCreationParameters $parameters, $orderId, $confirm = false)
-    {
-        $request = $this->getRequestBodyFromParams($parameters);
-        $request['confirm'] = $confirm;
-
-        $raw = $this->printfulClient->put('orders/' . $orderId, $request);
-        return Order::fromArray($raw);
-    }
-
-    /**
-     * Sets the order status to CANCELED
-     * @param string|int $orderId - Order ID (integer) or External ID (prefixed with @)
-     * @return Order
-     */
-    public function cancel($orderId)
-    {
-        $raw = $this->printfulClient->delete('orders/' . $orderId);
-        return Order::fromArray($raw);
-    }
-
-    /**
-     * Approves for fulfillment an order that was saved as a draft
-     * @param string|int $orderId - Order ID (integer) or External ID (prefixed with @)
-     * @return Order
-     */
-    public function confirm($orderId)
-    {
-        $raw = $this->printfulClient->post('orders/' . $orderId . '/confirm');
-        return Order::fromArray($raw);
     }
 
     /**
