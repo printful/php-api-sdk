@@ -4,20 +4,20 @@
 namespace Printful\Tests\MockupGenerator;
 
 
-use Printful\MockupGenerator;
+use Printful\PrintfulMockupGenerator;
 use Printful\Structures\Generator\MockupGenerationParameters;
 use Printful\Structures\Placements;
 use Printful\Tests\TestCase;
 
 class MockupGenerationTest extends TestCase
 {
-    /** @var MockupGenerator */
+    /** @var PrintfulMockupGenerator */
     private $generator;
 
     protected function setUp()
     {
         parent::setUp();
-        $this->generator = new MockupGenerator($this->api);
+        $this->generator = new PrintfulMockupGenerator($this->api);
     }
 
     public function testGeneratePosterMockups()

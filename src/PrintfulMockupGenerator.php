@@ -13,7 +13,7 @@ use Printful\Structures\Generator\ProductPrintfiles;
 use Printful\Structures\Generator\VariantPlacementGroup;
 use Printful\Structures\Generator\VariantPrintfileItem;
 
-class MockupGenerator
+class PrintfulMockupGenerator
 {
     /** @var PrintfulApiClient */
     private $printfulClient;

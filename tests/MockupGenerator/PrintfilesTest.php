@@ -4,7 +4,7 @@
 namespace Printful\Tests\MockupGenerator;
 
 
-use Printful\MockupGenerator;
+use Printful\PrintfulMockupGenerator;
 use Printful\Structures\Generator\PrintfileItem;
 use Printful\Structures\Placements;
 use Printful\Tests\TestCase;
@@ -17,7 +17,7 @@ class PrintfilesTest extends TestCase
      */
     public function testPrintfileRetrieval($productId)
     {
-        $generator = new MockupGenerator($this->api);
+        $generator = new PrintfulMockupGenerator($this->api);
 
         $productPrintfiles = $generator->getProductPrintfiles($productId);
 

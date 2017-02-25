@@ -1,8 +1,8 @@
 <?php
 
+use Printful\PrintfulTaxRates;
 use Printful\Structures\CountryItem;
 use Printful\Structures\TaxRateItem;
-use Printful\TaxRates;
 use Printful\Tests\TestCase;
 
 class TaxRatesTest extends TestCase
@@ -14,7 +14,7 @@ class TaxRatesTest extends TestCase
      */
     public function testTaxRatesCalculation(array $recipient, $isTaxRequired)
     {
-        $rates = new TaxRates($this->api);
+        $rates = new PrintfulTaxRates($this->api);
         $countryCode = $recipient['country_code'];
         $stateCode = $recipient['state_code'];
         $city = $recipient['city'];
@@ -27,7 +27,7 @@ class TaxRatesTest extends TestCase
 
     public function testTaxableCountriesListRetrieved()
     {
-        $rates = new TaxRates($this->api);
+        $rates = new PrintfulTaxRates($this->api);
 
         $taxableCountriesList = $rates->getTaxCountries();
         self::assertInstanceOf(CountryItem::class, reset($taxableCountriesList));
