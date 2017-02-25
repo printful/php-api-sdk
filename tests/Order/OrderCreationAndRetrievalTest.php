@@ -41,7 +41,11 @@ class OrderCreationAndRetrievalTest extends TestCase
 
         $order = $this->printfulOrder->create($params);
         $canceledOrder = $this->printfulOrder->cancel($order->id);
-        self::assertEquals(Order::STATUS_CANCELED, $canceledOrder->status, 'After cancellation order has status ' . Order::STATUS_CANCELED);
+        self::assertEquals(
+            Order::STATUS_CANCELED,
+            $canceledOrder->status,
+            'After cancellation order has status ' . Order::STATUS_CANCELED
+        );
     }
 
     public function testOrderCanBeUpdated()
