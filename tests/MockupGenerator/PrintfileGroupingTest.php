@@ -64,7 +64,7 @@ class PrintfileGroupingTest extends TestCase
         }
     }
 
-    public function testMultiplePlacementWithMultplePrintfileGrouping()
+    public function testMultiplePlacementWithMultiplePrintfileGrouping()
     {
         $pp = new ProductPrintfiles;
 

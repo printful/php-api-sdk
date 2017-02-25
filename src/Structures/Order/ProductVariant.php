@@ -1,4 +1,5 @@
 <?php
+
 namespace Printful\Structures\Order;
 
 use Printful\Structures\BaseItem;
