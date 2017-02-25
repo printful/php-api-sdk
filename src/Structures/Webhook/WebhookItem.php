@@ -1,4 +1,5 @@
 <?php
+
 namespace Printful\Structures\Webhook;
 
 use Printful\Structures\BaseItem;

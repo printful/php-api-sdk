@@ -1,4 +1,5 @@
 <?php
+
 namespace Printful;
 
 use Printful\Structures\Order\Order;
@@ -37,7 +38,7 @@ class PrintfulOrder
     }
 
     /**
-     * Updates unsubmitted order and optionally submits it for the fulfillment.
+     * Updates un-submitted order and optionally submits it for the fulfillment.
      * Post only the fields that need to be changed, not all required fields.
      *
      * @param OrderCreationParameters $parameters
