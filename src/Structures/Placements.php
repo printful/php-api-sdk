@@ -47,6 +47,11 @@ class Placements
     const TYPE_LABEL_OUTSIDE = 'label_outside';
 
     /**
+     * Mockup of the product, can be used when submitting orders, etc
+     */
+    const TYPE_MOCKUP = 'mockup';
+
+    /**
      * @var array
      */
     public static $types = [
