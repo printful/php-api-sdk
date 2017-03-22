@@ -170,11 +170,15 @@ class PrintfulApiClient
         $this->lastResponse = $response = json_decode($this->lastResponseRaw, true);
 
         if (!isset($response['code'], $response['result'])) {
-            throw new PrintfulException('Invalid API response');
+            $e = new PrintfulException('Invalid API response');
+            $e->rawResponse = $this->lastResponseRaw;
+            throw $e;
         }
         $status = (int)$response['code'];
         if ($status < 200 || $status >= 300) {
-            throw new PrintfulApiException((string)$response['result'], $status);
+            $e = new PrintfulApiException((string)$response['result'], $status);
+            $e->rawResponse = $this->lastResponseRaw;
+            throw $e;
         }
         return $response['result'];
     }
