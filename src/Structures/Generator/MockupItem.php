@@ -32,7 +32,7 @@ class MockupItem extends BaseItem
 
     /**
      * Optional list of extra mockups generated. Not all products have extra mockups though.
-     * @var string[] List of URLs
+     * @var MockupExtraItem[] List of extra mockups
      */
     public $extraMockups = [];
 
