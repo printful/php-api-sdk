@@ -15,8 +15,8 @@ abstract class BaseItem
      * @return static
      * @throws PrintfulException
      */
-    public static function fromArray(array $raw
-    ) {
+    public static function fromArray(array $raw)
+    {
         throw new PrintfulException(
             __CLASS__ . ' does not have fromArray() implementation. ' .
             'Data given: ' . print_r($raw, true)

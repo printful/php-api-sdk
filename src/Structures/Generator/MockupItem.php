@@ -49,7 +49,9 @@ class MockupItem extends BaseItem
         $i->mockupUrl = $raw['mockup_url'];
 
         if (!empty($raw['extra'])) {
-            $i->extraMockups = $raw['extra'];
+            foreach ($raw['extra'] as $v) {
+                $i->extraMockups[] = MockupExtraItem::fromArray($v);
+            }
         }
 
         return $i;
