@@ -20,9 +20,21 @@ class PrintfulApiClient
 
     private $lastResponse;
 
-    public $url = 'https://api.theprintful.com/';
+    public $url = 'https://api.printful.com/';
 
     const USER_AGENT = 'Printful PHP API SDK 2.0';
+
+    /**
+     * Maximum amount of time in seconds that is allowed to make the connection to the API server
+     * @var int
+     */
+    public $curlConnectTimeout = 20;
+
+    /**
+     * Maximum amount of time in seconds to which the execution of cURL call will be limited
+     * @var int
+     */
+    public $curlTimeout = 20;
 
     /**
      * @param string $key Printful Store API key
@@ -148,8 +160,8 @@ class PrintfulApiClient
         curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true);
         curl_setopt($curl, CURLOPT_MAXREDIRS, 3);
 
-        curl_setopt($curl, CURLOPT_CONNECTTIMEOUT, 20);
-        curl_setopt($curl, CURLOPT_TIMEOUT, 20);
+        curl_setopt($curl, CURLOPT_CONNECTTIMEOUT, $this->curlConnectTimeout);
+        curl_setopt($curl, CURLOPT_TIMEOUT, $this->curlTimeout);
 
         curl_setopt($curl, CURLOPT_USERAGENT, self::USER_AGENT);
 
