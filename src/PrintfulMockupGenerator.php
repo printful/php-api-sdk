@@ -103,6 +103,8 @@ class PrintfulMockupGenerator
             'variant_ids' => $parameters->variantIds,
             'files' => $files,
             'format' => $parameters->format,
+            'option_groups' => $parameters->optionGroups,
+            'options' => $parameters->options,
         ];
 
         $response = $this->printfulClient->post('/mockup-generator/generate/' . $parameters->productId, $data);

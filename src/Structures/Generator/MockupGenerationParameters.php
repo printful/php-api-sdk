@@ -36,6 +36,20 @@ class MockupGenerationParameters
     public $format = self::FORMAT_JPG;
 
     /**
+     * List of options to generate (Front, Back, etc)
+     * If not provided, everything is generated.
+     * @var string[]
+     */
+    public $options = [];
+
+    /**
+     * List of option groups to generate (for leggings Barefoot, High-heels, etc.)
+     * If not provided, everything is generated.
+     * @var string[]
+     */
+    public $optionGroups = [];
+
+    /**
      * Add a file for a specific placement
      *
      * Available placements are defined in Placement class

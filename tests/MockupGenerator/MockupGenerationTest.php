@@ -84,4 +84,19 @@ class MockupGenerationTest extends TestCase
         self::assertEmpty($result->getVariantMockups(4017, Placements::TYPE_DEFAULT),
             'Variant does not have a default placement mockup');
     }
+
+    public function testsGenerateOnlyHighHeelBackLeggings()
+    {
+        $parameters = new MockupGenerationParameters;
+        $parameters->productId = 189; // Leggings
+        $parameters->variantIds = [7679];  // L
+        $parameters->options = ['Back'];
+        $parameters->optionGroups = ['High-heels'];
+
+        $parameters->addImageUrl(Placements::TYPE_DEFAULT, 'https://dummyimage.com/600x400/000/fff');
+
+        $result = $this->generator->generateMockups($parameters);
+
+        self::assertCount(1, $result->getVariantMockups(7679), 'One variant mockup exists');
+    }
 }
