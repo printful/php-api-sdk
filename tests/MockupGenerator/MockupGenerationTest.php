@@ -85,6 +85,34 @@ class MockupGenerationTest extends TestCase
             'Variant does not have a default placement mockup');
     }
 
+    public function testGenerateHatMockups()
+    {
+        $parameters = new MockupGenerationParameters;
+        $parameters->productId = 206; // Yupoong 6245CM - Unstructured Classic Dad Cap
+        $parameters->variantIds = [
+            7853, // White
+        ];
+
+        $parameters->addImageUrl(Placements::TYPE_EMBROIDERY_FRONT, 'https://dummyimage.com/600x400/000/fff');
+        $parameters->addImageUrl(Placements::TYPE_EMBROIDERY_LEFT, 'https://dummyimage.com/600x400/000/fff');
+        $parameters->addImageUrl(Placements::TYPE_EMBROIDERY_RIGHT, 'https://dummyimage.com/600x400/000/fff');
+
+        $result = $this->generator->generateMockups($parameters);
+
+        self::assertEquals($parameters->productId, $result->productId, 'Product matches');
+        self::assertCount(3, $result->mockups, '3 mockups are generated (one color front + 2 sides');
+        self::assertCount(3, $result->getVariantMockups(7853), 'One variant has 3 placements');
+
+        self::assertCount(1, $result->getVariantMockups(7853, Placements::TYPE_EMBROIDERY_FRONT),
+            'Has front');
+
+        self::assertCount(1, $result->getVariantMockups(7853, Placements::TYPE_EMBROIDERY_LEFT),
+            'Has left');
+
+        self::assertCount(1, $result->getVariantMockups(7853, Placements::TYPE_EMBROIDERY_RIGHT),
+            'Has right');
+    }
+
     public function testsGenerateOnlyHighHeelBackLeggings()
     {
         $parameters = new MockupGenerationParameters;
