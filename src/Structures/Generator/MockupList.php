@@ -10,13 +10,6 @@ namespace Printful\Structures\Generator;
 class MockupList
 {
     /**
-     * Printful product id
-     *
-     * @var int
-     */
-    public $productId = [];
-
-    /**
      * @var MockupItem[]
      */
     public $mockups = [];
