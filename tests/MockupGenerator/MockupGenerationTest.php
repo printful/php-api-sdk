@@ -111,7 +111,7 @@ class MockupGenerationTest extends TestCase
             'Has right');
     }
 
-    public function testsGenerateOnlyHighHeelBackLeggings()
+    public function testGenerateOnlyHighHeelBackLeggings()
     {
         $parameters = new MockupGenerationParameters;
         $parameters->productId = 189; // Leggings
@@ -124,5 +124,21 @@ class MockupGenerationTest extends TestCase
         $result = $this->generator->generateMockups($parameters);
 
         self::assertCount(1, $result->getVariantMockups(7679), 'One variant mockup exists');
+    }
+
+    public function testGenerateMugWithExtraMockups()
+    {
+        $parameters = new MockupGenerationParameters;
+        $parameters->productId = 19; // White Glossy Mug
+        $parameters->variantIds = [1320];  // 11oz
+
+        $parameters->addImageUrl(Placements::TYPE_DEFAULT, 'https://dummyimage.com/600x400/000/fff');
+
+        $result = $this->generator->generateMockups($parameters);
+
+        $mockups = $result->getVariantMockups(1320);
+
+        self::assertCount(1, $mockups, 'One mockup exists');
+        self::assertCount(2, $mockups[0]->extraMockups, 'Two extra mockups exist');
     }
 }
