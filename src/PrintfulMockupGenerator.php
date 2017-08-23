@@ -4,6 +4,7 @@
 namespace Printful;
 
 
+use Printful\Structures\Generator\GenerationResultItem;
 use Printful\Structures\Generator\MockupGenerationFile;
 use Printful\Structures\Generator\MockupGenerationParameters;
 use Printful\Structures\Generator\MockupItem;
@@ -84,6 +85,65 @@ class PrintfulMockupGenerator
     }
 
     /**
+     * Create an asynchronous generation task and return task that is in pending state
+     * To retrieve the generation result use <b>PrintfulMockupGenerator::getGenerationTask</b> method.
+     *
+     * @see PrintfulMockupGenerator::getGenerationTask
+     * @param MockupGenerationParameters $parameters
+     * @return GenerationResultItem Pending task
+     */
+    public function createGenerationTask(MockupGenerationParameters $parameters)
+    {
+        $data = $this->parametersToArray($parameters);
+
+        $response = $this->printfulClient->post('/mockup-generator/create-task/' . $parameters->productId, $data);
+
+        return GenerationResultItem::fromArray($response);
+    }
+
+    /**
+     * Create a tasks and waits for it to be complete by periodically checking for result.
+     * If the timeout is exceeded, latest task result is returned which will be in pending state.
+     *
+     * @param MockupGenerationParameters $parameters
+     * @param int $maxSecondsWait Maximum amount of seconds to wait for the result
+     * @param int $interval Interval before requesting task result
+     * @return GenerationResultItem Completed or failed generation result
+     */
+    public function createGenerationTaskAndWaitForResult(
+        MockupGenerationParameters $parameters,
+        $maxSecondsWait = 180,
+        $interval = 5
+    ) {
+        $task = $this->createGenerationTask($parameters);
+
+        for ($i = 0; $i < $maxSecondsWait / $interval; $i++) {
+            sleep($interval);
+            $task = $this->getGenerationTask($task->taskKey);
+            if (!$task->isPending()) {
+                break;
+            }
+        }
+
+        return $task;
+    }
+
+    /**
+     * Check for a generation task result
+     *
+     * @param string $tasKey
+     * @return GenerationResultItem
+     */
+    public function getGenerationTask($tasKey)
+    {
+        $response = $this->printfulClient->get('/mockup-generator/task/', [
+            'task_key' => $tasKey,
+        ]);
+
+        return GenerationResultItem::fromArray($response);
+    }
+
+    /**
      * Generate mockup images for given Printful product and variants.
      * This request can take up to multiple seconds!
      *
@@ -91,6 +151,25 @@ class PrintfulMockupGenerator
      * @return MockupList
      */
     public function generateMockups(MockupGenerationParameters $parameters)
+    {
+        $data = $this->parametersToArray($parameters);
+
+        $response = $this->printfulClient->post('/mockup-generator/generate/' . $parameters->productId, $data);
+
+        $mockupList = new MockupList;
+
+        $mockupList->mockups = array_map(function (array $rawMockup) {
+            return MockupItem::fromArray($rawMockup);
+        }, $response['mockups']);
+
+        return $mockupList;
+    }
+
+    /**
+     * @param MockupGenerationParameters $parameters
+     * @return array
+     */
+    private function parametersToArray(MockupGenerationParameters $parameters)
     {
         $files = array_map(function (MockupGenerationFile $file) {
             return [
@@ -107,16 +186,6 @@ class PrintfulMockupGenerator
             'options' => $parameters->options,
         ];
 
-        $response = $this->printfulClient->post('/mockup-generator/generate/' . $parameters->productId, $data);
-
-        $mockupList = new MockupList;
-
-        $mockupList->productId = (int)$response['product_id'];
-
-        $mockupList->mockups = array_map(function (array $rawMockup) {
-            return MockupItem::fromArray($rawMockup);
-        }, $response['mockups']);
-
-        return $mockupList;
+        return $data;
     }
 }

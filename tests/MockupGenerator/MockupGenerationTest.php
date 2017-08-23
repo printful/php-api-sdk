@@ -71,7 +71,6 @@ class MockupGenerationTest extends TestCase
 
         $result = $this->generator->generateMockups($parameters);
 
-        self::assertEquals($parameters->productId, $result->productId, 'Product matches');
         self::assertCount(4, $result->mockups, '4 mockups are generated (2 colors x 2 placements');
         self::assertCount(2, $result->getVariantMockups(4011), 'One variant has 2 placements');
 
@@ -99,7 +98,6 @@ class MockupGenerationTest extends TestCase
 
         $result = $this->generator->generateMockups($parameters);
 
-        self::assertEquals($parameters->productId, $result->productId, 'Product matches');
         self::assertCount(3, $result->mockups, '3 mockups are generated (one color front + 2 sides');
         self::assertCount(3, $result->getVariantMockups(7853), 'One variant has 3 placements');
 
