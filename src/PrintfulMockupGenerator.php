@@ -149,6 +149,12 @@ class PrintfulMockupGenerator
      *
      * @param MockupGenerationParameters $parameters
      * @return MockupList
+     * @deprecated This function is deprecated and will be removed on 2017-11-01. Use createGenerationTask/getGenerationTask or createGenerationTaskAndWaitForResult.
+     *
+     * @see https://www.printful.com/docs/generator
+     * @see \Printful\PrintfulMockupGenerator::createGenerationTask
+     * @see \Printful\PrintfulMockupGenerator::getGenerationTask
+     * @see \Printful\PrintfulMockupGenerator::createGenerationTaskAndWaitForResult
      */
     public function generateMockups(MockupGenerationParameters $parameters)
     {

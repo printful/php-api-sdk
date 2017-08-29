@@ -31,7 +31,7 @@ class MockupGenerationTest extends TestCase
 
         $parameters->addImageUrl(Placements::TYPE_DEFAULT, 'https://dummyimage.com/600x400/000/fff');
 
-        $result = $this->generator->generateMockups($parameters);
+        $result = $this->generator->createGenerationTaskAndWaitForResult($parameters)->mockupList;
 
         self::assertEquals($parameters->productId, $parameters->productId, 'Product matches');
         self::assertCount(2, $result->mockups, 'Two mockups are generated');
@@ -50,7 +50,7 @@ class MockupGenerationTest extends TestCase
 
         self::expectExceptionMessage('File type "' . Placements::TYPE_FRONT . '" is not allowed for this product');
 
-        $this->generator->generateMockups($parameters);
+        $this->generator->createGenerationTaskAndWaitForResult($parameters)->mockupList;
     }
 
     public function testGenerateShirtMockups()
@@ -69,7 +69,7 @@ class MockupGenerationTest extends TestCase
         $parameters->addImageUrl(Placements::TYPE_FRONT, 'https://dummyimage.com/600x400/000/fff');
         $parameters->addImageUrl(Placements::TYPE_BACK, 'https://dummyimage.com/600x400/000/fff');
 
-        $result = $this->generator->generateMockups($parameters);
+        $result = $this->generator->createGenerationTaskAndWaitForResult($parameters)->mockupList;
 
         self::assertCount(4, $result->mockups, '4 mockups are generated (2 colors x 2 placements');
         self::assertCount(2, $result->getVariantMockups(4011), 'One variant has 2 placements');
@@ -96,7 +96,7 @@ class MockupGenerationTest extends TestCase
         $parameters->addImageUrl(Placements::TYPE_EMBROIDERY_LEFT, 'https://dummyimage.com/600x400/000/fff');
         $parameters->addImageUrl(Placements::TYPE_EMBROIDERY_RIGHT, 'https://dummyimage.com/600x400/000/fff');
 
-        $result = $this->generator->generateMockups($parameters);
+        $result = $this->generator->createGenerationTaskAndWaitForResult($parameters)->mockupList;
 
         self::assertCount(3, $result->mockups, '3 mockups are generated (one color front + 2 sides');
         self::assertCount(3, $result->getVariantMockups(7853), 'One variant has 3 placements');
@@ -121,7 +121,7 @@ class MockupGenerationTest extends TestCase
 
         $parameters->addImageUrl(Placements::TYPE_DEFAULT, 'https://dummyimage.com/600x400/000/fff');
 
-        $result = $this->generator->generateMockups($parameters);
+        $result = $this->generator->createGenerationTaskAndWaitForResult($parameters)->mockupList;
 
         self::assertCount(1, $result->getVariantMockups(7679), 'One variant mockup exists');
     }
@@ -134,7 +134,7 @@ class MockupGenerationTest extends TestCase
 
         $parameters->addImageUrl(Placements::TYPE_DEFAULT, 'https://dummyimage.com/600x400/000/fff');
 
-        $result = $this->generator->generateMockups($parameters);
+        $result = $this->generator->createGenerationTaskAndWaitForResult($parameters)->mockupList;
 
         $mockups = $result->getVariantMockups(1320);
 
