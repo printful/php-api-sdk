@@ -25,7 +25,6 @@ class StoreInformationTest extends TestCase
         self::assertInstanceOf(Store::class, $store, 'Store information retrieved');
     }
 
-
     public function testStorePackingSlipCanBeUpdated()
     {
         $packingSlip = PackingSlipItem::fromArray([
