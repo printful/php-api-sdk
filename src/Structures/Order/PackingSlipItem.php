@@ -29,9 +29,9 @@ class PackingSlipItem extends BaseItem
     {
         $slip = new self;
 
-        $slip->email = $raw['email'];
-        $slip->phone = $raw['phone'];
-        $slip->message = $raw['message'];
+        $slip->email = isset($raw['email']) ? $raw['email'] : '';
+        $slip->phone = isset($raw['phone']) ? $raw['phone'] : '';
+        $slip->message = isset($raw['message']) ? $raw['message'] : '';
 
         return $slip;
     }
@@ -42,9 +42,9 @@ class PackingSlipItem extends BaseItem
     public function toArray()
     {
         return [
-            'email' => $this->email,
-            'phone' => $this->phone,
-            'message' => $this->message,
+            'email' => isset($this->email) ? $this->email : '',
+            'phone' => isset($this->phone) ? $this->phone : '',
+            'message' => isset($this->message) ? $this->message : '',
         ];
     }
 
