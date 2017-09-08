@@ -5,6 +5,7 @@ namespace Printful;
 use Printful\Structures\Order\PackingSlipItem;
 use Printful\Structures\Store\Store;
 use Printful\Structures\Store\StoreStatistics;
+use Printful\Structures\Store\StoreCarriersServicesList;
 
 class PrintfulStoreInformation
 {
@@ -51,5 +52,24 @@ class PrintfulStoreInformation
     {
         $raw = $this->printfulClient->get('store/statistics');
         return StoreStatistics::fromArray($raw['store_statistics']);
+    }
+
+    /**
+     * @return StoreCarriersServicesList
+     */
+    public function getCarriersServices()
+    {
+        $raw = $this->printfulClient->get('store/carriers-services');
+        return StoreCarriersServicesList::fromArray($raw);
+    }
+
+    /**
+     * @param $carrierStatus
+     * @return StoreCarriersServicesList
+     */
+    public function postCarriersServiceStatus($carrierStatus)
+    {
+        $raw = $this->printfulClient->post('store/carriers-services', $carrierStatus);
+        return StoreCarriersServicesList::fromArray($raw);
     }
 }

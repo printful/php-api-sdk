@@ -3,6 +3,7 @@
 use Printful\PrintfulStoreInformation;
 use Printful\Structures\Order\PackingSlipItem;
 use Printful\Structures\Store\Store;
+use Printful\Structures\Store\StoreCarriersServicesItem;
 use Printful\Structures\Store\StoreStatistics;
 use Printful\Tests\TestCase;
 
@@ -41,6 +42,31 @@ class StoreInformationTest extends TestCase
     {
         $statistics = $this->printfulStoreInformation->getStoreStatistics();
         self::assertInstanceOf(StoreStatistics::class, $statistics, 'Store statistics retrieved');
+    }
+
+    public function testStoreCarriersServicesCanBeRetrieved()
+    {
+        $carrierList = $this->printfulStoreInformation->getCarriersServices();
+        self::assertInstanceOf(StoreCarriersServicesItem::class, $carrierList->carriers[0],'Carriers can be retrieved');
+    }
+
+    public function testStoreCarriersServicesCanBeUpdated()
+    {
+        $testParams = $this->getTestCarrierParams();
+        $carrierList = $this->printfulStoreInformation->postCarriersServiceStatus($testParams);
+        self::assertInstanceOf(StoreCarriersServicesItem::class, $carrierList->carriers[0],'Carriers can be updated');
+    }
+
+    private function getTestCarrierParams()
+    {
+        $carriers = [
+            [
+                'id' => 'STANDARD',
+                'status' => 'on',
+            ]
+        ];
+
+        return $carriers;
     }
 
 }
