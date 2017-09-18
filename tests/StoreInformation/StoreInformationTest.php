@@ -4,7 +4,6 @@ use Printful\PrintfulStoreInformation;
 use Printful\Structures\Order\PackingSlipItem;
 use Printful\Structures\Store\Store;
 use Printful\Structures\Store\StoreCarriersServicesItem;
-use Printful\Structures\Store\StoreStatistics;
 use Printful\Tests\TestCase;
 
 class StoreInformationTest extends TestCase
@@ -36,12 +35,6 @@ class StoreInformationTest extends TestCase
 
         $updatedPackingSlip = $this->printfulStoreInformation->postPackingSlip($packingSlip);
         self::assertEquals($packingSlip->email,  $updatedPackingSlip->email, 'Packing slip updated');
-    }
-
-    public function testStoreStaticticsCanBeRetrieved()
-    {
-        $statistics = $this->printfulStoreInformation->getStoreStatistics();
-        self::assertInstanceOf(StoreStatistics::class, $statistics, 'Store statistics retrieved');
     }
 
     public function testStoreCarriersServicesCanBeRetrieved()
