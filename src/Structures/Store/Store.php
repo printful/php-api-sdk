@@ -9,41 +9,49 @@ use Printful\Structures\Order\PackingSlipItem;
 class Store extends BaseItem
 {
     /**
+     * Store ID
      * @var int
      */
     public $id;
 
     /**
+     * Store name
      * @var String
      */
     public $name;
 
     /**
+     * Store website URL
      * @var String
      */
     public $website;
 
     /**
+     * Custom return address (if enabled)
      * @var AddressItem
      */
-    public $return_address;
+    public $returnAddress;
 
     /**
+     * Default billing address (if configured)
      * @var AddressItem
      */
-    public $billing_address;
+    public $billingAddress;
 
     /**
+     * Default payment card (if configured)
      * @var
      */
-    public $payment_card;
+    public $paymentCard;
 
     /**
+     * Packing slip information of the current store
      * @var PackingSlipItem
      */
-    public $packing_slip;
+    public $packingSlip;
 
     /**
+     * Store creation timestamp
      * @var int - Timestamp
      */
     public $created;
@@ -58,10 +66,10 @@ class Store extends BaseItem
         $store->id = (int)$raw['id'];
         $store->name = $raw['name'];
         $store->website = $raw['website'];
-        $store->return_address = isset($raw['return_address']) ? AddressItem::fromArray($raw['return_address']) : null;
-        $store->billing_address = isset($raw['billing_address']) ? AddressItem::fromArray($raw['billing_address']) : null;
-        $store->payment_card = $raw['payment_card'];
-        $store->packing_slip = isset($raw['packing_slip']) ? PackingSlipItem::fromArray($raw['packing_slip']) : null;
+        $store->returnAddress = isset($raw['return_address']) ? AddressItem::fromArray($raw['return_address']) : null;
+        $store->billingAddress = isset($raw['billing_address']) ? AddressItem::fromArray($raw['billing_address']) : null;
+        $store->paymentCard = $raw['payment_card'];
+        $store->packingSlip = isset($raw['packing_slip']) ? PackingSlipItem::fromArray($raw['packing_slip']) : null;
         $store->created = (int)$raw['created'];
 
         return $store;
@@ -76,10 +84,10 @@ class Store extends BaseItem
             'id' => (int)$this->id,
             'name' => $this->name,
             'website' => $this->website,
-            'return_address' => $this->return_address,
-            'billing_address' => $this->billing_address,
-            'payment_card' => $this->payment_card,
-            'packing_slip' => $this->packing_slip->toArray(),
+            'return_address' => $this->returnAddress,
+            'billing_address' => $this->billingAddress,
+            'payment_card' => $this->paymentCard,
+            'packing_slip' => $this->packingSlip->toArray(),
             'created' => $this->created,
         ];
     }

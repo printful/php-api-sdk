@@ -8,6 +8,7 @@ class StoreCarriersServicesList extends BaseItem
 {
 
     /**
+     * List containing carrier items
      * @var array
      */
     public $carriers;

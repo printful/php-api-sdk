@@ -28,13 +28,15 @@ class StoreInformationTest extends TestCase
     public function testStorePackingSlipCanBeUpdated()
     {
         $packingSlip = PackingSlipItem::fromArray([
-            'email' => 'test@example.com',
-            'phone' => '(111) 222-3333',
-            'message' => 'Message text',
+            'email' => 'test' . rand(0, 99) . '@example.com',
+            'phone' => '(111) 222-33' . rand(10, 99),
+            'message' => 'Message text ' . rand(0, 99),
         ]);
 
-        $updatedPackingSlip = $this->printfulStoreInformation->postPackingSlip($packingSlip);
-        self::assertEquals($packingSlip->email,  $updatedPackingSlip->email, 'Packing slip updated');
+        $updatedPackingSlip = $this->printfulStoreInformation->setPackingSlip($packingSlip);
+        self::assertEquals($packingSlip->email,  $updatedPackingSlip->email, 'Packing slip email updated');
+        self::assertEquals($packingSlip->phone,  $updatedPackingSlip->phone, 'Packing slip phone updated');
+        self::assertEquals($packingSlip->message,  $updatedPackingSlip->message, 'Packing slip message updated');
     }
 
     public function testStoreCarriersServicesCanBeRetrieved()
@@ -45,21 +47,53 @@ class StoreInformationTest extends TestCase
 
     public function testStoreCarriersServicesCanBeUpdated()
     {
-        $testParams = $this->getTestCarrierParams();
-        $carrierList = $this->printfulStoreInformation->postCarriersServiceStatus($testParams);
-        self::assertInstanceOf(StoreCarriersServicesItem::class, $carrierList->carriers[0],'Carriers can be updated');
+        $testParamsEnable = $this->getTestCarrierEnableParams();
+        $carrierList = $this->printfulStoreInformation->setCarriersServiceStatus($testParamsEnable);
+        $carrier = $this->getCarrierWithId($carrierList, $testParamsEnable[0]['carrier_id']);
+        self::assertEquals($carrier->status, $testParamsEnable[0]['status'],'Carriers can be enabled');
+
+        $testParamsDisable = $this->getTestCarrierDisableParams();
+        $carrierList = $this->printfulStoreInformation->setCarriersServiceStatus($testParamsDisable);
+        $carrier = $this->getCarrierWithId($carrierList, $testParamsDisable[0]['carrier_id']);
+        self::assertEquals($carrier->status, $testParamsDisable[0]['status'],'Carriers can be disabled');
     }
 
-    private function getTestCarrierParams()
+    private function getTestCarrierEnableParams()
     {
         $carriers = [
             [
-                'id' => 'STANDARD',
+                'carrier_id' => 'STANDARD',
                 'status' => 'on',
             ]
         ];
 
         return $carriers;
+    }
+
+    private function getTestCarrierDisableParams()
+    {
+        $carriers = [
+            [
+                'carrier_id' => 'STANDARD',
+                'status' => 'off',
+            ]
+        ];
+
+        return $carriers;
+    }
+
+    private function getCarrierWithId($carrierList, $carrierId)
+    {
+        $carrier = null;
+
+        foreach ($carrierList->carriers as $carrierListItem) {
+            if ($carrierListItem->carrierId == $carrierId) {
+                $carrier = $carrierListItem;
+                break;
+            }
+        }
+
+        return $carrier;
     }
 
 }

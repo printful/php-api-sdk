@@ -32,7 +32,7 @@ class PrintfulStoreInformation
      * @param PackingSlipItem $parameters
      * @return PackingSlipItem
      */
-    public function postPackingSlip(PackingSlipItem $parameters)
+    public function setPackingSlip(PackingSlipItem $parameters)
     {
         $request = [
             'email' => $parameters->email,
@@ -57,7 +57,7 @@ class PrintfulStoreInformation
      * @param $carrierStatus
      * @return StoreCarriersServicesList
      */
-    public function postCarriersServiceStatus($carrierStatus)
+    public function setCarriersServiceStatus($carrierStatus)
     {
         $raw = $this->printfulClient->post('store/carriers-services', $carrierStatus);
         return StoreCarriersServicesList::fromArray($raw);

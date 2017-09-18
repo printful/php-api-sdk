@@ -6,20 +6,40 @@ use Printful\Structures\BaseItem;
 
 class StoreCarriersServicesItem extends BaseItem
 {
-    public $id;
+    /**
+     * ID of the carrier
+     * @var
+     */
+    public $carrierId;
 
+    /**
+     * Carrier title
+     * @var
+     */
     public $title;
 
+    /**
+     * Carrier subtitle
+     * @var
+     */
     public $subtitle;
 
+    /**
+     * Carrier status - on/off
+     * @var
+     */
     public $status;
 
+    /**
+     * Carrier type - standard/expedited
+     * @var
+     */
     public $type;
 
     public static function fromArray(array $raw)
     {
         $carrier = new self;
-        $carrier->id = $raw['id'];
+        $carrier->carrierId = $raw['carrier_id'];
         $carrier->title = $raw['title'];
         $carrier->subtitle = $raw['subtitle'];
         $carrier->status = $raw['status'];
@@ -34,7 +54,7 @@ class StoreCarriersServicesItem extends BaseItem
     public function toArray()
     {
         return [
-            'id' => $this->id,
+            'carrier_id' => $this->carrierId,
             'title' => $this->title,
             'subtitle' => $this->subtitle,
             'status' => $this->status,
