@@ -95,11 +95,12 @@ class MockupGenerationTest extends TestCase
         $parameters->addImageUrl(Placements::TYPE_EMBROIDERY_FRONT, 'https://dummyimage.com/600x400/000/fff');
         $parameters->addImageUrl(Placements::TYPE_EMBROIDERY_LEFT, 'https://dummyimage.com/600x400/000/fff');
         $parameters->addImageUrl(Placements::TYPE_EMBROIDERY_RIGHT, 'https://dummyimage.com/600x400/000/fff');
+        $parameters->addImageUrl(Placements::TYPE_EMBROIDERY_BACK, 'https://dummyimage.com/600x400/000/fff');
 
         $result = $this->generator->createGenerationTaskAndWaitForResult($parameters)->mockupList;
 
-        self::assertCount(3, $result->mockups, '3 mockups are generated (one color front + 2 sides');
-        self::assertCount(3, $result->getVariantMockups(7853), 'One variant has 3 placements');
+        self::assertCount(4, $result->mockups, '4 mockups are generated (one color front, back + 2 sides');
+        self::assertCount(4, $result->getVariantMockups(7853), 'One variant has 4 placements');
 
         self::assertCount(1, $result->getVariantMockups(7853, Placements::TYPE_EMBROIDERY_FRONT),
             'Has front');
@@ -109,6 +110,9 @@ class MockupGenerationTest extends TestCase
 
         self::assertCount(1, $result->getVariantMockups(7853, Placements::TYPE_EMBROIDERY_RIGHT),
             'Has right');
+
+        self::assertCount(1, $result->getVariantMockups(7853, Placements::TYPE_EMBROIDERY_BACK),
+            'Has back');
     }
 
     public function testGenerateOnlyHighHeelBackLeggings()

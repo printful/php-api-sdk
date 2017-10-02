@@ -27,6 +27,11 @@ class Placements
     const TYPE_EMBROIDERY_RIGHT = 'embroidery_right';
 
     /**
+     * Back placement for embroidery
+     */
+    const TYPE_EMBROIDERY_BACK = 'embroidery_back';
+
+    /**
      * Front for DTG products, double-sided totes, etc
      */
     const TYPE_FRONT = 'front';
@@ -77,6 +82,10 @@ class Placements
         ],
         self::TYPE_EMBROIDERY_RIGHT => [
             'title' => 'Right side',
+            'conflictingTypes' => [],
+        ],
+        self::TYPE_EMBROIDERY_BACK => [
+            'title' => 'Back',
             'conflictingTypes' => [],
         ],
         self::TYPE_LABEL_INSIDE => [
