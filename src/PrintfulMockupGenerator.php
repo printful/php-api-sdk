@@ -11,6 +11,9 @@ use Printful\Structures\Generator\MockupItem;
 use Printful\Structures\Generator\MockupList;
 use Printful\Structures\Generator\PrintfileItem;
 use Printful\Structures\Generator\ProductPrintfiles;
+use Printful\Structures\Generator\Templates\ProductTemplates;
+use Printful\Structures\Generator\Templates\TemplateItem;
+use Printful\Structures\Generator\Templates\VariantTemplateMappingItem;
 use Printful\Structures\Generator\VariantPlacementGroup;
 use Printful\Structures\Generator\VariantPrintfileItem;
 
@@ -32,6 +35,7 @@ class PrintfulMockupGenerator
      *
      * @param int $productId Printful product id
      * @return ProductPrintfiles
+     * @throws Exceptions\PrintfulException
      */
     public function getProductPrintfiles($productId)
     {
@@ -91,6 +95,7 @@ class PrintfulMockupGenerator
      * @see PrintfulMockupGenerator::getGenerationTask
      * @param MockupGenerationParameters $parameters
      * @return GenerationResultItem Pending task
+     * @throws Exceptions\PrintfulException
      */
     public function createGenerationTask(MockupGenerationParameters $parameters)
     {
@@ -109,6 +114,7 @@ class PrintfulMockupGenerator
      * @param int $maxSecondsWait Maximum amount of seconds to wait for the result
      * @param int $interval Interval before requesting task result
      * @return GenerationResultItem Completed or failed generation result
+     * @throws Exceptions\PrintfulException
      */
     public function createGenerationTaskAndWaitForResult(
         MockupGenerationParameters $parameters,
@@ -133,6 +139,7 @@ class PrintfulMockupGenerator
      *
      * @param string $tasKey
      * @return GenerationResultItem
+     * @throws Exceptions\PrintfulException
      */
     public function getGenerationTask($tasKey)
     {
@@ -149,6 +156,7 @@ class PrintfulMockupGenerator
      *
      * @param MockupGenerationParameters $parameters
      * @return MockupList
+     * @throws Exceptions\PrintfulException
      * @deprecated This function is deprecated and will be removed on 2017-11-01. Use createGenerationTask/getGenerationTask or createGenerationTaskAndWaitForResult.
      *
      * @see https://www.printful.com/docs/generator
@@ -193,5 +201,31 @@ class PrintfulMockupGenerator
         ];
 
         return $data;
+    }
+
+    /**
+     * TODO document
+     * @param int $productId
+     * @return ProductTemplates
+     * @throws Exceptions\PrintfulException
+     */
+    public function getProductTemplates($productId)
+    {
+        $response = $this->printfulClient->get('/mockup-generator/templates/' . $productId);
+
+        $templates = new ProductTemplates;
+        $templates->version = (int)$response['version'];
+
+        $templates->variantMapping = array_map(function($v){
+            return VariantTemplateMappingItem::fromArray($v);
+        }, $response['variant_mapping']);
+
+        $templates->templates = array_map(function($v){
+            return TemplateItem::fromArray($v);
+        }, $response['templates']);
+
+        $templates->conflictingPlacements = $response['conflicting_placements'];
+
+        return $templates;
     }
 }

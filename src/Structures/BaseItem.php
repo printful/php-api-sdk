@@ -12,7 +12,7 @@ abstract class BaseItem
      * Convert response array to item object
      *
      * @param array $raw
-     * @return static
+     * @return static|void
      * @throws PrintfulException
      */
     public static function fromArray(array $raw)
