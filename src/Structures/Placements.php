@@ -52,6 +52,26 @@ class Placements
     const TYPE_LABEL_OUTSIDE = 'label_outside';
 
     /**
+     * Belt front (leggings)
+     */
+    const TYPE_BELT_FRONT = 'belt_front';
+
+    /**
+     * Belt back (leggings)
+     */
+    const TYPE_BELT_BACK = 'belt_back';
+
+    /**
+     * Left sleeve (Cut & Sew shirts)
+     */
+    const TYPE_SLEEVE_LEFT = 'sleeve_left';
+
+    /**
+     * Right sleeve (Cut & Sew shirts)
+     */
+    const TYPE_SLEEVE_RIGHT = 'sleeve_right';
+
+    /**
      * Mockup of the product, can be used when submitting orders, etc
      */
     const TYPE_MOCKUP = 'mockup';
@@ -95,6 +115,22 @@ class Placements
         self::TYPE_LABEL_OUTSIDE => [
             'title' => 'Outside label',
             'conflictingTypes' => [self::TYPE_BACK, self::TYPE_LABEL_INSIDE],
+        ],
+        self::TYPE_SLEEVE_LEFT => [
+            'title' => 'Left Sleeve',
+            'conflictingTypes' => [],
+        ],
+        self::TYPE_SLEEVE_RIGHT => [
+            'title' => 'Right Sleeve',
+            'conflictingTypes' => [],
+        ],
+        self::TYPE_BELT_FRONT => [
+            'title' => 'Front waist',
+            'conflictingTypes' => [],
+        ],
+        self::TYPE_BELT_BACK => [
+            'title' => 'Back waist',
+            'conflictingTypes' => [],
         ],
     ];
 
