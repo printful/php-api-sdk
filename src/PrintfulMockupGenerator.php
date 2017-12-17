@@ -11,6 +11,7 @@ use Printful\Structures\Generator\MockupItem;
 use Printful\Structures\Generator\MockupList;
 use Printful\Structures\Generator\PrintfileItem;
 use Printful\Structures\Generator\ProductPrintfiles;
+use Printful\Structures\Generator\Templates\PlacementConflictItem;
 use Printful\Structures\Generator\Templates\ProductTemplates;
 use Printful\Structures\Generator\Templates\TemplateItem;
 use Printful\Structures\Generator\Templates\VariantTemplateMappingItem;
@@ -204,7 +205,9 @@ class PrintfulMockupGenerator
     }
 
     /**
-     * TODO document
+     * Retrieve templates for given product. Resources returned may be used to create your own generator interface.
+     * This includes background images and area positions.
+     *
      * @param int $productId
      * @return ProductTemplates
      * @throws Exceptions\PrintfulException
@@ -215,16 +218,22 @@ class PrintfulMockupGenerator
 
         $templates = new ProductTemplates;
         $templates->version = (int)$response['version'];
+        $templates->minDpi = (int)$response['min_dpi'];
 
-        $templates->variantMapping = array_map(function($v){
+        $templates->variantMapping = array_map(function ($v) {
             return VariantTemplateMappingItem::fromArray($v);
         }, $response['variant_mapping']);
 
-        $templates->templates = array_map(function($v){
+        $templates->templates = array_map(function ($v) {
             return TemplateItem::fromArray($v);
         }, $response['templates']);
 
-        $templates->conflictingPlacements = $response['conflicting_placements'];
+        $templates->placementConflicts = array_map(function ($v) {
+            $pc = new PlacementConflictItem;
+            $pc->placement = $v['placement'];
+            $pc->conflictingPlacements = $v['conflicts'];
+            return $pc;
+        }, $response['conflicting_placements']);
 
         return $templates;
     }

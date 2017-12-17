@@ -10,7 +10,8 @@ namespace Printful\Structures\Generator\Templates;
 class ProductTemplates
 {
     /**
-     * Indicates the version of resources. If this changes, resources should be re-cached.
+     * Indicates the version of resources.
+     * If this changes, resources should be re-cached.
      * @var int
      */
     public $version;
@@ -34,8 +35,9 @@ class ProductTemplates
     public $templates = [];
 
     /**
-     * @var array
+     * List of placement conflicts. This helps to determine which placements conflict (cannot be used together with).
+     *
+     * @var PlacementConflictItem[]
      */
-    // TODO specify type
-    public $conflictingPlacements;
+    public $placementConflicts;
 }
