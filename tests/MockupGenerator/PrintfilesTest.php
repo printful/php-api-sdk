@@ -14,6 +14,7 @@ class PrintfilesTest extends TestCase
     /**
      * @dataProvider productProvider
      * @param $productId
+     * @throws \Printful\Exceptions\PrintfulException
      */
     public function testPrintfileRetrieval($productId)
     {
@@ -51,7 +52,7 @@ class PrintfilesTest extends TestCase
             [1], // Poster
             [19], // 11oz mug
             [83], // Square Pillow Case w/ stuffing
-            [86], // PL401 Sublimation T-Shirt
+            [230], // PL401 Sublimation T-Shirt
         ];
     }
 }
