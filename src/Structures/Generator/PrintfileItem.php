@@ -6,6 +6,10 @@ namespace Printful\Structures\Generator;
 
 use Printful\Structures\BaseItem;
 
+/**
+ * @see https://www.printful.com/docs/generator#actionPrintfiles
+ * @see \Printful\PrintfulMockupGenerator::getProductPrintfiles()
+ */
 class PrintfileItem extends BaseItem
 {
     /**
