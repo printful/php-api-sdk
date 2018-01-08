@@ -145,4 +145,49 @@ class MockupGenerationTest extends TestCase
         self::assertCount(1, $mockups, 'One mockup exists');
         self::assertCount(2, $mockups[0]->extraMockups, 'Two extra mockups exist');
     }
+
+    public function testGenerateYogaLeggings()
+    {
+        $parameters = new MockupGenerationParameters;
+        $parameters->productId = 242; // White Glossy Mug
+        $parameters->variantIds = [8356];  // 11oz
+
+        $parameters->addImageUrl(Placements::TYPE_BELT_FRONT, 'https://dummyimage.com/1000x300/f00/fff');
+        $parameters->addImageUrl(Placements::TYPE_BELT_BACK, 'https://dummyimage.com/1000x300/0f0/fff');
+        $parameters->addImageUrl(Placements::TYPE_DEFAULT, 'https://dummyimage.com/1000x1000/00f/fff');
+
+        $result = $this->generator->createGenerationTaskAndWaitForResult($parameters)->mockupList;
+
+        $mockups = $result->getVariantMockups(8356);
+
+        self::assertCount(1, $mockups, 'One mockup exists');
+        self::assertCount(3, $mockups[0]->extraMockups, 'Three extra mockups (back, left, right');
+    }
+
+    public function testGenerateCutSewShirt()
+    {
+        $parameters = new MockupGenerationParameters;
+        $parameters->format = $parameters::FORMAT_JPG;
+        $parameters->productId = 257; // All-Over Cut & Sew Men's T-shirt
+        $parameters->variantIds = [ // All variants: XS - 2XL
+            8855,
+            8853,
+            8852,
+            8851,
+            8854,
+            8850,
+        ];
+
+        $parameters->addImageUrl(Placements::TYPE_DEFAULT, 'https://dummyimage.com/600x400/f00/fff');
+        $parameters->addImageUrl(Placements::TYPE_BACK, 'https://dummyimage.com/600x400/00f/fff');
+        $parameters->addImageUrl(Placements::TYPE_SLEEVE_LEFT, 'https://dummyimage.com/600x400/0f0/fff');
+        $parameters->addImageUrl(Placements::TYPE_SLEEVE_RIGHT, 'https://dummyimage.com/600x400/0f0/fff');
+
+        $result = $this->generator->createGenerationTaskAndWaitForResult($parameters)->mockupList;
+
+        $mockups = $result->getVariantMockups(8855);
+
+        self::assertCount(1, $mockups, 'One mockup exists');
+        self::assertCount(3, $mockups[0]->extraMockups, 'Three extra mockups exist (back, left, right');
+    }
 }
