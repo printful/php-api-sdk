@@ -57,14 +57,16 @@ class MockupGenerationParameters
      *
      * @param string $placement
      * @param $imageUrl
+     * @param MockupPositionItem|null $position Optional position for image for generation. If position is not provided, image will be fitted or stretched over the area.
      * @return self
      */
-    public function addImageUrl($placement, $imageUrl)
+    public function addImageUrl($placement, $imageUrl, MockupPositionItem $position = null)
     {
         $file = new MockupGenerationFile;
 
         $file->placement = $placement;
         $file->imageUrl = $imageUrl;
+        $file->position = $position;
 
         $this->files[] = $file;
 

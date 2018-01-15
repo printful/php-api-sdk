@@ -6,6 +6,7 @@ namespace Printful\Tests\MockupGenerator;
 
 use Printful\PrintfulMockupGenerator;
 use Printful\Structures\Generator\MockupGenerationParameters;
+use Printful\Structures\Generator\MockupPositionItem;
 use Printful\Structures\Placements;
 use Printful\Tests\TestCase;
 
@@ -29,7 +30,16 @@ class MockupGenerationTest extends TestCase
             2, // 24x36
         ];
 
-        $parameters->addImageUrl(Placements::TYPE_DEFAULT, 'https://dummyimage.com/600x400/000/fff');
+        // Relative positions that will result in image that is in center of the poster in half the width
+        $position = new MockupPositionItem;
+        $position->areaWidth = 1000;
+        $position->areaHeight = 1000;
+        $position->width = 500;
+        $position->height = 500;
+        $position->top = 250;
+        $position->left = 250;
+
+        $parameters->addImageUrl(Placements::TYPE_DEFAULT, $this->getDummyImageUrl(500, 500), $position);
 
         $result = $this->generator->createGenerationTaskAndWaitForResult($parameters)->mockupList;
 
@@ -66,8 +76,8 @@ class MockupGenerationTest extends TestCase
             4018, // Black L
         ];
 
-        $parameters->addImageUrl(Placements::TYPE_FRONT, 'https://dummyimage.com/600x400/000/fff');
-        $parameters->addImageUrl(Placements::TYPE_BACK, 'https://dummyimage.com/600x400/000/fff');
+        $parameters->addImageUrl(Placements::TYPE_FRONT, $this->getDummyImageUrl(600, 400));
+        $parameters->addImageUrl(Placements::TYPE_BACK, $this->getDummyImageUrl(600, 400));
 
         $result = $this->generator->createGenerationTaskAndWaitForResult($parameters)->mockupList;
 
@@ -92,10 +102,10 @@ class MockupGenerationTest extends TestCase
             7853, // White
         ];
 
-        $parameters->addImageUrl(Placements::TYPE_EMBROIDERY_FRONT, 'https://dummyimage.com/600x400/000/fff');
-        $parameters->addImageUrl(Placements::TYPE_EMBROIDERY_LEFT, 'https://dummyimage.com/600x400/000/fff');
-        $parameters->addImageUrl(Placements::TYPE_EMBROIDERY_RIGHT, 'https://dummyimage.com/600x400/000/fff');
-        $parameters->addImageUrl(Placements::TYPE_EMBROIDERY_BACK, 'https://dummyimage.com/600x400/000/fff');
+        $parameters->addImageUrl(Placements::TYPE_EMBROIDERY_FRONT, $this->getDummyImageUrl(600, 400));
+        $parameters->addImageUrl(Placements::TYPE_EMBROIDERY_LEFT, $this->getDummyImageUrl(600, 400));
+        $parameters->addImageUrl(Placements::TYPE_EMBROIDERY_RIGHT, $this->getDummyImageUrl(600, 400));
+        $parameters->addImageUrl(Placements::TYPE_EMBROIDERY_BACK, $this->getDummyImageUrl(600, 400));
 
         $result = $this->generator->createGenerationTaskAndWaitForResult($parameters)->mockupList;
 
@@ -123,7 +133,7 @@ class MockupGenerationTest extends TestCase
         $parameters->options = ['Back'];
         $parameters->optionGroups = ['High-heels'];
 
-        $parameters->addImageUrl(Placements::TYPE_DEFAULT, 'https://dummyimage.com/600x400/000/fff');
+        $parameters->addImageUrl(Placements::TYPE_DEFAULT, $this->getDummyImageUrl(600, 400));
 
         $result = $this->generator->createGenerationTaskAndWaitForResult($parameters)->mockupList;
 
@@ -136,7 +146,7 @@ class MockupGenerationTest extends TestCase
         $parameters->productId = 19; // White Glossy Mug
         $parameters->variantIds = [1320];  // 11oz
 
-        $parameters->addImageUrl(Placements::TYPE_DEFAULT, 'https://dummyimage.com/600x400/000/fff');
+        $parameters->addImageUrl(Placements::TYPE_DEFAULT, $this->getDummyImageUrl(600, 400));
 
         $result = $this->generator->createGenerationTaskAndWaitForResult($parameters)->mockupList;
 

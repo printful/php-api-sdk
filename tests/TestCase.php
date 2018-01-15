@@ -33,4 +33,15 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase
     {
         return new PrintfulMockupGenerator($this->api);
     }
+
+    /**
+     * @param int $width
+     * @param int $height
+     * @return string
+     */
+    protected function getDummyImageUrl($width, $height)
+    {
+        return 'http://lorempixel.com/' . $width . '/' . $height;
+        // return 'https://dummyimage.com/' . $width . 'x' . $height . '/000/fff';
+    }
 }
