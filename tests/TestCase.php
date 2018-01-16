@@ -41,7 +41,7 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase
      */
     protected function getDummyImageUrl($width, $height)
     {
-        return 'http://lorempixel.com/' . $width . '/' . $height;
-        // return 'https://dummyimage.com/' . $width . 'x' . $height . '/000/fff';
+        // return 'http://lorempixel.com/' . $width . '/' . $height;
+        return 'https://dummyimage.com/' . $width . 'x' . $height . '/000/fff';
     }
 }
