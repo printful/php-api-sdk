@@ -177,7 +177,17 @@ class MockupGenerationTest extends TestCase
         $parameters->productId = 19; // White Glossy Mug
         $parameters->variantIds = [1320];  // 11oz
 
-        $parameters->addImageUrl(Placements::TYPE_DEFAULT, $this->getDummyImageUrl(600, 400));
+        $position = new MockupPositionItem;
+        $position->areaWidth = 520;
+        $position->areaHeight = 202;
+        $position->width = 140;
+        $position->height = 63;
+        $position->top = 77;
+        $position->left = 43;
+
+        $imageUrl = $this->getDummyImageUrl(280, 126);
+
+        $parameters->addImageUrl(Placements::TYPE_DEFAULT, $imageUrl, $position);
 
         $result = $this->generator->createGenerationTaskAndWaitForResult($parameters)->mockupList;
 
