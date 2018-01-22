@@ -96,8 +96,19 @@ class MockupGenerationTest extends TestCase
             4018, // Black L
         ];
 
-        $parameters->addImageUrl(Placements::TYPE_FRONT, $this->getDummyImageUrl(600, 400));
-        $parameters->addImageUrl(Placements::TYPE_BACK, $this->getDummyImageUrl(600, 400));
+        // Positions for square image centered vertically, fits print file width
+        $position = new MockupPositionItem;
+        $position->areaWidth = 1800;
+        $position->areaHeight = 2400;
+        $position->width = 1800;
+        $position->height = 1800;
+        $position->top = 300;
+        $position->left = 0;
+
+        $dummyImage = $this->getDummyImageUrl(500, 500);
+
+        $parameters->addImageUrl(Placements::TYPE_FRONT, $dummyImage, $position);
+        $parameters->addImageUrl(Placements::TYPE_BACK, $dummyImage, $position);
 
         $result = $this->generator->createGenerationTaskAndWaitForResult($parameters)->mockupList;
 
