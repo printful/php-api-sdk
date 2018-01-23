@@ -54,12 +54,12 @@ class MockupPositionItem
         }
 
         return [
-            'area_width' => (int)$this->areaWidth,
-            'area_height' => (int)$this->areaHeight,
-            'width' => (int)$this->width,
-            'height' => (int)$this->height,
-            'top' => (int)$this->top,
-            'left' => (int)$this->left,
+            'area_width' => (float)$this->areaWidth,
+            'area_height' => (float)$this->areaHeight,
+            'width' => (float)$this->width,
+            'height' => (float)$this->height,
+            'top' => (float)$this->top,
+            'left' => (float)$this->left,
         ];
     }
 }

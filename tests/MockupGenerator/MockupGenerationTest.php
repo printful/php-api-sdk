@@ -180,12 +180,12 @@ class MockupGenerationTest extends TestCase
         $position = new MockupPositionItem;
         $position->areaWidth = 520;
         $position->areaHeight = 202;
-        $position->width = 140;
-        $position->height = 63;
-        $position->top = 77;
-        $position->left = 43;
+        $position->width = 70;
+        $position->height = 70;
+        $position->left = 225;
+        $position->top = 66;
 
-        $imageUrl = $this->getDummyImageUrl(280, 126);
+        $imageUrl = $this->getDummyImageUrl(700, 700);
 
         $parameters->addImageUrl(Placements::TYPE_DEFAULT, $imageUrl, $position);
 
