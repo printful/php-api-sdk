@@ -11,4 +11,4 @@ API endpoint documentation can be found here: https://www.printful.com/docs
 
 Using composer, run `composer require printful/php-api-sdk`
 
-Check out example directory for more specific usage examples
+Check out **example** and **test** directories for more specific usage examples.
