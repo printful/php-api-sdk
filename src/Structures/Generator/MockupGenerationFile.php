@@ -18,4 +18,10 @@ class MockupGenerationFile
      * @var string
      */
     public $imageUrl;
+
+    /**
+     * Optional positions for generation
+     * @var MockupPositionItem
+     */
+    public $position;
 }

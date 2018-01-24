@@ -7,8 +7,6 @@ namespace Printful;
 use Printful\Structures\Generator\GenerationResultItem;
 use Printful\Structures\Generator\MockupGenerationFile;
 use Printful\Structures\Generator\MockupGenerationParameters;
-use Printful\Structures\Generator\MockupItem;
-use Printful\Structures\Generator\MockupList;
 use Printful\Structures\Generator\PrintfileItem;
 use Printful\Structures\Generator\ProductPrintfiles;
 use Printful\Structures\Generator\Templates\PlacementConflictItem;
@@ -152,45 +150,22 @@ class PrintfulMockupGenerator
     }
 
     /**
-     * Generate mockup images for given Printful product and variants.
-     * This request can take up to multiple seconds!
-     *
-     * @param MockupGenerationParameters $parameters
-     * @return MockupList
-     * @throws Exceptions\PrintfulException
-     * @deprecated This function is deprecated and will be removed on 2017-11-01. Use createGenerationTask/getGenerationTask or createGenerationTaskAndWaitForResult.
-     *
-     * @see https://www.printful.com/docs/generator
-     * @see \Printful\PrintfulMockupGenerator::createGenerationTask
-     * @see \Printful\PrintfulMockupGenerator::getGenerationTask
-     * @see \Printful\PrintfulMockupGenerator::createGenerationTaskAndWaitForResult
-     */
-    public function generateMockups(MockupGenerationParameters $parameters)
-    {
-        $data = $this->parametersToArray($parameters);
-
-        $response = $this->printfulClient->post('/mockup-generator/generate/' . $parameters->productId, $data);
-
-        $mockupList = new MockupList;
-
-        $mockupList->mockups = array_map(function (array $rawMockup) {
-            return MockupItem::fromArray($rawMockup);
-        }, $response['mockups']);
-
-        return $mockupList;
-    }
-
-    /**
      * @param MockupGenerationParameters $parameters
      * @return array
      */
     private function parametersToArray(MockupGenerationParameters $parameters)
     {
         $files = array_map(function (MockupGenerationFile $file) {
-            return [
+            $re = [
                 'placement' => $file->placement,
                 'image_url' => $file->imageUrl,
             ];
+
+            if ($file->position) {
+                $re['position'] = $file->position->toArray();
+            }
+
+            return $re;
         }, $parameters->getFiles());
 
         $data = [

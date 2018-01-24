@@ -6,6 +6,7 @@ namespace Printful\Tests\MockupGenerator;
 
 use Printful\PrintfulMockupGenerator;
 use Printful\Structures\Generator\MockupGenerationParameters;
+use Printful\Structures\Generator\MockupPositionItem;
 use Printful\Structures\Placements;
 use Printful\Tests\TestCase;
 
@@ -20,7 +21,7 @@ class MockupGenerationTest extends TestCase
         $this->generator = new PrintfulMockupGenerator($this->api);
     }
 
-    public function testGeneratePosterMockups()
+    public function testGeneratePostersWithPositions()
     {
         $parameters = new MockupGenerationParameters;
         $parameters->productId = 1; // Poster
@@ -29,7 +30,20 @@ class MockupGenerationTest extends TestCase
             2, // 24x36
         ];
 
-        $parameters->addImageUrl(Placements::TYPE_DEFAULT, 'https://dummyimage.com/600x400/000/fff');
+        // Pre-set image positions that fill the whole area of mockup (same side ratio as poster size)
+        $border = 40; // We will pad the image withing the area, so we can see a white border
+        $position = new MockupPositionItem;
+        $position->areaWidth = 720;
+        $position->areaHeight = 960;
+        $position->width = $position->areaWidth - $border * 2;
+        $position->height = $position->areaHeight - $border * 2;
+        $position->top = $border;
+        $position->left = $border;
+
+        // Image URL which is the same ratio as posters
+        $imageUrl = $this->getDummyImageUrl(720, 960);
+
+        $parameters->addImageUrl(Placements::TYPE_DEFAULT, $imageUrl, $position);
 
         $result = $this->generator->createGenerationTaskAndWaitForResult($parameters)->mockupList;
 
@@ -37,6 +51,22 @@ class MockupGenerationTest extends TestCase
         self::assertCount(2, $result->mockups, 'Two mockups are generated');
         self::assertCount(1, $result->getVariantMockups(1), 'Variant 1 mockup exists');
         self::assertCount(1, $result->getVariantMockups(2), 'Variant 2 mockup exists');
+    }
+
+    public function testGenerateSquarePosterWithoutPositions()
+    {
+        $parameters = new MockupGenerationParameters;
+        $parameters->productId = 1; // Poster
+        $parameters->variantIds = [
+            6239, // 10x10
+        ];
+
+        // No positions are given, so product image will be stretched over the poster (will cover whole area)
+        $parameters->addImageUrl(Placements::TYPE_DEFAULT, $this->getDummyImageUrl(700, 700));
+
+        $result = $this->generator->createGenerationTaskAndWaitForResult($parameters, 180, 1)->mockupList;
+
+        self::assertCount(1, $result->mockups, 'One mockup is generated');
     }
 
     public function testInvalidPlacement()
@@ -66,8 +96,19 @@ class MockupGenerationTest extends TestCase
             4018, // Black L
         ];
 
-        $parameters->addImageUrl(Placements::TYPE_FRONT, 'https://dummyimage.com/600x400/000/fff');
-        $parameters->addImageUrl(Placements::TYPE_BACK, 'https://dummyimage.com/600x400/000/fff');
+        // Positions for square image centered vertically, fits print file width
+        $position = new MockupPositionItem;
+        $position->areaWidth = 1800;
+        $position->areaHeight = 2400;
+        $position->width = 1800;
+        $position->height = 1800;
+        $position->top = 300;
+        $position->left = 0;
+
+        $dummyImage = $this->getDummyImageUrl(500, 500);
+
+        $parameters->addImageUrl(Placements::TYPE_FRONT, $dummyImage, $position);
+        $parameters->addImageUrl(Placements::TYPE_BACK, $dummyImage, $position);
 
         $result = $this->generator->createGenerationTaskAndWaitForResult($parameters)->mockupList;
 
@@ -92,10 +133,10 @@ class MockupGenerationTest extends TestCase
             7853, // White
         ];
 
-        $parameters->addImageUrl(Placements::TYPE_EMBROIDERY_FRONT, 'https://dummyimage.com/600x400/000/fff');
-        $parameters->addImageUrl(Placements::TYPE_EMBROIDERY_LEFT, 'https://dummyimage.com/600x400/000/fff');
-        $parameters->addImageUrl(Placements::TYPE_EMBROIDERY_RIGHT, 'https://dummyimage.com/600x400/000/fff');
-        $parameters->addImageUrl(Placements::TYPE_EMBROIDERY_BACK, 'https://dummyimage.com/600x400/000/fff');
+        $parameters->addImageUrl(Placements::TYPE_EMBROIDERY_FRONT, $this->getDummyImageUrl(600, 400));
+        $parameters->addImageUrl(Placements::TYPE_EMBROIDERY_LEFT, $this->getDummyImageUrl(600, 400));
+        $parameters->addImageUrl(Placements::TYPE_EMBROIDERY_RIGHT, $this->getDummyImageUrl(600, 400));
+        $parameters->addImageUrl(Placements::TYPE_EMBROIDERY_BACK, $this->getDummyImageUrl(600, 400));
 
         $result = $this->generator->createGenerationTaskAndWaitForResult($parameters)->mockupList;
 
@@ -123,7 +164,7 @@ class MockupGenerationTest extends TestCase
         $parameters->options = ['Back'];
         $parameters->optionGroups = ['High-heels'];
 
-        $parameters->addImageUrl(Placements::TYPE_DEFAULT, 'https://dummyimage.com/600x400/000/fff');
+        $parameters->addImageUrl(Placements::TYPE_DEFAULT, $this->getDummyImageUrl(600, 400));
 
         $result = $this->generator->createGenerationTaskAndWaitForResult($parameters)->mockupList;
 
@@ -136,7 +177,17 @@ class MockupGenerationTest extends TestCase
         $parameters->productId = 19; // White Glossy Mug
         $parameters->variantIds = [1320];  // 11oz
 
-        $parameters->addImageUrl(Placements::TYPE_DEFAULT, 'https://dummyimage.com/600x400/000/fff');
+        $position = new MockupPositionItem;
+        $position->areaWidth = 520;
+        $position->areaHeight = 202;
+        $position->width = 70;
+        $position->height = 70;
+        $position->left = 225;
+        $position->top = 66;
+
+        $imageUrl = $this->getDummyImageUrl(700, 700);
+
+        $parameters->addImageUrl(Placements::TYPE_DEFAULT, $imageUrl, $position);
 
         $result = $this->generator->createGenerationTaskAndWaitForResult($parameters)->mockupList;
 
