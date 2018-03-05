@@ -241,4 +241,27 @@ class MockupGenerationTest extends TestCase
         self::assertCount(1, $mockups, 'One mockup exists');
         self::assertCount(3, $mockups[0]->extraMockups, 'Three extra mockups exist (back, left, right');
     }
+
+    public function testGenerateSleeveMockups()
+    {
+        $parameters = new MockupGenerationParameters;
+        $parameters->productId = 71; // 3001 Unisex Short Sleeve Jersey T-Shirt with Tear Away Label
+        $parameters->variantIds = [
+            4011, // White S
+        ];
+
+        $parameters->addImageUrl(Placements::TYPE_SLEEVE_LEFT, 'https://dummyimage.com/600x525/f00/fff');
+        $parameters->addImageUrl(Placements::TYPE_SLEEVE_RIGHT, 'https://dummyimage.com/600x525/00f/fff');
+
+        $result = $this->generator->createGenerationTaskAndWaitForResult($parameters)->mockupList;
+
+        self::assertCount(2, $result->mockups, '2 mockups with sleeves are generated');
+        self::assertCount(2, $result->getVariantMockups(4011), 'One variant has 2 sleeve placements');
+
+        self::assertCount(1, $result->getVariantMockups(4011, Placements::TYPE_SLEEVE_LEFT),
+            'Variant has mockup for front placement');
+
+        self::assertCount(1, $result->getVariantMockups(4011, Placements::TYPE_SLEEVE_RIGHT),
+            'Variant has mockup for back placement');
+    }
 }
