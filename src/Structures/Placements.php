@@ -62,12 +62,12 @@ class Placements
     const TYPE_BELT_BACK = 'belt_back';
 
     /**
-     * Left sleeve (Cut & Sew shirts)
+     * Left sleeve (Cut & Sew, DTG shirts)
      */
     const TYPE_SLEEVE_LEFT = 'sleeve_left';
 
     /**
-     * Right sleeve (Cut & Sew shirts)
+     * Right sleeve (Cut & Sew, DTG shirts)
      */
     const TYPE_SLEEVE_RIGHT = 'sleeve_right';
 
