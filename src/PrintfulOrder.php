@@ -132,7 +132,7 @@ class PrintfulOrder
      * @param OrderCreationParameters $parameters
      * @return array
      */
-    private function getRequestBodyFromParams(OrderCreationParameters $parameters)
+    protected function getRequestBodyFromParams(OrderCreationParameters $parameters)
     {
         $request = [
             'external_id' => $parameters->externalId,
