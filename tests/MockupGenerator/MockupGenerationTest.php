@@ -259,9 +259,26 @@ class MockupGenerationTest extends TestCase
         self::assertCount(2, $result->getVariantMockups(4011), 'One variant has 2 sleeve placements');
 
         self::assertCount(1, $result->getVariantMockups(4011, Placements::TYPE_SLEEVE_LEFT),
-            'Variant has mockup for front placement');
+            'Variant has mockup for left sleeve placement');
 
         self::assertCount(1, $result->getVariantMockups(4011, Placements::TYPE_SLEEVE_RIGHT),
-            'Variant has mockup for back placement');
+            'Variant has mockup for right sleeve placement');
+    }
+
+    public function testGenerateEmbroideryApparelMockups()
+    {
+        $parameters = new MockupGenerationParameters;
+        $parameters->productId = 287; // 3800 Embroidered Polo Shirt
+        $parameters->variantIds = [
+            9114, // White S
+        ];
+
+        $parameters->addImageUrl(Placements::TYPE_EMBROIDERY_CHEST_LEFT, 'https://dummyimage.com/1200x1200/f00/fff');
+
+        $result = $this->generator->createGenerationTaskAndWaitForResult($parameters)->mockupList;
+        $mockups = $result->getVariantMockups(9114);
+
+        self::assertCount(1, $mockups, 'One on model mockup exists');
+        self::assertCount(2, $mockups[0]->extraMockups, 'Two extra mockups exist (flat, wrinkled');
     }
 }

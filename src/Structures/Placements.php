@@ -32,6 +32,11 @@ class Placements
     const TYPE_EMBROIDERY_BACK = 'embroidery_back';
 
     /**
+     * Left chest placement for apparel embroidery
+     */
+    const TYPE_EMBROIDERY_CHEST_LEFT = 'embroidery_chest_left';
+
+    /**
      * Front for DTG products, double-sided totes, etc
      */
     const TYPE_FRONT = 'front';
