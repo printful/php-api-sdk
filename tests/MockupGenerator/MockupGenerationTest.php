@@ -279,6 +279,24 @@ class MockupGenerationTest extends TestCase
         $mockups = $result->getVariantMockups(9114);
 
         self::assertCount(1, $mockups, 'One on model mockup exists');
-        self::assertCount(2, $mockups[0]->extraMockups, 'Two extra mockups exist (flat, wrinkled');
+        self::assertCount(3, $mockups[0]->extraMockups, 'Two extra mockups exist (flat, wrinkled');
+    }
+
+    public function testGenerateBikiniMockups()
+    {
+        $parameters = new MockupGenerationParameters;
+        $parameters->productId = 273; // Two-piece bikini
+        $parameters->variantIds = [
+            9021,
+        ];
+
+        $parameters->addImageUrl(Placements::TYPE_TOP, 'https://dummyimage.com/1200x1200/f00/fff');
+        $parameters->addImageUrl(Placements::TYPE_FRONT, 'https://dummyimage.com/1200x1200/0f0/fff');
+        $parameters->addImageUrl(Placements::TYPE_BACK, 'https://dummyimage.com/1200x1200/00f/fff');
+
+        $result = $this->generator->createGenerationTaskAndWaitForResult($parameters)->mockupList;
+        $mockups = $result->getVariantMockups(9021);
+
+        self::assertCount(3, $mockups, 'Top, front, back mockups exist');
     }
 }

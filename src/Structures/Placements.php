@@ -82,6 +82,11 @@ class Placements
     const TYPE_MOCKUP = 'mockup';
 
     /**
+     * Bikini top, backpack etc.
+     */
+    const TYPE_TOP = 'top';
+
+    /**
      * @var array
      */
     public static $types = [
@@ -135,6 +140,10 @@ class Placements
         ],
         self::TYPE_BELT_BACK => [
             'title' => 'Back waist',
+            'conflictingTypes' => [],
+        ],
+        self::TYPE_TOP => [
+            'title' => 'Top',
             'conflictingTypes' => [],
         ],
     ];
