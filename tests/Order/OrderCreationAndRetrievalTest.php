@@ -3,6 +3,7 @@
 
 use Printful\PrintfulOrder;
 use Printful\Structures\Order\Order;
+use Printful\Structures\Order\OrderCostGroup;
 use Printful\Structures\Order\OrderCostsItem;
 use Printful\Structures\Order\OrderCreationParameters;
 use Printful\Structures\Order\OrderItemCreationParameters;
@@ -105,8 +106,8 @@ class OrderCreationAndRetrievalTest extends TestCase
 
         $estimate = $this->printfulOrder->estimateCosts($params);
 
-        self::assertArrayHasKey('costs', $estimate, 'Costs estimate retrieved');
-        self::assertInstanceOf(OrderCostsItem::class, $estimate['costs'], 'Cost estimate correct type');
+        self::assertInstanceOf(OrderCostGroup::class, $estimate, 'Costs estimate retrieved');
+        self::assertInstanceOf(OrderCostsItem::class, $estimate->printfulCosts, 'Cost estimate correct type');
     }
 
     /**
