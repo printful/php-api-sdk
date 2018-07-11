@@ -3,6 +3,8 @@
 
 use Printful\PrintfulOrder;
 use Printful\Structures\Order\Order;
+use Printful\Structures\Order\OrderCostGroup;
+use Printful\Structures\Order\OrderCostsItem;
 use Printful\Structures\Order\OrderCreationParameters;
 use Printful\Structures\Order\OrderItemCreationParameters;
 use Printful\Structures\Order\OrderItemFile;
@@ -94,6 +96,18 @@ class OrderCreationAndRetrievalTest extends TestCase
     {
         $orderList = $this->printfulOrder->getList();
         self::assertInstanceOf(OrderList::class, $orderList, 'Order List retrieved');
+    }
+
+    public function testOrderCostsCanBeEstimated()
+    {
+        $externalId = uniqid();
+        $params = $this->getTestOrderParams();
+        $params->externalId = $externalId;
+
+        $estimate = $this->printfulOrder->estimateCosts($params);
+
+        self::assertInstanceOf(OrderCostGroup::class, $estimate, 'Costs estimate retrieved');
+        self::assertInstanceOf(OrderCostsItem::class, $estimate->printfulCosts, 'Cost estimate correct type');
     }
 
     /**
