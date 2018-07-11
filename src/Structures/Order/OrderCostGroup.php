@@ -17,8 +17,9 @@ class OrderCostGroup
     public static function fromArray(array $raw)
     {
         $orderCosts = new self;
-        $orderCosts->printfulCosts =  $raw['costs'] ? OrderCostsItem::fromArray($raw['costs']) : null;
-        $orderCosts->printfulCosts =  $raw['retail_costs'] ? OrderCostsItem::fromArray($raw['retail_costs']) : null;
+
+        $orderCosts->printfulCosts = !empty($raw['costs']) ? OrderCostsItem::fromArray($raw['costs']) : null;
+        $orderCosts->printfulCosts = !empty($raw['retail_costs']) ? OrderCostsItem::fromArray($raw['retail_costs']) : null;
 
         return $orderCosts;
     }
