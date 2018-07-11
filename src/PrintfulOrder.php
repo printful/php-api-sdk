@@ -3,6 +3,7 @@
 namespace Printful;
 
 use Printful\Structures\Order\Order;
+use Printful\Structures\Order\OrderCostsItem;
 use Printful\Structures\Order\OrderCreationParameters;
 use Printful\Structures\Order\OrderItemCreationParameters;
 use Printful\Structures\Order\OrderList;
@@ -124,6 +125,24 @@ class PrintfulOrder
         $total = $this->printfulClient->getItemCount();
 
         return new OrderList($rawOrders, $total, $offset);
+    }
+
+    /**
+     * @param OrderCreationParameters $parameters
+     * @return array
+     * @throws Exceptions\PrintfulApiException
+     * @throws Exceptions\PrintfulException
+     */
+    public function estimateCosts(OrderCreationParameters $parameters)
+    {
+        $request = $this->getRequestBodyFromParams($parameters);
+
+        $raw = $this->printfulClient->post('orders/estimate-costs', $request);
+
+        return [
+            'costs' => $raw['costs'] ? OrderCostsItem::fromArray($raw['costs']) : null,
+            'retail_costs' => $raw['retail_costs'] ? OrderCostsItem::fromArray($raw['retail_costs']): null,
+        ];
     }
 
     /**
