@@ -37,6 +37,11 @@ class Placements
     const TYPE_EMBROIDERY_CHEST_LEFT = 'embroidery_chest_left';
 
     /**
+     * Front placement for apparel embroidery
+     */
+    const TYPE_EMBROIDERY_APPAREL_FRONT = 'embroidery_apparel_front';
+
+    /**
      * Front for DTG products, double-sided totes, etc
      */
     const TYPE_FRONT = 'front';
@@ -116,6 +121,14 @@ class Placements
         ],
         self::TYPE_EMBROIDERY_BACK => [
             'title' => 'Back',
+            'conflictingTypes' => [],
+        ],
+        self::TYPE_EMBROIDERY_CHEST_LEFT => [
+            'title' => 'Left chest',
+            'conflictingTypes' => [],
+        ],
+        self::TYPE_EMBROIDERY_APPAREL_FRONT => [
+            'title' => 'Front',
             'conflictingTypes' => [],
         ],
         self::TYPE_LABEL_INSIDE => [
