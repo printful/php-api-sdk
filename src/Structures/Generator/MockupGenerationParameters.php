@@ -50,6 +50,17 @@ class MockupGenerationParameters
     public $optionGroups = [];
 
     /**
+     * Key-value list of product options.
+     * For example, ['stitch_color' => 'white'].
+     * Depends on the product, available option list can be found here:
+     * @see https://www.printful.com/docs/products#actionGet
+     *
+     * @var array
+     */
+    public $productOptions = [];
+
+
+    /**
      * Add a file for a specific placement
      *
      * Available placements are defined in Placement class

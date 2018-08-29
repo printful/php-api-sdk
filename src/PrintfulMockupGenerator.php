@@ -173,6 +173,7 @@ class PrintfulMockupGenerator
             'files' => $files,
             'format' => $parameters->format,
             'option_groups' => $parameters->optionGroups,
+            'product_options' => $parameters->productOptions,
             'options' => $parameters->options,
         ];
 
