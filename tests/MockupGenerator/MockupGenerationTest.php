@@ -133,6 +133,17 @@ class MockupGenerationTest extends TestCase
             7853, // White
         ];
 
+        $parameters->productOptions = [
+            'thread_colors' => [
+                '#CC3333',
+                '#A67843',
+            ],
+            'thread_colors_left' => [
+                '#96A1A8',
+                '#A67843',
+            ],
+        ];
+
         $parameters->addImageUrl(Placements::TYPE_EMBROIDERY_FRONT, $this->getDummyImageUrl(600, 400));
         $parameters->addImageUrl(Placements::TYPE_EMBROIDERY_LEFT, $this->getDummyImageUrl(600, 400));
         $parameters->addImageUrl(Placements::TYPE_EMBROIDERY_RIGHT, $this->getDummyImageUrl(600, 400));
@@ -271,6 +282,10 @@ class MockupGenerationTest extends TestCase
         $parameters->productId = 287; // 3800 Embroidered Polo Shirt
         $parameters->variantIds = [
             9114, // White S
+        ];
+
+        $parameters->productOptions = [
+            'thread_colors_chest_left' => ['#FFCC00'],
         ];
 
         $parameters->addImageUrl(Placements::TYPE_EMBROIDERY_CHEST_LEFT, 'https://dummyimage.com/1200x1200/f00/fff');
