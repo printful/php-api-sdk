@@ -18,6 +18,12 @@ class WebhookItem extends BaseItem
     const TYPE_PRODUCT_SYNCED = 'product_synced';
     /** Is called when stock is updated for some of product's variants. */
     const TYPE_STOCK_UPDATED = 'stock_updated';
+    /** Is called when order is put on hold. */
+    const TYPE_ORDER_PUT_HOLD = 'order_put_hold';
+    /** Is called when order is removed from hold. */
+    const TYPE_ORDER_REMOVE_HOLD = 'order_remove_hold';
+    /** Is called when a shipment is processed as returned to the fulfillment facility. */
+    const TYPE_PACKAGE_RETURNED = 'package_returned';
 
     /**
      * @var string
