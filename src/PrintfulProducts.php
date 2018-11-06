@@ -158,7 +158,7 @@ class PrintfulProducts
     /**
      * Preforms PUT SyncVariant request
      *
-     * @param $variantId
+     * @param string $variantId
      * @param SyncVariantRequest $request
      * @return SyncVariantResponse
      * @throws Exceptions\PrintfulApiException
