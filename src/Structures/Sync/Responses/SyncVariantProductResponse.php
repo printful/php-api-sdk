@@ -1,8 +1,8 @@
 <?php
 
-namespace Printful\Structures\Sync;
+namespace Printful\Structures\Sync\Responses;
 
-class SyncVariantProduct
+class SyncVariantProductResponse
 {
     /** @var int */
     public $variantId;
@@ -17,14 +17,14 @@ class SyncVariantProduct
     public $name;
 
     /**
-     * Creates SyncVariantProduct from array in response
+     * Creates SyncVariantProductResponse from array in response
      *
      * @param array $array
-     * @return SyncVariantProduct
+     * @return SyncVariantProductResponse
      */
     public static function fromArray(array $array)
     {
-        $syncVariantProduct = new SyncVariantProduct;
+        $syncVariantProduct = new SyncVariantProductResponse;
 
         $syncVariantProduct->variantId = (int)$array['variant_id'] ?: null;
         $syncVariantProduct->productId = (int)$array['product_id'] ?: null;

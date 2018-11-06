@@ -1,10 +1,10 @@
 <?php
 
-namespace Printful\Structures\Sync;
+namespace Printful\Structures\Sync\Responses;
 
 use Printful\Structures\BaseItem;
 
-class SyncVariant extends BaseItem
+class SyncVariantResponse extends BaseItem
 {
     /** @var int */
     public $id;
@@ -30,24 +30,24 @@ class SyncVariant extends BaseItem
     /** @var string */
     public $currency;
 
-    /** @var SyncVariantProduct */
+    /** @var SyncVariantProductResponse */
     public $product;
 
-    /** @var SyncVariantFile[] */
+    /** @var SyncVariantFileResponse[] */
     public $files = [];
 
-    /** @var SyncVariantOption[] */
+    /** @var SyncVariantOptionResponse[] */
     public $options = [];
 
     /**
-     * Creates SyncVariant from array
+     * Creates SyncVariantResponse from array
      *
      * @param array $array
-     * @return SyncVariant
+     * @return SyncVariantResponse
      */
     public static function fromArray(array $array)
     {
-        $variant = new SyncVariant;
+        $variant = new SyncVariantResponse;
 
         $variant->id = (int)$array['id'];
         $variant->externalId = (string)$array['existing_id'];
@@ -57,16 +57,16 @@ class SyncVariant extends BaseItem
         $variant->variantId = (int)$array['variant_id'];
         $variant->retailPrice = (float)$array['retail_price'];
         $variant->currency = (string)$array['currency'];
-        $variant->product = SyncVariantProduct::fromArray($array['product']);
+        $variant->product = SyncVariantProductResponse::fromArray($array['product']);
 
         $variantFiles = (array)$array['files'] ?: [];
         foreach ($variantFiles as $file) {
-            $variant->files[] = SyncVariantFile::fromArray($file);
+            $variant->files[] = SyncVariantFileResponse::fromArray($file);
         }
 
         $variantOptions = (array)$array['options'] ?: [];
         foreach ($variantOptions as $option) {
-            $variant->options[] = SyncVariantOption::fromArray($option);
+            $variant->options[] = SyncVariantOptionResponse::fromArray($option);
         }
 
         return $variant;

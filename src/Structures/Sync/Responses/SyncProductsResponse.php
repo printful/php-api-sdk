@@ -1,13 +1,13 @@
 <?php
 
-namespace Printful\Structures\Sync;
+namespace Printful\Structures\Sync\Responses;
 
 class SyncProductsResponse
 {
-    /** @var SyncProduct[] */
+    /** @var SyncProductResponse[] */
     public $result = [];
 
-    /** @var SyncProductsPaging */
+    /** @var SyncProductsPagingResponse */
     public $paging;
 
     /**
@@ -22,11 +22,11 @@ class SyncProductsResponse
 
         $result = $array['result'] ?: [];
         foreach ($result as $item) {
-            $response->result[] = SyncProduct::fromArray($item);
+            $response->result[] = SyncProductResponse::fromArray($item);
         }
 
         $pagingArray = $array['paging'] ?: [];
-        $response->paging = SyncProductsPaging::fromArray($pagingArray);
+        $response->paging = SyncProductsPagingResponse::fromArray($pagingArray);
 
         return $response;
     }

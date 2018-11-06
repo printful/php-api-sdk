@@ -1,8 +1,8 @@
 <?php
 
-namespace Printful\Structures\Sync;
+namespace Printful\Structures\Sync\Responses;
 
-class SyncVariantFile
+class SyncVariantFileResponse
 {
     /** @var int */
     public $id;
@@ -50,14 +50,14 @@ class SyncVariantFile
     public $visible;
 
     /**
-     * Creates SyncVariantFile from array
+     * Creates SyncVariantFileResponse from array
      *
      * @param array $array
-     * @return SyncVariantFile
+     * @return SyncVariantFileResponse
      */
     public static function fromArray(array $array)
     {
-        $file = new SyncVariantFile;
+        $file = new SyncVariantFileResponse;
 
         $file->id = (int)$array['id'];
         $file->type = (string)$array['type'];

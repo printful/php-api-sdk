@@ -2,9 +2,11 @@
 
 namespace Printful;
 
-use Printful\Structures\Sync\SyncProductResponse;
-use Printful\Structures\Sync\SyncProductsResponse;
-use Printful\Structures\Sync\SyncVariant;
+use Printful\Factories\Sync\ParameterFactory;
+use Printful\Structures\Sync\Responses\SyncProductResponse;
+use Printful\Structures\Sync\Responses\SyncProductsResponse;
+use Printful\Structures\Sync\Responses\SyncVariantResponse;
+use Printful\Structures\Sync\SyncProductCreationParameters;
 
 /**
  * Class PrintfulProducts
@@ -68,18 +70,37 @@ class PrintfulProducts
     }
 
     /**
-     * Preforms GET SyncVariant request
+     * Preforms GET SyncVariantResponse request
      *
      * @param $id
-     * @return SyncVariant
+     * @return SyncVariantResponse
      * @throws Exceptions\PrintfulApiException
      * @throws Exceptions\PrintfulException
      */
     public function getVariant($id)
     {
         $response = $this->printfulClient->get(PrintfulProducts::ENDPOINT_VARIANTS . '/' . $id);
-        $result = SyncVariant::fromArray($response);
+        $result = SyncVariantResponse::fromArray($response);
 
         return $result;
+    }
+
+    /**
+     * Preforms POST SyncProduct request
+     *
+     * @param SyncProductCreationParameters $request
+     * @return SyncProductResponse
+     * @throws Exceptions\PrintfulApiException
+     * @throws Exceptions\PrintfulException
+     */
+    public function createProduct(SyncProductCreationParameters $request)
+    {
+        $params = ParameterFactory::buildSyncProductPostParams($request);
+        $response = $this->printfulClient->post(PrintfulProducts::ENDPOINT_PRODUCTS, $params);
+
+        $result = $response['result'];
+        $syncProduct = SyncProductResponse::fromArray($result);
+
+        return $syncProduct;
     }
 }

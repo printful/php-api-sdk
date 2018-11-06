@@ -1,13 +1,15 @@
 <?php
 
-namespace Printful\Structures\Sync;
+namespace Printful\Structures\Sync\Responses;
 
-class SyncProductsPaging
+class SyncProductsPagingResponse
 {
     /** @var int */
     public $offset = 0;
+
     /** @var int */
     public $limit = 20;
+
     /** @var int */
     public $total = 0;
 
@@ -15,11 +17,11 @@ class SyncProductsPaging
      * Creates SyncProductPaging from array
      *
      * @param array $array
-     * @return SyncProductsPaging
+     * @return SyncProductsPagingResponse
      */
     public static function fromArray(array $array)
     {
-        $paging = new SyncProductsPaging;
+        $paging = new SyncProductsPagingResponse;
 
         $paging->total =(int)$array['total'] ?: 0;
         $paging->limit =(int)$array['limit'] ?: 0;

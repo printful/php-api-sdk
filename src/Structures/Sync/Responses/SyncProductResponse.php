@@ -1,8 +1,8 @@
 <?php
 
-namespace Printful\Structures\Sync;
+namespace Printful\Structures\Sync\Responses;
 
-class SyncProduct
+class SyncProductResponse
 {
     /** @var int */
     public $id;
@@ -23,11 +23,11 @@ class SyncProduct
      * Creates SyncProduct from array
      *
      * @param array $array
-     * @return SyncProduct
+     * @return SyncProductResponse
      */
     public static function fromArray(array $array)
     {
-        $syncProduct = new SyncProduct;
+        $syncProduct = new SyncProductResponse;
 
         $syncProduct->id = (int)$array['id'];
         $syncProduct->externalId = (string)$array['external_id'];

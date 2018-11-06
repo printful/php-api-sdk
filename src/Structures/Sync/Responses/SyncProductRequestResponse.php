@@ -1,31 +1,31 @@
 <?php
 
-namespace Printful\Structures\Sync;
+namespace Printful\Structures\Sync\Responses;
 
-class SyncProductResponse
+class SyncProductRequestResponse
 {
-    /** @var SyncProduct */
+    /** @var SyncProductResponse */
     public $syncProduct;
 
-    /** @var SyncVariant[] */
+    /** @var SyncVariantResponse[] */
     public $syncVariants = [];
 
     /**
      * Creates SyncProductResponse from array
      *
      * @param array $array
-     * @return SyncProductResponse
+     * @return SyncProductRequestResponse
      */
     public static function fromArray(array $array)
     {
-        $response = new SyncProductResponse;
+        $response = new SyncProductRequestResponse;
 
         $productArray = $array['sync_product'];
-        $response->syncProduct = SyncProduct::fromArray($productArray);
+        $response->syncProduct = SyncProductResponse::fromArray($productArray);
 
         $variantArray = $array['sync_variants'];
         foreach ($variantArray as $item){
-            $response->syncVariants[] = SyncVariant::fromArray($item);
+            $response->syncVariants[] = SyncVariantResponse::fromArray($item);
         }
 
         return $response;

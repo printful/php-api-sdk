@@ -1,8 +1,8 @@
 <?php
 
-namespace Printful\Structures\Sync;
+namespace Printful\Structures\Sync\Responses;
 
-class SyncVariantOption
+class SyncVariantOptionResponse
 {
     /** @var string */
     public $id;
@@ -11,14 +11,14 @@ class SyncVariantOption
     public $value;
 
     /**
-     * Creates SyncVariantOption from array
+     * Creates SyncVariantOptionResponse from array
      *
      * @param array $array
-     * @return SyncVariantOption
+     * @return SyncVariantOptionResponse
      */
     public static function fromArray(array $array)
     {
-        $option = new SyncVariantOption;
+        $option = new SyncVariantOptionResponse;
 
         $option->id = (string)$array['id'];
         $option->value = $array['value'];
