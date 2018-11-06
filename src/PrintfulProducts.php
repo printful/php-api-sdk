@@ -174,4 +174,30 @@ class PrintfulProducts
 
         return $syncVariant;
     }
+
+    /**
+     * Preforms DELETE SyncProduct request
+     *
+     * @param $productId
+     * @return mixed
+     * @throws Exceptions\PrintfulApiException
+     * @throws Exceptions\PrintfulException
+     */
+    public function deleteProduct($productId)
+    {
+        return $this->printfulClient->delete(PrintfulProducts::ENDPOINT_PRODUCTS . '/' . $productId);
+    }
+
+    /**
+     * Preforms DELETE SyncVariant request
+     *
+     * @param $variantId
+     * @return mixed
+     * @throws Exceptions\PrintfulApiException
+     * @throws Exceptions\PrintfulException
+     */
+    public function deleteVariant($variantId)
+    {
+        return $this->printfulClient->delete(PrintfulProducts::ENDPOINT_VARIANTS . '/' . $variantId);
+    }
 }
