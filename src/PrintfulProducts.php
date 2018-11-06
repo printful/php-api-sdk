@@ -104,9 +104,8 @@ class PrintfulProducts
     public function createProduct(SyncProductCreationParameters $request)
     {
         $params = ParameterFactory::buildSyncProductPostParams($request);
-        $response = $this->printfulClient->post(PrintfulProducts::ENDPOINT_PRODUCTS, $params);
+        $result = $this->printfulClient->post(PrintfulProducts::ENDPOINT_PRODUCTS, $params);
 
-        $result = $response['result'];
         $syncProduct = SyncProductResponse::fromArray($result);
 
         return $syncProduct;

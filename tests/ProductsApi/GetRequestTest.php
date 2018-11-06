@@ -1,27 +1,13 @@
 <?php
 
-namespace tests\ProductsApi;
+namespace Printful\Tests\ProductsApi;
 
-use Printful\PrintfulProducts;
 use Printful\Structures\Sync\Responses\SyncProductResponse;
 use Printful\Structures\Sync\Responses\SyncProductsPagingResponse;
 use Printful\Structures\Sync\Responses\SyncProductsResponse;
-use Printful\Tests\TestCase;
 
-class GetRequestTest extends TestCase
+class GetRequestTest extends ProductsApiTestBase
 {
-    /** @var PrintfulProducts */
-    private $apiEndpoint;
-
-    /**
-     * @throws \Exception
-     */
-    protected function setUp()
-    {
-        parent::setUp();
-        $this->apiEndpoint = new PrintfulProducts($this->api);
-    }
-
     /**
      * Tests Get SyncProduct list functionality
      *

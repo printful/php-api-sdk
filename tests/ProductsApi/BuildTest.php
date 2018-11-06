@@ -1,6 +1,6 @@
 <?php
 
-namespace tests\ProductsApi;
+namespace Printful\Tests\ProductsApi;
 
 use Printful\Factories\Sync\ParameterFactory;
 use Printful\Structures\Sync\Requests\SyncVariantRequestFile;
