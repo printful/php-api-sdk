@@ -5,9 +5,8 @@ namespace Printful\Tests\ProductsApi;
 use Printful\Factories\Sync\ParameterFactory;
 use Printful\Structures\Sync\Requests\SyncVariantRequestFile;
 use Printful\Structures\Sync\SyncProductCreationParameters;
-use Printful\Tests\TestCase;
 
-class BuildTest extends TestCase
+class BuildTest extends ProductsApiTestBase
 {
     /**
      * Tests SyncProductCreationParameters build from array
@@ -106,68 +105,4 @@ class BuildTest extends TestCase
        }
 
     }
-
-    /**
-     * Returns POST product data in array format
-     *
-     * @return array
-     */
-    private function getPostProductData()
-    {
-        return [
-            'sync_product' => [
-                'name' => 'Test name',
-                'thumbnail' => 'https://picsum.photos/200/300',
-            ],
-            'sync_variants' => [
-                [
-                    'retail_price' => 21.00,
-                    'variant_id' => 4011,
-                    'files' => [
-                        [
-                            'url' => 'https://picsum.photos/200/300',
-                        ],
-                        [
-                            'type' => 'back',
-                            'url' => 'https://picsum.photos/200/300',
-                        ],
-                    ],
-                    'options' => [
-                        [
-                            'id' => 'embroidery_type',
-                            'value' => 'flat',
-                        ],
-                        [
-                            'id' => 'thread_colors',
-                            'value' => '',
-                        ],
-                    ],
-                ],
-                [
-                    'retail_price' => 21,
-                    'variant_id' => 4012,
-                    'files' => [
-                        [
-                            'url' => 'https://picsum.photos/200/300',
-                        ],
-                        [
-                            'type' => 'back',
-                            'url' => 'https://picsum.photos/200/300',
-                        ],
-                    ],
-                    'options' => [
-                        [
-                            'id' => 'embroidery_type',
-                            'value' => 'flat',
-                        ],
-                        [
-                            'id' => 'thread_colors',
-                            'value' => '',
-                        ],
-                    ],
-                ],
-            ],
-        ];
-    }
-
 }
