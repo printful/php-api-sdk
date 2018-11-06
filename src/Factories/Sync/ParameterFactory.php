@@ -3,8 +3,8 @@
 namespace Printful\Factories\Sync;
 
 use Printful\Exceptions\PrintfulSdkException;
-use Printful\Factories\Sync\Requests\SyncVariantRequestFile;
-use Printful\Factories\Sync\Requests\SyncVariantRequestOption;
+use Printful\Structures\Sync\Requests\SyncVariantRequestFile;
+use Printful\Structures\Sync\Requests\SyncVariantRequestOption;
 use Printful\Structures\Sync\SyncProductCreationParameters;
 use Printful\Structures\Sync\Requests\SyncVariantRequest;
 
@@ -115,11 +115,11 @@ class ParameterFactory
             }
 
             if ($file->id) {
-                $filesParams['id'] = $file->id;
+                $fileParam['id'] = $file->id;
             }
 
             if ($file->url) {
-                $filesParams['url'] = $file->url;
+                $fileParam['url'] = $file->url;
             }
 
             $key = SyncVariantRequestFile::DEFAULT_TYPE;

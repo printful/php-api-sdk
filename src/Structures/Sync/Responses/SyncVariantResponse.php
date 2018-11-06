@@ -50,7 +50,7 @@ class SyncVariantResponse extends BaseItem
         $variant = new SyncVariantResponse;
 
         $variant->id = (int)$array['id'];
-        $variant->externalId = (string)$array['existing_id'];
+        $variant->externalId = (string)$array['external_id'];
         $variant->syncProductId = (string)$array['sync_product_id'];
         $variant->name = (string)$array['name'];
         $variant->synced = (bool)$array['synced'];

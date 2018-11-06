@@ -1,6 +1,6 @@
 <?php
 
-namespace Printful\Factories\Sync\Requests;
+namespace Printful\Structures\Sync\Requests;
 
 class SyncVariantRequestOption
 {

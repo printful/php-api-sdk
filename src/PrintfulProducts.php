@@ -3,6 +3,7 @@
 namespace Printful;
 
 use Printful\Factories\Sync\ParameterFactory;
+use Printful\Structures\Sync\Responses\SyncProductRequestResponse;
 use Printful\Structures\Sync\Responses\SyncProductResponse;
 use Printful\Structures\Sync\Responses\SyncProductsResponse;
 use Printful\Structures\Sync\Responses\SyncVariantResponse;
@@ -48,7 +49,14 @@ class PrintfulProducts
         ];
 
         $response = $this->printfulClient->get(PrintfulProducts::ENDPOINT_PRODUCTS, $requestData);
-        $result = SyncProductsResponse::fromArray($response);
+        $lastResponse = $this->printfulClient->getLastResponse();
+
+        // as paging block is omitted in $response;
+        $responseArray = [
+          'result' => $response,
+          'paging' => $lastResponse['paging'],
+        ];
+        $result = SyncProductsResponse::fromArray($responseArray);
 
         return $result;
     }
@@ -57,14 +65,14 @@ class PrintfulProducts
      * Preforms GET SyncProduct request
      *
      * @param $id
-     * @return SyncProductResponse
+     * @return SyncProductRequestResponse
      * @throws Exceptions\PrintfulApiException
      * @throws Exceptions\PrintfulException
      */
     public function getProduct($id)
     {
         $response = $this->printfulClient->get(PrintfulProducts::ENDPOINT_PRODUCTS . '/' . $id);
-        $result = SyncProductResponse::fromArray($response);
+        $result = SyncProductRequestResponse::fromArray($response);
 
         return $result;
     }

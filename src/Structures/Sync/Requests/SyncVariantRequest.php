@@ -2,9 +2,6 @@
 
 namespace Printful\Structures\Sync\Requests;
 
-use Printful\Factories\Sync\Requests\SyncVariantRequestFile;
-use Printful\Factories\Sync\Requests\SyncVariantRequestOption;
-
 class SyncVariantRequest
 {
     /** @var string */
@@ -61,7 +58,6 @@ class SyncVariantRequest
     {
         return $this->options;
     }
-
 
     /**
      * Builds SyncVariantRequest from array
