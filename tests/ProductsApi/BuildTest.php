@@ -17,6 +17,7 @@ class BuildTest extends TestCase
         $data = $this->getPostProductData();
 
         $params = SyncProductCreationParameters::fromArray($data);
+        $this->assertInstanceOf(SyncProductCreationParameters::class, $params);
 
         $product = $params->getProduct();
         $variants = $params->getVariants();
@@ -80,6 +81,7 @@ class BuildTest extends TestCase
     {
        $data = $this->getPostProductData();
        $creationParams = SyncProductCreationParameters::fromArray($data);
+       $this->assertInstanceOf(SyncProductCreationParameters::class, $creationParams);
 
        $postParams = ParameterFactory::buildSyncProductPostParams($creationParams);
 
