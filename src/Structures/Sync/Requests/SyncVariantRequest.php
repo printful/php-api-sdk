@@ -4,20 +4,23 @@ namespace Printful\Structures\Sync\Requests;
 
 class SyncVariantRequest
 {
-    /** @var string */
+    /** @var int|null */
+    public $id;
+
+    /** @var string|null */
     public $externalId;
 
-    /** @var int */
+    /** @var int|null */
     public $variantId;
 
-    /** @var float */
+    /** @var float|null */
     public $retailPrice;
 
-    /** @var SyncVariantRequestFile[] */
-    private $files = [];
+    /** @var SyncVariantRequestFile[]|null */
+    private $files;
 
-    /** @var SyncVariantRequestOption[] */
-    private $options = [];
+    /** @var SyncVariantRequestOption[]|null */
+    private $options;
 
     /**
      * Adds SyncVariantRequestFile to SyncVariantRequest
@@ -26,13 +29,17 @@ class SyncVariantRequest
      */
     public function addFile(SyncVariantRequestFile $file)
     {
+        if (is_null($this->files)) {
+            $this->files = [];
+        }
+
         $this->files[] = $file;
     }
 
     /**
      * Returns SyncVariantRequestFile array added to SyncVariantRequest
      *
-     * @return SyncVariantRequestFile[]
+     * @return SyncVariantRequestFile[]|null
      */
     public function getFiles()
     {
@@ -46,13 +53,17 @@ class SyncVariantRequest
      */
     public function addOption(SyncVariantRequestOption $option)
     {
+        if (is_null($this->options)) {
+            $this->options = [];
+        }
+
         $this->options[] = $option;
     }
 
     /**
      * Returns SyncVariantRequestOption array added to SyncVariantRequest
      *
-     * @return SyncVariantRequestOption[]
+     * @return SyncVariantRequestOption[]|null
      */
     public function getOptions()
     {

@@ -9,6 +9,7 @@ use Printful\Structures\Sync\Responses\SyncProductResponse;
 use Printful\Structures\Sync\Responses\SyncProductsResponse;
 use Printful\Structures\Sync\Responses\SyncVariantResponse;
 use Printful\Structures\Sync\SyncProductCreationParameters;
+use Printful\Structures\Sync\SyncProductUpdateParameters;
 
 /**
  * Class PrintfulProducts
@@ -128,6 +129,46 @@ class PrintfulProducts
     {
         $params = ParameterFactory::buildSyncVariantPostParams($syncVariantRequest);
         $result = $this->printfulClient->post(PrintfulProducts::ENDPOINT_PRODUCTS . '/' . $productId . '/variants', $params);
+
+        $syncVariant = SyncVariantResponse::fromArray($result);
+
+        return $syncVariant;
+    }
+
+    /**
+     * Preforms PUT SyncProduct request
+     *
+     * @param string $productId
+     * @param SyncProductUpdateParameters $request
+     * @return SyncProductResponse
+     * @throws Exceptions\PrintfulApiException
+     * @throws Exceptions\PrintfulException
+     * @throws Exceptions\PrintfulSdkException
+     */
+    public function updateProduct($productId, SyncProductUpdateParameters $request)
+    {
+        $params = ParameterFactory::buildSyncProductPutParams($request);
+        $result = $this->printfulClient->put(PrintfulProducts::ENDPOINT_PRODUCTS . '/' . $productId, $params);
+
+        $syncProduct = SyncProductResponse::fromArray($result);
+
+        return $syncProduct;
+    }
+
+    /**
+     * Preforms PUT SyncVariant request
+     *
+     * @param $variantId
+     * @param SyncVariantRequest $request
+     * @return SyncVariantResponse
+     * @throws Exceptions\PrintfulApiException
+     * @throws Exceptions\PrintfulException
+     * @throws Exceptions\PrintfulSdkException
+     */
+    public function updateVariant($variantId, SyncVariantRequest $request)
+    {
+        $params = ParameterFactory::buildSyncVariantPutParams($request);
+        $result = $this->printfulClient->put(PrintfulProducts::ENDPOINT_VARIANTS . '/' . $variantId, $params);
 
         $syncVariant = SyncVariantResponse::fromArray($result);
 

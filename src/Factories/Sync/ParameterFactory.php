@@ -7,6 +7,7 @@ use Printful\Structures\Sync\Requests\SyncVariantRequestFile;
 use Printful\Structures\Sync\Requests\SyncVariantRequestOption;
 use Printful\Structures\Sync\SyncProductCreationParameters;
 use Printful\Structures\Sync\Requests\SyncVariantRequest;
+use Printful\Structures\Sync\SyncProductUpdateParameters;
 
 class ParameterFactory
 {
@@ -44,6 +45,89 @@ class ParameterFactory
         }
 
         $params['sync_variants'] = $syncVariantParams;
+
+        return $params;
+    }
+
+    /**
+     * Builds SyncProduct PUT request params
+     *
+     * @param SyncProductUpdateParameters $request
+     * @return array
+     * @throws PrintfulSdkException
+     */
+    public static function buildSyncProductPutParams(SyncProductUpdateParameters $request)
+    {
+        $params = [];
+
+        $requestSyncProduct = $request->syncProduct;
+        $requestSyncVariants = $request->syncVariants;
+
+        if (!$requestSyncProduct && !$requestSyncVariants) {
+            throw new PrintfulSdkException('Nothing to update');
+        }
+
+        if ($requestSyncProduct) {
+            $syncProduct = [];
+
+            if ($requestSyncProduct->name) {
+                $syncProduct['name'] = $requestSyncProduct->name;
+            }
+
+            if ($requestSyncProduct->thumbnail) {
+                $syncProduct['thumbnail'] = $requestSyncProduct->thumbnail;
+            }
+
+            $params['sync_product'] = $syncProduct;
+        }
+
+        if ($requestSyncVariants) {
+            $syncVariants = [];
+            foreach ($requestSyncVariants as $requestSyncVariant) {
+                $syncVariants[] = self::buildSyncVariantPutParams($requestSyncVariant);
+            }
+            $params['sync_variants'] = $syncVariants;
+        }
+
+        return $params;
+    }
+
+    /**
+     * Builds PUT params from SyncVariantRequest
+     *
+     * @param SyncVariantRequest $request
+     * @return array
+     * @throws PrintfulSdkException
+     */
+    public static function buildSyncVariantPutParams(SyncVariantRequest $request)
+    {
+        $params = [];
+
+        if (!is_null($request->externalId)) {
+            $params['external_id'] = $request->externalId;
+        }
+
+        if (!is_null($request->retailPrice)) {
+            $params['retail_price'] = $request->retailPrice;
+        }
+
+        if (!is_null($request->variantId)) {
+            if (!$request->variantId) {
+                throw new PrintfulSdkException('Variant id is required');
+            }
+
+            $params['variant_id'] = $request->variantId;
+        }
+
+        $files = $request->getFiles();
+        if (!is_null($files)) {
+            $params['files'] = self::buildSyncVariantFilesParam($files);
+        }
+
+        $options = $request->getOptions();
+        if (!is_null($options)) {
+            $params['options'] = self::buildSyncVariantOptionsParam($options);
+        }
 
         return $params;
     }

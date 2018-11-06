@@ -3,6 +3,8 @@
 namespace Printful\Tests\ProductsApi;
 
 use Printful\PrintfulProducts;
+use Printful\Structures\Sync\Responses\SyncProductResponse;
+use Printful\Structures\Sync\SyncProductCreationParameters;
 use Printful\Tests\TestCase;
 
 abstract class ProductsApiTestBase extends TestCase
@@ -107,5 +109,28 @@ abstract class ProductsApiTestBase extends TestCase
                 ],
             ],
         ];
+    }
+
+    /**
+     * Creates SyncProduct and caches result
+     *
+     * @return SyncProductResponse
+     * @throws \Printful\Exceptions\PrintfulApiException
+     * @throws \Printful\Exceptions\PrintfulException
+     */
+    protected function createProduct()
+    {
+        static $result;
+
+        if ($result) {
+            return $result;
+        }
+
+        $data = $this->getPostProductData();
+        $params = SyncProductCreationParameters::fromArray($data);
+
+        $result = $this->apiEndpoint->createProduct($params);
+
+        return $result;
     }
 }
