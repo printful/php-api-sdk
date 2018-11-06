@@ -81,4 +81,31 @@ abstract class ProductsApiTestBase extends TestCase
             ],
         ];
     }
+
+    protected function getPostVariantData()
+    {
+        return [
+            'retail_price' => 21.00,
+            'variant_id' => 4011,
+            'files' => [
+                [
+                    'url' => 'https://picsum.photos/200/300',
+                ],
+                [
+                    'type' => 'back',
+                    'url' => 'https://picsum.photos/200/300',
+                ],
+            ],
+            'options' => [
+                [
+                    'id' => 'embroidery_type',
+                    'value' => 'flat',
+                ],
+                [
+                    'id' => 'thread_colors',
+                    'value' => '',
+                ],
+            ],
+        ];
+    }
 }

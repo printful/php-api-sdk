@@ -3,6 +3,7 @@
 namespace Printful;
 
 use Printful\Factories\Sync\ParameterFactory;
+use Printful\Structures\Sync\Requests\SyncVariantRequest;
 use Printful\Structures\Sync\Responses\SyncProductRequestResponse;
 use Printful\Structures\Sync\Responses\SyncProductResponse;
 use Printful\Structures\Sync\Responses\SyncProductsResponse;
@@ -11,6 +12,8 @@ use Printful\Structures\Sync\SyncProductCreationParameters;
 
 /**
  * Class PrintfulProducts
+ *
+ * API Docs: https://www.printful.com/docs/products
  *
  * @package Printful
  */
@@ -53,8 +56,8 @@ class PrintfulProducts
 
         // as paging block is omitted in $response;
         $responseArray = [
-          'result' => $response,
-          'paging' => $lastResponse['paging'],
+            'result' => $response,
+            'paging' => $lastResponse['paging'],
         ];
         $result = SyncProductsResponse::fromArray($responseArray);
 
@@ -109,5 +112,25 @@ class PrintfulProducts
         $syncProduct = SyncProductResponse::fromArray($result);
 
         return $syncProduct;
+    }
+
+    /**
+     * Preforms POST SyncVariant request
+     *
+     * @param string $productId
+     * @param SyncVariantRequest $syncVariantRequest
+     * @return SyncVariantResponse
+     * @throws Exceptions\PrintfulApiException
+     * @throws Exceptions\PrintfulException
+     * @throws Exceptions\PrintfulSdkException
+     */
+    public function createVariant($productId, SyncVariantRequest $syncVariantRequest)
+    {
+        $params = ParameterFactory::buildSyncVariantPostParams($syncVariantRequest);
+        $result = $this->printfulClient->post(PrintfulProducts::ENDPOINT_PRODUCTS . '/' . $productId . '/variants', $params);
+
+        $syncVariant = SyncVariantResponse::fromArray($result);
+
+        return $syncVariant;
     }
 }
