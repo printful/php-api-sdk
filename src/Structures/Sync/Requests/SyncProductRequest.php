@@ -23,9 +23,9 @@ class SyncProductRequest
     {
         $syncProductRequest =  new SyncProductRequest;
 
-        $syncProductRequest->name = (string)$array['name'] ?: null;
-        $syncProductRequest->thumbnail = (string)$array['thumbnail'] ?: null;
-        $syncProductRequest->externalId = (string)$array['external_id'] ?: null;
+        $syncProductRequest->name = isset($array['name']) ? (string)$array['name'] : null;
+        $syncProductRequest->thumbnail = isset($array['thumbnail']) ? (string)$array['thumbnail'] : null;
+        $syncProductRequest->externalId = isset($array['external_id']) ? (string)$array['external_id'] : null;
 
         return $syncProductRequest;
     }
