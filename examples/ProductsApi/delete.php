@@ -9,13 +9,13 @@ require_once __DIR__ . '../../vendor/autoload.php';
 
 /**
  * This example fill will demonstrate how to update Product using Products Api
- * Docs for this endpoint can be found here: https://www.printful.com/docs/products#actionUpdateProduct
  */
 
 // Replace this with your API key
 $apiKey = '';
 
 // Delete product example
+// Docs for this endpoint can be found here: https://www.printful.local/docs/products#actionDeleteProduct
 try {
 
     // product id in Printful store, which we want to delete
@@ -41,6 +41,7 @@ try {
 }
 
 // Delete variant example
+// Docs for this endpoint can be found here: https://www.printful.local/docs/products#actionDeleteVariant
 try {
 
     // variant id in Printful store, which we want to delete
