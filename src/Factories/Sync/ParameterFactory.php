@@ -33,6 +33,11 @@ class ParameterFactory
         if (!empty($requestProduct->thumbnail)) {
             $syncProductParams['thumbnail'] = (string)$requestProduct->thumbnail;
         }
+
+        if (!empty($requestProduct->externalId)) {
+            $syncProductParams['external_id'] = (string)$requestProduct->externalId;
+        }
+
         $params['sync_product'] = $syncProductParams;
 
         $syncVariantParams = [];
@@ -152,6 +157,7 @@ class ParameterFactory
 
         $syncVariantParams = [];
 
+        $syncVariantParams['external_id'] = $syncVariantRequest->externalId;
         $syncVariantParams['retail_price'] = $syncVariantRequest->retailPrice;
         $syncVariantParams['variant_id'] = $syncVariantRequest->variantId;
         $syncVariantParams['files'] = self::buildSyncVariantFilesParam($files);
