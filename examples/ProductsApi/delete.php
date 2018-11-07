@@ -8,7 +8,7 @@ use Printful\PrintfulProductsApi;
 require_once __DIR__ . '../../vendor/autoload.php';
 
 /**
- * This example fill will demonstrate how to update Product using Products Api
+ * This example fill will demonstrate how to delete Product and it's variants using Products Api
  */
 
 // Replace this with your API key
