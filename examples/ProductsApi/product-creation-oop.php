@@ -15,7 +15,7 @@ require_once __DIR__ . '../../vendor/autoload.php';
 
 /**
  * This example fill will demonstrate usage of Products API in OOP fashion
- * Docs for this endpoint can be found here: https://www.printful.com/docs/products
+ * Docs for this endpoint can be found here: https://www.printful.com/docs/products#actionCreateProduct
  */
 
 // Replace this with your API key
@@ -43,7 +43,7 @@ try {
     // create creationParams
     $creationParams = new SyncProductCreationParameters($productRequest);
 
-    // create variant a
+    // create variant
     $syncVariantRequest = new SyncVariantRequest;
 
     // set id in my store for this variant (optional)
