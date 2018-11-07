@@ -114,15 +114,16 @@ abstract class ProductsApiTestBase extends TestCase
     /**
      * Creates SyncProduct and caches result
      *
+     * @param bool $useCache
      * @return SyncProductResponse
      * @throws \Printful\Exceptions\PrintfulApiException
      * @throws \Printful\Exceptions\PrintfulException
      */
-    protected function createProduct()
+    protected function createProduct($useCache = true)
     {
         static $result;
 
-        if ($result) {
+        if ($useCache && $result) {
             return $result;
         }
 
