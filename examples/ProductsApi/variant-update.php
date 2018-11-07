@@ -97,7 +97,7 @@ try {
     // create Products Api object
     $productsApi = new PrintfulProductsApi($pf);
 
-    // in this example we only update retail price, so we omit everything else
+    // in this example we only update retail price and files, so we omit everything else
     $variantRequest = SyncVariantRequest::fromArray([
         'retail_price' => 22.00,
         'files' => [ // if we provide `files`, we should mention all files. All missing files will be removed
