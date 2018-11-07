@@ -68,6 +68,7 @@ try {
     // set print file placement on item. If not set, default placement for this product will be used
     $file->type = 'front';
 
+    // add print file to variant. You can add multiple files for single variant (type must be unique)
     $syncVariantRequest->addFile($file);
 
     // create variant option
