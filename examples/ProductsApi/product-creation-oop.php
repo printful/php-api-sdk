@@ -43,7 +43,7 @@ try {
     // create creationParams
     $creationParams = new SyncProductCreationParameters($productRequest);
 
-    // add variant a
+    // create variant a
     $syncVariantRequest = new SyncVariantRequest;
 
     // set id in my store for this variant (optional)
