@@ -46,11 +46,14 @@ try {
     // add variant a
     $syncVariantRequest = new SyncVariantRequest;
 
-    // set id in my store for this variant(optional)
+    // set id in my store for this variant (optional)
     $syncVariantRequest->externalId = 1;
 
     // set variant in from Printful Catalog(https://www.printful.com/docs/catalog)
     $syncVariantRequest->variantId = 4011; // Bella + Canvas 3001, S, White
+
+    // set retail price that this item is sold for (optional)
+    $syncVariantRequest->retailPrice = 21.00;
 
     // create print file
     // $file->id or $file->url is required
