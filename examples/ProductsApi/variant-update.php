@@ -10,8 +10,8 @@ use Printful\Structures\Sync\Requests\SyncVariantRequest;
 require_once __DIR__ . '../../vendor/autoload.php';
 
 /**
- * This example fill will demonstrate how to update Product using Products Api
- * Docs for this endpoint can be found here: https://www.printful.com/docs/products#actionUpdateProduct
+ * This example fill will demonstrate how to update Variant using Products Api
+ * Docs for this endpoint can be found here: https://www.printful.com/docs/products#actionUpdateVariant
  */
 
 // Replace this with your API key
