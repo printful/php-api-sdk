@@ -24,7 +24,7 @@ class SyncProductRequestResponse
         $response->syncProduct = SyncProductResponse::fromArray($productArray);
 
         $variantArray = $array['sync_variants'];
-        foreach ($variantArray as $item){
+        foreach ($variantArray as $item) {
             $response->syncVariants[] = SyncVariantResponse::fromArray($item);
         }
 

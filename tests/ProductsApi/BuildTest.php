@@ -55,12 +55,12 @@ class BuildTest extends ProductsApiTestBase
      */
     private function compareFiles($files, $dataFiles)
     {
-        foreach($files as $file){
+        foreach ($files as $file) {
             $found = false;
 
-            foreach ($dataFiles as $dataFile){
+            foreach ($dataFiles as $dataFile) {
                 $type = isset($dataFile['type']) ? $dataFile['type'] : SyncVariantRequestFile::DEFAULT_TYPE;
-                if($type == $file->type){
+                if ($type == $file->type) {
                     $this->assertEquals($dataFile['url'], $file->url);
 
                     $found = true;
@@ -78,31 +78,31 @@ class BuildTest extends ProductsApiTestBase
      */
     public function testBuildProductPostParams()
     {
-       $data = $this->getPostProductData();
-       $creationParams = SyncProductCreationParameters::fromArray($data);
-       $this->assertInstanceOf(SyncProductCreationParameters::class, $creationParams);
+        $data = $this->getPostProductData();
+        $creationParams = SyncProductCreationParameters::fromArray($data);
+        $this->assertInstanceOf(SyncProductCreationParameters::class, $creationParams);
 
-       $postParams = ParameterFactory::buildSyncProductPostParams($creationParams);
+        $postParams = ParameterFactory::buildSyncProductPostParams($creationParams);
 
-       $this->assertEquals($postParams['sync_product'], $data['sync_product']);
-       $this->assertEquals(count($postParams['sync_variants']), count($data['sync_variants']));
+        $this->assertEquals($postParams['sync_product'], $data['sync_product']);
+        $this->assertEquals(count($postParams['sync_variants']), count($data['sync_variants']));
 
-       foreach ($postParams['sync_variants'] as $postSyncVariant){
-           $found = false;
-           foreach ($data['sync_variants'] as $dataSyncVariant){
-               if($postSyncVariant['variant_id'] == $dataSyncVariant['variant_id']){
+        foreach ($postParams['sync_variants'] as $postSyncVariant) {
+            $found = false;
+            foreach ($data['sync_variants'] as $dataSyncVariant) {
+                if ($postSyncVariant['variant_id'] == $dataSyncVariant['variant_id']) {
 
-                   $this->assertEquals($postSyncVariant['retail_price'], $dataSyncVariant['retail_price']);
-                   $this->assertEquals(count($postSyncVariant['files']), count($dataSyncVariant['files']));
+                    $this->assertEquals($postSyncVariant['retail_price'], $dataSyncVariant['retail_price']);
+                    $this->assertEquals(count($postSyncVariant['files']), count($dataSyncVariant['files']));
 
-                   // actual file array compare we skip heres
+                    // actual file array compare we skip heres
 
-                   $found = true;
-                   break;
-               }
-           }
-           $this->assertTrue($found);
-       }
+                    $found = true;
+                    break;
+                }
+            }
+            $this->assertTrue($found);
+        }
 
     }
 }

@@ -23,9 +23,9 @@ class SyncProductsPagingResponse
     {
         $paging = new SyncProductsPagingResponse;
 
-        $paging->total =(int)$array['total'] ?: 0;
-        $paging->limit =(int)$array['limit'] ?: 0;
-        $paging->offset =(int)$array['offset'] ?: 0;
+        $paging->total = (int)$array['total'] ?: 0;
+        $paging->limit = (int)$array['limit'] ?: 0;
+        $paging->offset = (int)$array['offset'] ?: 0;
 
         return $paging;
     }

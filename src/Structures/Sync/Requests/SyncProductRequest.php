@@ -21,7 +21,7 @@ class SyncProductRequest
      */
     public static function fromArray(array $array)
     {
-        $syncProductRequest =  new SyncProductRequest;
+        $syncProductRequest = new SyncProductRequest;
 
         $syncProductRequest->name = isset($array['name']) ? (string)$array['name'] : null;
         $syncProductRequest->thumbnail = isset($array['thumbnail']) ? (string)$array['thumbnail'] : null;

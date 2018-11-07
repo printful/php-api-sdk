@@ -23,11 +23,11 @@ class SyncProductUpdateParameters
     {
         $params = new SyncProductUpdateParameters;
 
-        if(isset($array['sync_product'])){
+        if (isset($array['sync_product'])) {
             $params->syncProduct = SyncProductRequest::fromArray($array['sync_product']);
         }
 
-        if(isset($array['sync_variants'])){
+        if (isset($array['sync_variants'])) {
             foreach ($array['sync_variants'] as $item) {
                 $syncVariantRequest = SyncVariantRequest::fromArray($item);
                 $params->syncVariants[] = $syncVariantRequest;
