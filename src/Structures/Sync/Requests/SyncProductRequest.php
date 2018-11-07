@@ -5,6 +5,9 @@ namespace Printful\Structures\Sync\Requests;
 class SyncProductRequest
 {
     /** @var string */
+    public $externalId;
+
+    /** @var string */
     public $name;
 
     /** @var string */
@@ -22,6 +25,7 @@ class SyncProductRequest
 
         $syncProductRequest->name = (string)$array['name'] ?: null;
         $syncProductRequest->thumbnail = (string)$array['thumbnail'] ?: null;
+        $syncProductRequest->externalId = (string)$array['external_id'] ?: null;
 
         return $syncProductRequest;
     }

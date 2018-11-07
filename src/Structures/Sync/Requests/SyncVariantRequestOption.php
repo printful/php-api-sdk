@@ -5,7 +5,7 @@ namespace Printful\Structures\Sync\Requests;
 class SyncVariantRequestOption
 {
     /** @var string */
-    public $key;
+    public $id;
 
     /** @var mixed */
     public $value;
@@ -20,7 +20,7 @@ class SyncVariantRequestOption
     {
         $option = new SyncVariantRequestOption;
 
-        $option->key = isset($array['key']) ? (string)$array['key'] : null;
+        $option->id = isset($array['id']) ? (string)$array['id'] : null;
         $option->value = isset($array['value']) ?: null;
 
         return $option;

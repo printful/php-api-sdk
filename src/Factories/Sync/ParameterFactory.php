@@ -172,7 +172,7 @@ class ParameterFactory
 
         foreach ($options as $option) {
             $params[] = [
-                'key' => $option->key,
+                'key' => $option->id,
                 'value' => $option->value,
             ];
         }

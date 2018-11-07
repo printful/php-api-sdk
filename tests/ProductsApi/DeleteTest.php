@@ -34,9 +34,7 @@ class DeleteTest extends ProductsApiTestBase
         $this->expectException(PrintfulApiException::class);
 
         $product = $this->createProduct(false);
-
         $product = $this->apiEndpoint->getProduct($product->id);
-
         $variant = $product->syncVariants[0];
 
         $this->apiEndpoint->deleteVariant($variant->id);

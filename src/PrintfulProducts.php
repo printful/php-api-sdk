@@ -103,6 +103,7 @@ class PrintfulProducts
      * @param SyncProductCreationParameters $request
      * @return SyncProductResponse
      * @throws Exceptions\PrintfulApiException
+     * @throws Exceptions\PrintfulSdkException
      * @throws Exceptions\PrintfulException
      */
     public function createProduct(SyncProductCreationParameters $request)
