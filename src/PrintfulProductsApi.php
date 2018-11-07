@@ -82,7 +82,7 @@ class PrintfulProductsApi
     }
 
     /**
-     * Preforms GET SyncVariantResponse request
+     * Preforms GET SyncVariant request
      *
      * @param $id
      * @return SyncVariantResponse
