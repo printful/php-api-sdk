@@ -21,7 +21,7 @@ require_once __DIR__ . '../../vendor/autoload.php';
 // Replace this with your API key
 $apiKey = '';
 
-try{
+try {
     // create ApiClient
     $pf = new PrintfulApiClient($apiKey);
 
