@@ -25,6 +25,10 @@ try {
     // product id in Printful store, which we want to update
     $productId = 1;
 
+    // you can also use your external id
+    // $externalId = 32142;
+    // $productId = '@'.$externalId;
+
     // create ApiClient
     $pf = new PrintfulApiClient($apiKey);
 
@@ -69,7 +73,7 @@ try {
 
     // build product request from array
     $productRequest = SyncProductRequest::fromArray([
-        'name' => 'My new shirt name'
+        'name' => 'My new shirt name',
     ]);
 
     $params = new SyncProductUpdateParameters;
@@ -105,7 +109,7 @@ try {
     $params = SyncProductUpdateParameters::fromArray([
         'sync_product' => [
             'name' => 'My new shirt name',
-        ]
+        ],
     ]);
 
     // preform update
