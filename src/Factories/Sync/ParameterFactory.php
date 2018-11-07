@@ -83,6 +83,10 @@ class ParameterFactory
                 $syncProduct['thumbnail'] = $requestSyncProduct->thumbnail;
             }
 
+            if ($requestSyncProduct->externalId) {
+                $syncProduct['external_id'] = $requestSyncProduct->externalId;
+            }
+
             $params['sync_product'] = $syncProduct;
         }
 
