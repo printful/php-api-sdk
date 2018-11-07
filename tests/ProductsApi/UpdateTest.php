@@ -30,7 +30,11 @@ class UpdateTest extends ProductsApiTestBase
         $updatedSyncProduct = $this->apiEndpoint->updateProduct($syncProduct->id, $updateParams);
         $this->assertInstanceOf(SyncProductResponse::class, $updatedSyncProduct);
 
+        // check if this field is changed
         $this->assertEquals($productRequest->name, $updatedSyncProduct->name);
+
+        // check if this field is not changed
+        $this->assertEquals($syncProduct->externalId, $updatedSyncProduct->externalId);
     }
 
     /**
