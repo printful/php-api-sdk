@@ -4,7 +4,7 @@ use Printful\Exceptions\PrintfulApiException;
 use Printful\Exceptions\PrintfulException;
 use Printful\PrintfulApiClient;
 use Printful\PrintfulProductsApi;
-use Printful\Structures\Sync\Responses\SyncProductResponse;
+use Printful\Structures\Sync\Responses\SyncProductRequestResponse;
 
 require_once __DIR__ . '../../vendor/autoload.php';
 
@@ -27,16 +27,21 @@ try {
     $productId = 1;
 
     // get product by id
-    /** @var SyncProductResponse $product */
-    $product = $productsApi->getProduct($productId);
+    /** @var SyncProductRequestResponse $product */
+    $response = $productsApi->getProduct($productId);
 
+    // actual product can be found $response->syncProduct
+    // and products variants $response->syncVariants
 
     // product id in your store(saved with external_id)
     $externalProductId = 15946;
 
     // get product by external_id
-    /** @var SyncProductResponse $product */
-    $product = $productsApi->getProduct('@' . $externalProductId);
+    /** @var SyncProductRequestResponse $product */
+    $response = $productsApi->getProduct('@' . $externalProductId);
+
+    // actual product can be found $response->syncProduct
+    // and products variants $response->syncVariants
 
 } catch (PrintfulApiException $e) { // API response status code was not successful
     echo 'Printful API Exception: ' . $e->getCode() . ' ' . $e->getMessage();
