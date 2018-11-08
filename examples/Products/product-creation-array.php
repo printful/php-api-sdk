@@ -4,7 +4,7 @@ use Printful\Exceptions\PrintfulApiException;
 use Printful\Exceptions\PrintfulException;
 use Printful\Exceptions\PrintfulSdkException;
 use Printful\PrintfulApiClient;
-use Printful\PrintfulProductsApi;
+use Printful\PrintfulProducts;
 use Printful\Structures\Sync\SyncProductCreationParameters;
 
 require_once __DIR__ . '/../../vendor/autoload.php';
@@ -22,7 +22,7 @@ try {
     $pf = new PrintfulApiClient($apiKey);
 
     // create Products Api object
-    $productsApi = new PrintfulProductsApi($pf);
+    $productsApi = new PrintfulProducts($pf);
 
     $data = [
         'sync_product' => [

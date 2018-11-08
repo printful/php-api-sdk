@@ -3,7 +3,7 @@
 use Printful\Exceptions\PrintfulApiException;
 use Printful\Exceptions\PrintfulException;
 use Printful\PrintfulApiClient;
-use Printful\PrintfulProductsApi;
+use Printful\PrintfulProducts;
 use Printful\Structures\Sync\Responses\SyncVariantResponse;
 
 require_once __DIR__ . '/../../vendor/autoload.php';
@@ -21,7 +21,7 @@ try {
     $pf = new PrintfulApiClient($apiKey);
 
     // create Products Api object
-    $productsApi = new PrintfulProductsApi($pf);
+    $productsApi = new PrintfulProducts($pf);
 
     // variant id in your Printful store
     $variantId = 1;

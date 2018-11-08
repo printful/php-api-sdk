@@ -3,7 +3,7 @@
 use Printful\Exceptions\PrintfulApiException;
 use Printful\Exceptions\PrintfulException;
 use Printful\PrintfulApiClient;
-use Printful\PrintfulProductsApi;
+use Printful\PrintfulProducts;
 
 require_once __DIR__ . '/../../vendor/autoload.php';
 
@@ -29,7 +29,7 @@ try {
     $pf = new PrintfulApiClient($apiKey);
 
     // create Products Api object
-    $productsApi = new PrintfulProductsApi($pf);
+    $productsApi = new PrintfulProducts($pf);
 
     $productsApi->deleteProduct($id);
 
@@ -56,7 +56,7 @@ try {
     $pf = new PrintfulApiClient($apiKey);
 
     // create Products Api object
-    $productsApi = new PrintfulProductsApi($pf);
+    $productsApi = new PrintfulProducts($pf);
 
     $productsApi->deleteVariant($id);
 

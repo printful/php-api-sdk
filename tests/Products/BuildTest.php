@@ -1,12 +1,12 @@
 <?php
 
-namespace Printful\Tests\ProductsApi;
+namespace Printful\Tests\Products;
 
 use Printful\Factories\Sync\ParameterFactory;
 use Printful\Structures\Sync\Requests\SyncVariantRequestFile;
 use Printful\Structures\Sync\SyncProductCreationParameters;
 
-class BuildTest extends ProductsApiTestBase
+class BuildTest extends ProductsTestBase
 {
     /**
      * Tests SyncProductCreationParameters build from array

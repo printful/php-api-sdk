@@ -4,7 +4,7 @@ use Printful\Exceptions\PrintfulApiException;
 use Printful\Exceptions\PrintfulException;
 use Printful\Exceptions\PrintfulSdkException;
 use Printful\PrintfulApiClient;
-use Printful\PrintfulProductsApi;
+use Printful\PrintfulProducts;
 use Printful\Structures\Sync\Requests\SyncProductRequest;
 use Printful\Structures\Sync\SyncProductUpdateParameters;
 
@@ -33,7 +33,7 @@ try {
     $pf = new PrintfulApiClient($apiKey);
 
     // create Products Api object
-    $productsApi = new PrintfulProductsApi($pf);
+    $productsApi = new PrintfulProducts($pf);
 
     // build update params manually
     $params = new SyncProductUpdateParameters;
@@ -69,7 +69,7 @@ try {
     $pf = new PrintfulApiClient($apiKey);
 
     // create Products Api object
-    $productsApi = new PrintfulProductsApi($pf);
+    $productsApi = new PrintfulProducts($pf);
 
     // build product request from array
     $productRequest = SyncProductRequest::fromArray([
@@ -103,7 +103,7 @@ try {
     $pf = new PrintfulApiClient($apiKey);
 
     // create Products Api object
-    $productsApi = new PrintfulProductsApi($pf);
+    $productsApi = new PrintfulProducts($pf);
 
     // build params from array
     $params = SyncProductUpdateParameters::fromArray([

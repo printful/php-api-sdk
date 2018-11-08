@@ -1,15 +1,15 @@
 <?php
 
-namespace Printful\Tests\ProductsApi;
+namespace Printful\Tests\Products;
 
-use Printful\PrintfulProductsApi;
+use Printful\PrintfulProducts;
 use Printful\Structures\Sync\Responses\SyncProductResponse;
 use Printful\Structures\Sync\SyncProductCreationParameters;
 use Printful\Tests\TestCase;
 
-abstract class ProductsApiTestBase extends TestCase
+abstract class ProductsTestBase extends TestCase
 {
-    /** @var PrintfulProductsApi */
+    /** @var PrintfulProducts */
     protected $apiEndpoint;
 
     /**
@@ -18,7 +18,7 @@ abstract class ProductsApiTestBase extends TestCase
     protected function setUp()
     {
         parent::setUp();
-        $this->apiEndpoint = new PrintfulProductsApi($this->api);
+        $this->apiEndpoint = new PrintfulProducts($this->api);
     }
 
     /**

@@ -1,6 +1,6 @@
 <?php
 
-namespace Printful\Tests\ProductsApi;
+namespace Printful\Tests\Products;
 
 use Printful\Structures\Sync\Requests\SyncProductRequest;
 use Printful\Structures\Sync\Requests\SyncVariantRequest;
@@ -8,7 +8,7 @@ use Printful\Structures\Sync\Responses\SyncProductResponse;
 use Printful\Structures\Sync\Responses\SyncVariantResponse;
 use Printful\Structures\Sync\SyncProductUpdateParameters;
 
-class UpdateTest extends ProductsApiTestBase
+class UpdateTest extends ProductsTestBase
 {
     /**
      * Tests SyncProduct update

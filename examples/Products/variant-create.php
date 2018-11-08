@@ -4,7 +4,7 @@ use Printful\Exceptions\PrintfulApiException;
 use Printful\Exceptions\PrintfulException;
 use Printful\Exceptions\PrintfulSdkException;
 use Printful\PrintfulApiClient;
-use Printful\PrintfulProductsApi;
+use Printful\PrintfulProducts;
 use Printful\Structures\Sync\Requests\SyncVariantRequest;
 
 require_once __DIR__ . '/../../vendor/autoload.php';
@@ -31,7 +31,7 @@ try {
     $pf = new PrintfulApiClient($apiKey);
 
     // create Products Api object
-    $productsApi = new PrintfulProductsApi($pf);
+    $productsApi = new PrintfulProducts($pf);
 
     $variantRequest = SyncVariantRequest::fromArray([
         'external_id' => 1, // set id in my store for this variant (optional)

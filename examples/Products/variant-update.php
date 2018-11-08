@@ -4,7 +4,7 @@ use Printful\Exceptions\PrintfulApiException;
 use Printful\Exceptions\PrintfulException;
 use Printful\Exceptions\PrintfulSdkException;
 use Printful\PrintfulApiClient;
-use Printful\PrintfulProductsApi;
+use Printful\PrintfulProducts;
 use Printful\Structures\Sync\Requests\SyncVariantRequest;
 
 require_once __DIR__ . '/../../vendor/autoload.php';
@@ -31,7 +31,7 @@ try {
     $pf = new PrintfulApiClient($apiKey);
 
     // create Products Api object
-    $productsApi = new PrintfulProductsApi($pf);
+    $productsApi = new PrintfulProducts($pf);
 
     $variantRequest = new SyncVariantRequest;
 
@@ -63,7 +63,7 @@ try {
     $pf = new PrintfulApiClient($apiKey);
 
     // create Products Api object
-    $productsApi = new PrintfulProductsApi($pf);
+    $productsApi = new PrintfulProducts($pf);
 
     // in this example we only update retail price, so we omit everything else
     $variantRequest = SyncVariantRequest::fromArray([
@@ -95,7 +95,7 @@ try {
     $pf = new PrintfulApiClient($apiKey);
 
     // create Products Api object
-    $productsApi = new PrintfulProductsApi($pf);
+    $productsApi = new PrintfulProducts($pf);
 
     // in this example we only update retail price and files, so we omit everything else
     $variantRequest = SyncVariantRequest::fromArray([

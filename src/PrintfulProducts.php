@@ -12,13 +12,13 @@ use Printful\Structures\Sync\SyncProductCreationParameters;
 use Printful\Structures\Sync\SyncProductUpdateParameters;
 
 /**
- * Class PrintfulProductsApi
+ * Class PrintfulProducts
  *
  * API Docs: https://www.printful.com/docs/products
  *
  * @package Printful
  */
-class PrintfulProductsApi
+class PrintfulProducts
 {
     const ENDPOINT_PRODUCTS = '/store/products';
     const ENDPOINT_VARIANTS = '/store/variants';
@@ -52,7 +52,7 @@ class PrintfulProductsApi
             'limit' => (int)$limit,
         ];
 
-        $response = $this->printfulClient->get(PrintfulProductsApi::ENDPOINT_PRODUCTS, $requestData);
+        $response = $this->printfulClient->get(PrintfulProducts::ENDPOINT_PRODUCTS, $requestData);
         $lastResponse = $this->printfulClient->getLastResponse();
 
         // as paging block is omitted in $response;
@@ -75,7 +75,7 @@ class PrintfulProductsApi
      */
     public function getProduct($id)
     {
-        $response = $this->printfulClient->get(PrintfulProductsApi::ENDPOINT_PRODUCTS . '/' . $id);
+        $response = $this->printfulClient->get(PrintfulProducts::ENDPOINT_PRODUCTS . '/' . $id);
         $result = SyncProductRequestResponse::fromArray($response);
 
         return $result;
@@ -91,7 +91,7 @@ class PrintfulProductsApi
      */
     public function getVariant($id)
     {
-        $response = $this->printfulClient->get(PrintfulProductsApi::ENDPOINT_VARIANTS . '/' . $id);
+        $response = $this->printfulClient->get(PrintfulProducts::ENDPOINT_VARIANTS . '/' . $id);
         $result = SyncVariantResponse::fromArray($response);
 
         return $result;
@@ -109,7 +109,7 @@ class PrintfulProductsApi
     public function createProduct(SyncProductCreationParameters $request)
     {
         $params = ParameterFactory::buildSyncProductPostParams($request);
-        $result = $this->printfulClient->post(PrintfulProductsApi::ENDPOINT_PRODUCTS, $params);
+        $result = $this->printfulClient->post(PrintfulProducts::ENDPOINT_PRODUCTS, $params);
 
         $syncProduct = SyncProductResponse::fromArray($result);
 
@@ -129,7 +129,7 @@ class PrintfulProductsApi
     public function createVariant($productId, SyncVariantRequest $syncVariantRequest)
     {
         $params = ParameterFactory::buildSyncVariantPostParams($syncVariantRequest);
-        $result = $this->printfulClient->post(PrintfulProductsApi::ENDPOINT_PRODUCTS . '/' . $productId . '/variants', $params);
+        $result = $this->printfulClient->post(PrintfulProducts::ENDPOINT_PRODUCTS . '/' . $productId . '/variants', $params);
 
         $syncVariant = SyncVariantResponse::fromArray($result);
 
@@ -149,7 +149,7 @@ class PrintfulProductsApi
     public function updateProduct($productId, SyncProductUpdateParameters $request)
     {
         $params = ParameterFactory::buildSyncProductPutParams($request);
-        $result = $this->printfulClient->put(PrintfulProductsApi::ENDPOINT_PRODUCTS . '/' . $productId, $params);
+        $result = $this->printfulClient->put(PrintfulProducts::ENDPOINT_PRODUCTS . '/' . $productId, $params);
 
         $syncProduct = SyncProductResponse::fromArray($result);
 
@@ -169,7 +169,7 @@ class PrintfulProductsApi
     public function updateVariant($variantId, SyncVariantRequest $request)
     {
         $params = ParameterFactory::buildSyncVariantPutParams($request);
-        $result = $this->printfulClient->put(PrintfulProductsApi::ENDPOINT_VARIANTS . '/' . $variantId, $params);
+        $result = $this->printfulClient->put(PrintfulProducts::ENDPOINT_VARIANTS . '/' . $variantId, $params);
 
         $syncVariant = SyncVariantResponse::fromArray($result);
 
@@ -186,7 +186,7 @@ class PrintfulProductsApi
      */
     public function deleteProduct($productId)
     {
-        return $this->printfulClient->delete(PrintfulProductsApi::ENDPOINT_PRODUCTS . '/' . $productId);
+        return $this->printfulClient->delete(PrintfulProducts::ENDPOINT_PRODUCTS . '/' . $productId);
     }
 
     /**
@@ -199,6 +199,6 @@ class PrintfulProductsApi
      */
     public function deleteVariant($variantId)
     {
-        return $this->printfulClient->delete(PrintfulProductsApi::ENDPOINT_VARIANTS . '/' . $variantId);
+        return $this->printfulClient->delete(PrintfulProducts::ENDPOINT_VARIANTS . '/' . $variantId);
     }
 }

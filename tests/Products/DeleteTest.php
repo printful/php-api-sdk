@@ -1,10 +1,10 @@
 <?php
 
-namespace Printful\Tests\ProductsApi;
+namespace Printful\Tests\Products;
 
 use Printful\Exceptions\PrintfulApiException;
 
-class DeleteTest extends ProductsApiTestBase
+class DeleteTest extends ProductsTestBase
 {
     /**
      * Tests SyncProduct deletion

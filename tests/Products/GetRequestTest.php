@@ -1,12 +1,12 @@
 <?php
 
-namespace Printful\Tests\ProductsApi;
+namespace Printful\Tests\Products;
 
 use Printful\Structures\Sync\Responses\SyncProductResponse;
 use Printful\Structures\Sync\Responses\SyncProductsPagingResponse;
 use Printful\Structures\Sync\Responses\SyncProductsResponse;
 
-class GetRequestTest extends ProductsApiTestBase
+class GetRequestTest extends ProductsTestBase
 {
     /**
      * Tests Get SyncProduct list functionality
