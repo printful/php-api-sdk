@@ -11,7 +11,7 @@ use Printful\Structures\Sync\Requests\SyncVariantRequestFile;
 use Printful\Structures\Sync\Requests\SyncVariantRequestOption;
 use Printful\Structures\Sync\SyncProductCreationParameters;
 
-require_once __DIR__ . '../../vendor/autoload.php';
+require_once __DIR__ . '/../../vendor/autoload.php';
 
 /**
  * This example fill will demonstrate usage of Products API in OOP fashion

@@ -5,7 +5,7 @@ use Printful\Exceptions\PrintfulException;
 use Printful\PrintfulApiClient;
 use Printful\PrintfulProductsApi;
 
-require_once __DIR__ . '../../vendor/autoload.php';
+require_once __DIR__ . '/../../vendor/autoload.php';
 
 /**
  * This example fill will demonstrate how to delete Product and it's variants using Products Api

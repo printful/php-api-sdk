@@ -7,7 +7,7 @@ use Printful\PrintfulApiClient;
 use Printful\PrintfulProductsApi;
 use Printful\Structures\Sync\Requests\SyncVariantRequest;
 
-require_once __DIR__ . '../../vendor/autoload.php';
+require_once __DIR__ . '/../../vendor/autoload.php';
 
 /**
  * This example fill will demonstrate how to update Variant using Products Api

@@ -7,7 +7,7 @@ use Printful\PrintfulApiClient;
 use Printful\PrintfulProductsApi;
 use Printful\Structures\Sync\SyncProductCreationParameters;
 
-require_once __DIR__ . '../../vendor/autoload.php';
+require_once __DIR__ . '/../../vendor/autoload.php';
 
 /**
  * This example fill will demonstrate usage of Products API using data in an array

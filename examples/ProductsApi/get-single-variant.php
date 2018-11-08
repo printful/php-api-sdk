@@ -6,7 +6,7 @@ use Printful\PrintfulApiClient;
 use Printful\PrintfulProductsApi;
 use Printful\Structures\Sync\Responses\SyncVariantResponse;
 
-require_once __DIR__ . '../../vendor/autoload.php';
+require_once __DIR__ . '/../../vendor/autoload.php';
 
 /**
  * This example fill will demonstrate how to get a single Variant using id and external id

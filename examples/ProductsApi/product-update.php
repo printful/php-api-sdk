@@ -8,7 +8,7 @@ use Printful\PrintfulProductsApi;
 use Printful\Structures\Sync\Requests\SyncProductRequest;
 use Printful\Structures\Sync\SyncProductUpdateParameters;
 
-require_once __DIR__ . '../../vendor/autoload.php';
+require_once __DIR__ . '/../../vendor/autoload.php';
 
 /**
  * This example fill will demonstrate how to update Product using Products Api
