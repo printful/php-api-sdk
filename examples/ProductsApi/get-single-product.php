@@ -6,7 +6,7 @@ use Printful\PrintfulApiClient;
 use Printful\PrintfulProductsApi;
 use Printful\Structures\Sync\Responses\SyncProductRequestResponse;
 
-require_once __DIR__ . '../../vendor/autoload.php';
+require_once __DIR__ . '/../../vendor/autoload.php';
 
 /**
  * This example fill will demonstrate how to get a single Product using id and external id
@@ -27,17 +27,17 @@ try {
     $productId = 1;
 
     // get product by id
-    /** @var SyncProductRequestResponse $product */
+    /** @var SyncProductRequestResponse $response */
     $response = $productsApi->getProduct($productId);
 
     // actual product can be found $response->syncProduct
-    // and products variants $response->syncVariants
+    // and its variants $response->syncVariants
 
     // product id in your store(saved with external_id)
     $externalProductId = 15946;
 
     // get product by external_id
-    /** @var SyncProductRequestResponse $product */
+    /** @var SyncProductRequestResponse $response */
     $response = $productsApi->getProduct('@' . $externalProductId);
 
     // actual product can be found $response->syncProduct
