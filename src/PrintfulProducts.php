@@ -2,7 +2,6 @@
 
 namespace Printful;
 
-use Printful\Factories\Sync\ParameterFactory;
 use Printful\Structures\Sync\Requests\SyncVariantRequest;
 use Printful\Structures\Sync\Responses\SyncProductRequestResponse;
 use Printful\Structures\Sync\Responses\SyncProductResponse;
@@ -108,7 +107,7 @@ class PrintfulProducts
      */
     public function createProduct(SyncProductCreationParameters $request)
     {
-        $params = ParameterFactory::buildSyncProductPostParams($request);
+        $params = $request->toPostArray();
         $result = $this->printfulClient->post(PrintfulProducts::ENDPOINT_PRODUCTS, $params);
 
         $syncProduct = SyncProductResponse::fromArray($result);
@@ -128,7 +127,7 @@ class PrintfulProducts
      */
     public function createVariant($productId, SyncVariantRequest $syncVariantRequest)
     {
-        $params = ParameterFactory::buildSyncVariantPostParams($syncVariantRequest);
+        $params = $syncVariantRequest->toPostArray();
         $result = $this->printfulClient->post(PrintfulProducts::ENDPOINT_PRODUCTS . '/' . $productId . '/variants', $params);
 
         $syncVariant = SyncVariantResponse::fromArray($result);
@@ -148,7 +147,7 @@ class PrintfulProducts
      */
     public function updateProduct($productId, SyncProductUpdateParameters $request)
     {
-        $params = ParameterFactory::buildSyncProductPutParams($request);
+        $params = $request->toPutArray();
         $result = $this->printfulClient->put(PrintfulProducts::ENDPOINT_PRODUCTS . '/' . $productId, $params);
 
         $syncProduct = SyncProductResponse::fromArray($result);
@@ -168,7 +167,7 @@ class PrintfulProducts
      */
     public function updateVariant($variantId, SyncVariantRequest $request)
     {
-        $params = ParameterFactory::buildSyncVariantPutParams($request);
+        $params = $request->toPutArray();
         $result = $this->printfulClient->put(PrintfulProducts::ENDPOINT_VARIANTS . '/' . $variantId, $params);
 
         $syncVariant = SyncVariantResponse::fromArray($result);

@@ -25,4 +25,17 @@ class SyncVariantRequestOption
 
         return $option;
     }
+
+    /**
+     * Builds array
+     *
+     * @return array
+     */
+    public function toArray()
+    {
+        return [
+            'key' => $this->id,
+            'value' => $this->value,
+        ];
+    }
 }

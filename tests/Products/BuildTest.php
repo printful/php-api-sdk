@@ -2,7 +2,6 @@
 
 namespace Printful\Tests\Products;
 
-use Printful\Factories\Sync\ParameterFactory;
 use Printful\Structures\Sync\Requests\SyncVariantRequestFile;
 use Printful\Structures\Sync\SyncProductCreationParameters;
 
@@ -59,7 +58,7 @@ class BuildTest extends ProductsTestBase
             $found = false;
 
             foreach ($dataFiles as $dataFile) {
-                $type = isset($dataFile['type']) ? $dataFile['type'] : SyncVariantRequestFile::DEFAULT_TYPE;
+                $type = isset($dataFile['type']) ? $dataFile['type'] : SyncVariantRequestFile::TYPE_DEFAULT;
                 if ($type == $file->type) {
                     $this->assertEquals($dataFile['url'], $file->url);
 
@@ -82,7 +81,7 @@ class BuildTest extends ProductsTestBase
         $creationParams = SyncProductCreationParameters::fromArray($data);
         $this->assertInstanceOf(SyncProductCreationParameters::class, $creationParams);
 
-        $postParams = ParameterFactory::buildSyncProductPostParams($creationParams);
+        $postParams = $creationParams->toPostArray();
 
         $this->assertEquals($postParams['sync_product'], $data['sync_product']);
         $this->assertEquals(count($postParams['sync_variants']), count($data['sync_variants']));
@@ -95,7 +94,7 @@ class BuildTest extends ProductsTestBase
                     $this->assertEquals($postSyncVariant['retail_price'], $dataSyncVariant['retail_price']);
                     $this->assertEquals(count($postSyncVariant['files']), count($dataSyncVariant['files']));
 
-                    // actual file array compare we skip heres
+                    // actual file array compare we skip here
 
                     $found = true;
                     break;

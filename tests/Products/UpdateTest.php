@@ -52,7 +52,7 @@ class UpdateTest extends ProductsTestBase
         $variant = $syncProduct->syncVariants[0];
 
         $request = new SyncVariantRequest;
-        $request->externalId = 'my-sdk-updated-external-id-' . rand(1, 10);
+        $request->externalId = uniqid();
 
         $updatedSyncVariant = $this->apiEndpoint->updateVariant($variant->id, $request);
         $this->assertInstanceOf(SyncVariantResponse::class, $updatedSyncVariant);

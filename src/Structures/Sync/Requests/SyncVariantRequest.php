@@ -2,6 +2,8 @@
 
 namespace Printful\Structures\Sync\Requests;
 
+use Printful\Exceptions\PrintfulSdkException;
+
 class SyncVariantRequest
 {
     /** @var int|null */
@@ -97,5 +99,86 @@ class SyncVariantRequest
         }
 
         return $syncVariantRequest;
+    }
+
+    /**
+     * Builds POST request array
+     *
+     * @return array
+     * @throws PrintfulSdkException
+     */
+    public function toPostArray()
+    {
+        if (!$this->variantId) {
+            throw new PrintfulSdkException('Missing variant_id');
+        }
+
+        $files = $this->getFiles();
+        if (empty($files)) {
+            throw new PrintfulSdkException('Missing files');
+        }
+
+        $syncVariantParams = [];
+
+        $syncVariantParams['external_id'] = $this->externalId;
+        $syncVariantParams['retail_price'] = $this->retailPrice;
+        $syncVariantParams['variant_id'] = $this->variantId;
+
+        $syncVariantParams['files'] = [];
+        foreach ($files as $file) {
+            $syncVariantParams['files'][] = $file->toArray();
+        }
+
+        $syncVariantParams['options'] = [];
+        foreach ($this->getOptions() as $option) {
+            $syncVariantParams['options'][] = $option->toArray();
+        }
+
+        return $syncVariantParams;
+    }
+
+    /**
+     * Builds PUT request array
+     *
+     * @return array
+     * @throws PrintfulSdkException
+     */
+    public function toPutArray()
+    {
+        $syncVariantParams = [];
+
+        if (!is_null($this->externalId)) {
+            $syncVariantParams['external_id'] = $this->externalId;
+        }
+
+        if (!is_null($this->retailPrice)) {
+            $syncVariantParams['retail_price'] = $this->retailPrice;
+        }
+
+        if (!is_null($this->variantId)) {
+            if (!$this->variantId) {
+                throw new PrintfulSdkException('Variant id is required');
+            }
+
+            $syncVariantParams['variant_id'] = $this->variantId;
+        }
+
+        $files = $this->getFiles();
+        if (!is_null($files)) {
+            $syncVariantParams['files'] = [];
+            foreach ($files as $file){
+                $syncVariantParams['files'][] = $file->toArray();
+            }
+        }
+
+        $options = $this->getOptions();
+        if (!is_null($options)) {
+            $syncVariantParams['options'] = [];
+            foreach ($options as $option) {
+                $syncVariantParams['options'][] = $option->toArray();
+            }
+        }
+
+        return $syncVariantParams;
     }
 }

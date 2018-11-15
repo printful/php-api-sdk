@@ -2,6 +2,7 @@
 
 namespace Printful\Structures\Sync;
 
+use Printful\Exceptions\PrintfulSdkException;
 use Printful\Structures\Sync\Requests\SyncProductRequest;
 use Printful\Structures\Sync\Requests\SyncVariantRequest;
 
@@ -70,6 +71,48 @@ class SyncProductCreationParameters
         foreach ($syncVariantData as $item) {
             $syncVariantRequest = SyncVariantRequest::fromArray($item);
             $params->addSyncVariant($syncVariantRequest);
+        }
+
+        return $params;
+    }
+
+    /**
+     * Build POST request array
+     *
+     * @return array
+     * @throws PrintfulSdkException
+     */
+    public function toPostArray()
+    {
+        $params = [];
+
+        $requestProduct = $this->getProduct();
+        $requestVariants = $this->getVariants();
+        $syncProductParams = [];
+
+        if (empty($requestProduct->name)) {
+            throw new PrintfulSdkException('Missing product name');
+        }
+
+        if (empty($requestVariants)) {
+            throw new PrintfulSdkException('No variants specified');
+        }
+
+        $syncProductParams['name'] = $requestProduct->name;
+
+        if (!empty($requestProduct->thumbnail)) {
+            $syncProductParams['thumbnail'] = (string)$requestProduct->thumbnail;
+        }
+
+        if (!empty($requestProduct->externalId)) {
+            $syncProductParams['external_id'] = (string)$requestProduct->externalId;
+        }
+
+        $params['sync_product'] = $syncProductParams;
+
+        $params['sync_variants'] = [];
+        foreach ($requestVariants as $variant) {
+            $params['sync_variants'][] = $variant->toPostArray();
         }
 
         return $params;
