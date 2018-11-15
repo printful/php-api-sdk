@@ -2,6 +2,7 @@
 
 namespace Printful\Tests\Products;
 
+use Printful\Structures\File;
 use Printful\Structures\Sync\Requests\SyncVariantRequestFile;
 use Printful\Structures\Sync\SyncProductCreationParameters;
 
@@ -58,7 +59,7 @@ class BuildTest extends ProductsTestBase
             $found = false;
 
             foreach ($dataFiles as $dataFile) {
-                $type = isset($dataFile['type']) ? $dataFile['type'] : SyncVariantRequestFile::TYPE_DEFAULT;
+                $type = isset($dataFile['type']) ? $dataFile['type'] : File::TYPE_DEFAULT;
                 if ($type == $file->type) {
                     $this->assertEquals($dataFile['url'], $file->url);
 

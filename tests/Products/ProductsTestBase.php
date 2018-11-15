@@ -112,21 +112,14 @@ abstract class ProductsTestBase extends TestCase
     }
 
     /**
-     * Creates SyncProduct and caches result
+     * Creates SyncProduct
      *
-     * @param bool $useCache
      * @return SyncProductResponse
      * @throws \Printful\Exceptions\PrintfulApiException
      * @throws \Printful\Exceptions\PrintfulException
      */
-    protected function createProduct($useCache = true)
+    protected function createProduct()
     {
-        static $result;
-
-        if ($useCache && $result) {
-            return $result;
-        }
-
         $data = $this->getPostProductData();
         $params = SyncProductCreationParameters::fromArray($data);
 
