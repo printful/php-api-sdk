@@ -1,10 +1,8 @@
 <?php
 
-namespace Printful\Structures\Order;
+namespace Printful\Structures;
 
-use Printful\Structures\BaseItem;
-
-class OrderItemFile extends BaseItem
+class File extends BaseItem
 {
 
     const TYPE_PREVIEW = 'preview';
@@ -97,7 +95,7 @@ class OrderItemFile extends BaseItem
 
     /**
      * @param array $raw
-     * @return OrderItemFile
+     * @return File
      */
     public static function fromArray(array $raw)
     {

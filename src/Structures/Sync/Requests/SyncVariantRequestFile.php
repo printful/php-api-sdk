@@ -3,13 +3,12 @@
 namespace Printful\Structures\Sync\Requests;
 
 use Printful\Exceptions\PrintfulSdkException;
+use Printful\Structures\File;
 
 class SyncVariantRequestFile
 {
-    const TYPE_DEFAULT = 'default';
-
     /** @var string */
-    public $type = self::TYPE_DEFAULT;
+    public $type = File::TYPE_DEFAULT;
 
     /** @var int */
     public $id;
@@ -27,7 +26,7 @@ class SyncVariantRequestFile
     {
         $file = new SyncVariantRequestFile;
 
-        $file->type = isset($array['type']) ? (string)$array['type'] : self::TYPE_DEFAULT;
+        $file->type = isset($array['type']) ? (string)$array['type'] : File::TYPE_DEFAULT;
         $file->id = isset($array['id']) ? (int)$array['id'] : null;
         $file->url = isset($array['url']) ? (string)$array['url'] : null;
 

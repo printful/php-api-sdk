@@ -3,6 +3,7 @@
 namespace Printful\Structures\Sync\Responses;
 
 use Printful\Structures\BaseItem;
+use Printful\Structures\File;
 
 class SyncVariantResponse extends BaseItem
 {
@@ -33,7 +34,7 @@ class SyncVariantResponse extends BaseItem
     /** @var SyncVariantProductResponse */
     public $product;
 
-    /** @var SyncVariantFileResponse[] */
+    /** @var File[] */
     public $files = [];
 
     /** @var SyncVariantOptionResponse[] */
@@ -61,7 +62,7 @@ class SyncVariantResponse extends BaseItem
 
         $variantFiles = (array)$array['files'] ?: [];
         foreach ($variantFiles as $file) {
-            $variant->files[] = SyncVariantFileResponse::fromArray($file);
+            $variant->files[] = File::fromArray($file);
         }
 
         $variantOptions = (array)$array['options'] ?: [];
