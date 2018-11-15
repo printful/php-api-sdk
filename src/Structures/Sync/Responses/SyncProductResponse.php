@@ -13,10 +13,10 @@ class SyncProductResponse
     /** @var string */
     public $name;
 
-    /** @var int */
+    /** @var int Total number of Sync Variants belonging to this product */
     public $variants = 0;
 
-    /** @var int */
+    /** @var int Number of synced Sync Variants belonging to this product */
     public $synced = 0;
 
     /**
