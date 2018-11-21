@@ -19,7 +19,7 @@ class OrderCostGroup
         $orderCosts = new self;
 
         $orderCosts->printfulCosts = !empty($raw['costs']) ? OrderCostsItem::fromArray($raw['costs']) : null;
-        $orderCosts->printfulCosts = !empty($raw['retail_costs']) ? OrderCostsItem::fromArray($raw['retail_costs']) : null;
+        $orderCosts->retailCosts = !empty($raw['retail_costs']) ? OrderCostsItem::fromArray($raw['retail_costs']) : null;
 
         return $orderCosts;
     }

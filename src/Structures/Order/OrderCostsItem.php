@@ -8,34 +8,52 @@ class OrderCostsItem extends BaseItem
 {
 
     /**
-     * @var string
+     * @var float
      * Total cost of all items
      */
     public $subtotal;
 
     /**
-     * @var string
+     * @var float
      * Discount sum
      */
     public $discount;
 
     /**
-     * @var string
+     * @var float
      *  Shipping costs
      */
     public $shipping;
 
     /**
-     * @var string
+     * @var float
      * Sum of taxes (not included in the item price)
      */
     public $tax;
 
     /**
-     * @var string
+     * @var float
      * Sum of taxes (not included in the item price)
      */
     public $total;
+
+    /**
+     * @var string
+     * 3 letter currency code
+     */
+    public $currency;
+
+    /**
+     * @var float
+     * Digitization costs
+     */
+    public $digitization;
+
+    /**
+     * @var float
+     * Sum of vat (not included in the item price)
+     */
+    public $vat;
 
     /**
      * @param array $raw
@@ -45,11 +63,14 @@ class OrderCostsItem extends BaseItem
     {
         $costs = new self;
 
-        $costs->subtotal = $raw['subtotal'] ? (float)$raw['subtotal'] : null;
-        $costs->discount = $raw['discount'] ? (float)$raw['discount'] : null;
-        $costs->shipping = $raw['shipping'] ? (float)$raw['shipping'] : null;
-        $costs->tax = $raw['tax'] ? (float)$raw['tax'] : null;
-        $costs->total = $raw['total'] ? (float)$raw['total'] : null;
+        $costs->subtotal = isset($raw['subtotal']) ? (float)$raw['subtotal'] : null;
+        $costs->discount = isset($raw['discount']) ? (float)$raw['discount'] : null;
+        $costs->shipping = isset($raw['shipping']) ? (float)$raw['shipping'] : null;
+        $costs->tax = isset($raw['tax']) ? (float)$raw['tax'] : null;
+        $costs->total = isset($raw['total']) ? (float)$raw['total'] : null;
+        $costs->currency = isset($raw['currency']) ? $raw['currency'] : null;
+        $costs->digitization = isset($raw['digitization']) ? (float)$raw['digitization'] : null;
+        $costs->vat = isset($raw['vat']) ? (float)$raw['vat'] : null;
 
         return $costs;
     }
@@ -65,6 +86,9 @@ class OrderCostsItem extends BaseItem
             'tax' => $this->tax,
             'subtotal' => $this->subtotal,
             'total' => $this->total,
+            'currency' => $this->currency,
+            'digitization' => $this->digitization,
+            'vat' => $this->vat,
         ];
     }
 }
