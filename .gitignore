@@ -2,3 +2,4 @@ vendor/
 composer.lock
 .idea
 tests/Credentials.php
+.env
