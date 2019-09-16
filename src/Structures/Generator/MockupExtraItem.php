@@ -24,6 +24,20 @@ class MockupExtraItem extends BaseItem
     public $url;
 
     /**
+     * Mockup style
+     *
+     * @var string
+     */
+    public $option;
+
+    /**
+     * Mockup style group
+     *
+     * @var string
+     */
+    public $optionGroup;
+
+    /**
      * @param array|string $raw
      * @return MockupExtraItem
      */
@@ -33,6 +47,8 @@ class MockupExtraItem extends BaseItem
 
         $item->title = $raw['title'];
         $item->url = $raw['url'];
+        $item->option = $raw['option'];
+        $item->optionGroup = $raw['option_group'];
 
         return $item;
     }
