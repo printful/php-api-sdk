@@ -91,10 +91,10 @@ class PrintfulMockupGenerator
      * Create an asynchronous generation task and return task that is in pending state
      * To retrieve the generation result use <b>PrintfulMockupGenerator::getGenerationTask</b> method.
      *
-     * @see PrintfulMockupGenerator::getGenerationTask
      * @param MockupGenerationParameters $parameters
      * @return GenerationResultItem Pending task
      * @throws Exceptions\PrintfulException
+     * @see PrintfulMockupGenerator::getGenerationTask
      */
     public function createGenerationTask(MockupGenerationParameters $parameters)
     {
@@ -185,12 +185,20 @@ class PrintfulMockupGenerator
      * This includes background images and area positions.
      *
      * @param int $productId
+     * @param string|null $orientation Used for wall art only {@see TemplateItem::ORIENTATION_HORIZONTAL} {@see TemplateItem::ORIENTATION_VERTICAL}
      * @return ProductTemplates
+     * @throws Exceptions\PrintfulApiException
      * @throws Exceptions\PrintfulException
      */
-    public function getProductTemplates($productId)
+    public function getProductTemplates($productId, $orientation = null)
     {
-        $response = $this->printfulClient->get('/mockup-generator/templates/' . $productId);
+        $query = [];
+
+        if ($orientation) {
+            $query['orientation'] = $orientation;
+        }
+
+        $response = $this->printfulClient->get('/mockup-generator/templates/' . $productId, $query);
 
         $templates = new ProductTemplates;
         $templates->version = (int)$response['version'];

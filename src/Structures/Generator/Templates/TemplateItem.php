@@ -9,6 +9,19 @@ use Printful\Structures\BaseItem;
 class TemplateItem extends BaseItem
 {
     /**
+     * Horizontal template orientation (used for wall art)
+     */
+    const ORIENTATION_HORIZONTAL = 'horizontal';
+    /**
+     * Any template orientation (used for wall art, usually means that the template is a square)
+     */
+    const ORIENTATION_ANY = 'any';
+    /**
+     * Vertical template orientation (used for wall art)
+     */
+    const ORIENTATION_VERTICAL = 'vertical';
+
+    /**
      * Template's id
      * @var int
      */
@@ -85,6 +98,11 @@ class TemplateItem extends BaseItem
     public $printAreaLeft;
 
     /**
+     * @var string
+     */
+    public $orientation;
+
+    /**
      * @param array $raw
      * @return TemplateItem
      */
@@ -104,6 +122,7 @@ class TemplateItem extends BaseItem
         $item->printAreaHeight = (int)$raw['print_area_height'];
         $item->printAreaTop = (int)$raw['print_area_top'];
         $item->printAreaLeft = (int)$raw['print_area_left'];
+        $item->orientation = (string)$raw['orientation'];
 
         return $item;
     }
