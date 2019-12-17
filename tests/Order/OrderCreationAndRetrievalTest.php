@@ -7,7 +7,7 @@ use Printful\Structures\Order\OrderCostGroup;
 use Printful\Structures\Order\OrderCostsItem;
 use Printful\Structures\Order\OrderCreationParameters;
 use Printful\Structures\Order\OrderItemCreationParameters;
-use Printful\Structures\Order\OrderItemFile;
+use Printful\Structures\File;
 use Printful\Structures\Order\OrderList;
 use Printful\Structures\Order\RecipientCreationParameters;
 use Printful\Tests\TestCase;
@@ -19,6 +19,9 @@ class OrderCreationAndRetrievalTest extends TestCase
      */
     private $printfulOrder;
 
+    /**
+     * @throws Exception
+     */
     protected function setUp()
     {
         parent::setUp();
@@ -64,7 +67,7 @@ class OrderCreationAndRetrievalTest extends TestCase
         $itemParams->quantity = 1;
         $itemParams->retailPrice = 23.99;
         $itemParams->addFile(
-            OrderItemFile::TYPE_DEFAULT,
+            File::TYPE_DEFAULT,
             'https://pbs.twimg.com/profile_images/1044686525/Get_Some.jpg'
         );
         $params->addItem($itemParams);
@@ -98,6 +101,10 @@ class OrderCreationAndRetrievalTest extends TestCase
         self::assertInstanceOf(OrderList::class, $orderList, 'Order List retrieved');
     }
 
+    /**
+     * @throws \Printful\Exceptions\PrintfulApiException
+     * @throws \Printful\Exceptions\PrintfulException
+     */
     public function testOrderCostsCanBeEstimated()
     {
         $externalId = uniqid();
@@ -139,7 +146,7 @@ class OrderCreationAndRetrievalTest extends TestCase
         $itemParams->name = 'Some item name';
         $itemParams->sku = '00000000';
         $itemParams->addFile(
-            OrderItemFile::TYPE_DEFAULT,
+            File::TYPE_DEFAULT,
             'https://placeholdit.imgix.net/~text?txtsize=200&txt=2400%C3%972400&w=2400&h=2400'
         );
         $params->addItem($itemParams);

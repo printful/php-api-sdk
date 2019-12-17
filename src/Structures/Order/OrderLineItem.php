@@ -3,6 +3,7 @@
 namespace Printful\Structures\Order;
 
 use Printful\Structures\BaseItem;
+use Printful\Structures\File;
 
 class OrderLineItem extends BaseItem
 {
@@ -43,7 +44,7 @@ class OrderLineItem extends BaseItem
     public $name;
 
     /**
-     * @var OrderItemFile[]
+     * @var File[]
      */
     public $files = [];
 
@@ -81,7 +82,7 @@ class OrderLineItem extends BaseItem
         $item->sku = $raw['sku'];
 
         foreach ($raw['files'] as $v) {
-            $item->files[] = OrderItemFile::fromArray($v);
+            $item->files[] = File::fromArray($v);
         }
 
         foreach ($raw['options'] as $v) {
