@@ -2,115 +2,34 @@
 
 namespace Printful\Tests\Catalog;
 
-use Printful\Structures\Sync\Responses\SyncProductResponse;
-use Printful\Structures\Sync\Responses\SyncProductsPagingResponse;
-use Printful\Structures\Sync\Responses\SyncProductsResponse;
+use Printful\Structures\Catalog\Product;
+use Printful\Structures\Catalog\ProductList;
+use Printful\Structures\Catalog\ProductVariant;
+use Printful\Structures\Catalog\ProductVariantList;
 
 class GetRequestTest extends CatalogTestBase
 {
-    /**
-     * Tests Get SyncProduct list functionality
-     *
-     * @throws \Printful\Exceptions\PrintfulApiException
-     * @throws \Printful\Exceptions\PrintfulException
-     */
-    public function testGetCatalogProductList()
-    {
-        $result = $this->apiEndpoint->getProducts();
-        $this->assertInstanceOf(SyncProductsResponse::class, $result);
+	public function testProductListCanBeRetrieved()
+	{
+		$productList = $this->apiEndpoint->getList();
+		self::assertInstanceOf(ProductList::class, $productList, 'Product List retrieved');
+	}
 
-        foreach ($result->result as $item) {
-            $this->assertInstanceOf(SyncProductResponse::class, $item);
-        }
+	public function testProductsCanBeRetrieved()
+	{
+		$products = $this->apiEndpoint->getProducts();
+		self::assertInstanceOf(Product::class, $products[0], 'Products retrieved');
+	}
 
-        $this->assertInstanceOf(SyncProductsPagingResponse::class, $result->paging);
-    }
+	public function testProductVariantCanBeRetrieved()
+	{
+		$productVariant = $this->apiEndpoint->getProductVariant();
+		self::assertInstanceOf(ProductVariant::class, $productVariant, 'Product Variant retrieved');
+	}
 
-    /**
-     * Tests GET Single SyncProduct by ID
-     *
-     * @throws \Printful\Exceptions\PrintfulApiException
-     * @throws \Printful\Exceptions\PrintfulException
-     */
-    public function testGetSingleProductById()
-    {
-        $productsResponse = $this->apiEndpoint->getProducts();
-        if (empty($productsResponse->result)) {
-            $this->fail('Can\'t test getSingleProduct. No products in store');
-            return;
-        }
-
-        $prod = $productsResponse->result[0];
-        $result = $this->apiEndpoint->getProduct($prod->id);
-
-        $this->assertEquals($prod, $result->syncProduct);
-    }
-
-    /**
-     * Tests GET Single SyncProduct by External_id
-     *
-     * @throws \Printful\Exceptions\PrintfulApiException
-     * @throws \Printful\Exceptions\PrintfulException
-     */
-    public function testGetSingleProductByExternalId()
-    {
-        $productsResponse = $this->apiEndpoint->getProducts();
-        if (empty($productsResponse->result)) {
-            $this->fail('Can\'t test getSingleProduct. No products in store');
-            return;
-        }
-
-        $prod = $productsResponse->result[0];
-        $result = $this->apiEndpoint->getProduct('@' . $prod->externalId);
-
-        $this->assertEquals($prod, $result->syncProduct);
-    }
-
-    /**
-     * Test GET single SyncVariant by ID
-     *
-     * @throws \Printful\Exceptions\PrintfulApiException
-     * @throws \Printful\Exceptions\PrintfulException
-     */
-    public function testGetSingleVariantById()
-    {
-        $productsResponse = $this->apiEndpoint->getProducts();
-        if (empty($productsResponse->result)) {
-            $this->fail('Can\'t test getSingleProduct. No products in store');
-            return;
-        }
-
-        $prod = $productsResponse->result[0];
-        $result = $this->apiEndpoint->getProduct('@' . $prod->externalId);
-
-        $variant = $result->syncVariants[0];
-
-        $result = $this->apiEndpoint->getVariant($variant->id);
-
-        $this->assertEquals($variant, $result);
-    }
-
-    /**
-     * Test GET single SyncVariant by External ID
-     *
-     * @throws \Printful\Exceptions\PrintfulApiException
-     * @throws \Printful\Exceptions\PrintfulException
-     */
-    public function testGetSingleVariantByExternalId()
-    {
-        $productsResponse = $this->apiEndpoint->getProducts();
-        if (empty($productsResponse->result)) {
-            $this->fail('Can\'t test getSingleProduct. No products in store');
-            return;
-        }
-
-        $prod = $productsResponse->result[0];
-        $result = $this->apiEndpoint->getProduct('@' . $prod->externalId);
-
-        $variant = $result->syncVariants[0];
-
-        $result = $this->apiEndpoint->getVariant('@' . $variant->externalId);
-
-        $this->assertEquals($variant, $result);
-    }
+	public function testProductVariantListCanBeRetrieved()
+	{
+		$productVariantList = $this->apiEndpoint->getProductVariantList();
+		self::assertInstanceOf(ProductVariantList::class, $productVariantList, 'Product Variant List retrieved');
+	}
 }

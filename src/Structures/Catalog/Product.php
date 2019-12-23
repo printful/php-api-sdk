@@ -2,6 +2,8 @@
 
 namespace Printful\Structures\Catalog;
 
+use Printful\Structures\BaseItem;
+
 class Product extends BaseItem
 {
     /**
@@ -12,7 +14,7 @@ class Product extends BaseItem
 	/**
 	 * @var string
 	 */
-    public $name;
+    public $type;
 
     /**
      * @var string
@@ -64,6 +66,11 @@ class Product extends BaseItem
 	 */
     public $description;
 
+	/**
+	 * @var array
+	 */
+    public $dimensions;
+
     /**
      * @param array $raw
      * @return Product
@@ -73,12 +80,12 @@ class Product extends BaseItem
         $product = new Product();
 
 		$product->id = (int)$raw['id'];
-		$product->name = $raw['name'];
-		$product->typeName = $raw['typeName'];
+		$product->type = $raw['type'];
+		$product->typeName = $raw['type_name'];
 		$product->brand = $raw['brand'];
 		$product->model = $raw['model'];
 		$product->image = $raw['image'];
-		$product->variantCount = $raw['name'];
+		$product->variantCount = $raw['variant_count'];
 		$product->currency = $raw['currency'];
 		foreach ($raw['files'] as $v) {
 			$product->files[] = ProductFile::fromArray($v);
@@ -87,8 +94,9 @@ class Product extends BaseItem
 		foreach ($raw['options'] as $v) {
 			$product->options[] = ProductOption::fromArray($v);
 		}
-		$product->isDiscontinued = $raw['isDiscontinued'];
+		$product->isDiscontinued = $raw['is_discontinued'];
 		$product->description = $raw['description'];
+		$product->dimensions = $raw['dimensions'];
 
         return $product;
     }

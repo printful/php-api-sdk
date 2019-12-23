@@ -2,6 +2,8 @@
 
 namespace Printful\Structures\Catalog;
 
+use Printful\Structures\BaseItem;
+
 class ProductFile extends BaseItem
 {
 	/**
