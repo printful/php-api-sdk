@@ -2,6 +2,8 @@
 
 namespace Printful\Structures\Order;
 
+use Printful\Structures\File;
+
 class OrderItemCreationParameters
 {
     /**
@@ -35,7 +37,7 @@ class OrderItemCreationParameters
     public $sku;
 
     /**
-     * @var OrderItemFile[]
+     * @var File[]
      */
     private $files = [];
 
@@ -80,7 +82,7 @@ class OrderItemCreationParameters
     }
 
     /**
-     * @return OrderItemFile[]
+     * @return File[]
      */
     public function getFiles()
     {
