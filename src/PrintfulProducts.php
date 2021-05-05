@@ -47,6 +47,7 @@ class PrintfulProducts
     public function getProducts($offset = 0, $limit = 20)
     {
         $requestData = [
+            'search' => (string)$search,
             'offset' => (int)$offset,
             'limit' => (int)$limit,
         ];
