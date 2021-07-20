@@ -17,6 +17,11 @@ class OrderItemCreationParameters
     public $variantId;
 
     /**
+     * @var int - Sync Variant ID of the item ordered
+     */
+    public $syncVariantId;
+
+    /**
      * @var int
      */
     public $quantity;
@@ -105,6 +110,7 @@ class OrderItemCreationParameters
         return [
             'external_id' => $this->externalId,
             'variant_id' => $this->variantId,
+            'sync_variant_id' => $this->syncVariantId,
             'quantity' => $this->quantity,
             'retail_price' => $this->retailPrice,
             'name' => $this->name,
