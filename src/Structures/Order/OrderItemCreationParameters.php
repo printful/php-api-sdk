@@ -17,6 +17,11 @@ class OrderItemCreationParameters
     public $variantId;
 
     /**
+     * @var int - SyncVariant ID of the item ordered
+     */
+    public $syncVariantId;
+
+    /**
      * @var int
      */
     public $quantity;
@@ -37,14 +42,14 @@ class OrderItemCreationParameters
     public $sku;
 
     /**
-     * @var File[]
+     * @var File[]|null
      */
-    private $files = [];
+    private $files;
 
     /**
-     * @var OrderItemOption[]
+     * @var OrderItemOption[]|null
      */
-    private $options = [];
+    private $options;
 
     /**
      * There are two ways to assign a print file to the item.
@@ -60,6 +65,10 @@ class OrderItemCreationParameters
      */
     public function addFile($type, $url, $filename = null, $id = null, $isVisible = true)
     {
+        $this->files = is_null($this->options)
+            ? []
+            : $this->files;
+
         $this->files[] = [
             'type' => $type,
             'url' => $url,
@@ -75,6 +84,10 @@ class OrderItemCreationParameters
      */
     public function addOption($id, $value)
     {
+        $this->options = is_null($this->options)
+            ? []
+            : $this->options;
+
         $this->options[] = [
             'id' => $id,
             'value' => $value,
@@ -82,7 +95,7 @@ class OrderItemCreationParameters
     }
 
     /**
-     * @return File[]
+     * @return File[]|null
      */
     public function getFiles()
     {
@@ -90,7 +103,7 @@ class OrderItemCreationParameters
     }
 
     /**
-     * @return OrderItemOption[]
+     * @return OrderItemOption[]|null
      */
     public function getOptions()
     {
@@ -102,15 +115,30 @@ class OrderItemCreationParameters
      */
     public function toArray()
     {
-        return [
+        $array = [
             'external_id' => $this->externalId,
-            'variant_id' => $this->variantId,
             'quantity' => $this->quantity,
             'retail_price' => $this->retailPrice,
             'name' => $this->name,
             'sku' => $this->sku,
-            'files' => $this->files,
-            'options' => $this->options,
         ];
+
+        if (!is_null($this->variantId)) {
+            $array['variant_id'] = $this->variantId;
+        }
+
+        if (!is_null($this->syncVariantId)) {
+            $array['sync_variant_id'] = $this->syncVariantId;
+        }
+
+        if (!is_null($this->files)) {
+            $array['files'] = $this->files;
+        }
+
+        if (!is_null($this->options)) {
+            $array['options'] = $this->options;
+        }
+
+        return $array;
     }
 }
