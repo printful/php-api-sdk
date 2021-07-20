@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Printful;
-
 
 use Printful\Structures\Generator\GenerationResultItem;
 use Printful\Structures\Generator\MockupGenerationFile;
@@ -33,12 +31,19 @@ class PrintfulMockupGenerator
      * Get all available templates for specific printful product
      *
      * @param int $productId Printful product id
+     * @param string|null $orientation Used for products with multiple orientations (e.g. wall art) {@see TemplateItem::ORIENTATION_HORIZONTAL} {@see TemplateItem::ORIENTATION_VERTICAL}
      * @return ProductPrintfiles
      * @throws Exceptions\PrintfulException
      */
-    public function getProductPrintfiles($productId)
+    public function getProductPrintfiles($productId, $orientation = null)
     {
-        $raw = $this->printfulClient->get('mockup-generator/printfiles/' . $productId);
+        $query = [];
+
+        if ($orientation) {
+            $query['orientation'] = $orientation;
+        }
+
+        $raw = $this->printfulClient->get('mockup-generator/printfiles/' . $productId, $query);
 
         $productPrintfiles = new ProductPrintfiles;
 
@@ -185,7 +190,7 @@ class PrintfulMockupGenerator
      * This includes background images and area positions.
      *
      * @param int $productId
-     * @param string|null $orientation Used for wall art only {@see TemplateItem::ORIENTATION_HORIZONTAL} {@see TemplateItem::ORIENTATION_VERTICAL}
+     * @param string|null $orientation Used for products with multiple orientations (e.g. wall art) {@see TemplateItem::ORIENTATION_HORIZONTAL} {@see TemplateItem::ORIENTATION_VERTICAL}
      * @return ProductTemplates
      * @throws Exceptions\PrintfulApiException
      * @throws Exceptions\PrintfulException

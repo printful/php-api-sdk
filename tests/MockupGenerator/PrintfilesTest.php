@@ -14,13 +14,14 @@ class PrintfilesTest extends TestCase
     /**
      * @dataProvider productProvider
      * @param $productId
+     * @param string|null $orientation
      * @throws \Printful\Exceptions\PrintfulException
      */
-    public function testPrintfileRetrieval($productId)
+    public function testPrintfileRetrieval($productId, $orientation = null)
     {
         $generator = new PrintfulMockupGenerator($this->api);
 
-        $productPrintfiles = $generator->getProductPrintfiles($productId);
+        $productPrintfiles = $generator->getProductPrintfiles($productId, $orientation);
 
         self::assertEquals($productId, $productPrintfiles->productId);
 
@@ -49,10 +50,11 @@ class PrintfilesTest extends TestCase
     public function productProvider()
     {
         return [
-            [1], // Poster
+            [1],
+            [1, 'vertical'], // Poster
+            [1, 'horizontal'], // Poster
             [19], // 11oz mug
             [83], // Square Pillow Case w/ stuffing
-            [230], // PL401 Sublimation T-Shirt
         ];
     }
 }

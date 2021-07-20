@@ -44,11 +44,14 @@ class PrintfulProducts
      * @throws Exceptions\PrintfulApiException
      * @throws Exceptions\PrintfulException
      */
-    public function getProducts($offset = 0, $limit = 20)
+
+    public function getProducts($offset = 0, $limit = 20, $status = 'all', $search = '')
     {
         $requestData = [
             'offset' => (int)$offset,
-            'limit' => (int)$limit,
+            'limit'  => (int)$limit,
+            'status' => (string)$status,
+            'search' => (string)$search,
         ];
 
         $response = $this->printfulClient->get(PrintfulProducts::ENDPOINT_PRODUCTS, $requestData);
