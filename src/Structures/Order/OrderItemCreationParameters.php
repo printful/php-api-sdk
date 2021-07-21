@@ -65,7 +65,7 @@ class OrderItemCreationParameters
      */
     public function addFile($type, $url, $filename = null, $id = null, $isVisible = true)
     {
-        $this->files = is_null($this->options)
+        $this->files = is_null($this->files)
             ? []
             : $this->files;
 
