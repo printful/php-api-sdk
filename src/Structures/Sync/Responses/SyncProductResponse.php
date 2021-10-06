@@ -13,6 +13,9 @@ class SyncProductResponse
     /** @var string */
     public $name;
 
+    /** @var string */
+    public $thumbnailUrl;
+
     /** @var int Total number of Sync Variants belonging to this product */
     public $variants = 0;
 
@@ -32,6 +35,7 @@ class SyncProductResponse
         $syncProduct->id = (int)$array['id'];
         $syncProduct->externalId = (string)$array['external_id'];
         $syncProduct->name = (string)$array['name'];
+        $syncProduct->thumbnailUrl = (string)$array['thumbnail_url'];
         $syncProduct->variants = (int)$array['variants'];
         $syncProduct->synced = (int)$array['synced'];
 
