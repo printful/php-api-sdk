@@ -136,7 +136,7 @@ class PrintfulApiClient
         return $this->lastResponse;
     }
 
-    public function setOauthToken(string $token)
+    public function setOauthToken(string $token): void
     {
         $this->oauthToken = $token;
     }
@@ -208,13 +208,16 @@ class PrintfulApiClient
 
     /**
      * @param $curl resource
+     * @throws PrintfulException
      */
     private function setCredentials($curl): void
     {
-        if ($this->oauthToken === '') {
+        if ($this->oauthToken === null) {
             curl_setopt($curl, CURLOPT_USERPWD, $this->key);
-        } else {
+        } else if ($this->key === null) {
             curl_setopt($curl, CURLOPT_HTTPHEADER, ["Authorization: Bearer $this->oauthToken" ]);
+        } else {
+            throw new PrintfulException('Either OAuth token or store key must be set to make this request.');
         }
     }
 }
