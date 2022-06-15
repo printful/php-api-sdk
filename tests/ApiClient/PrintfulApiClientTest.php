@@ -34,7 +34,7 @@ class PrintfulApiClientTest extends TestCase
      */
     public function testGet_withOauthToken_returnsWithNoAuthErrors(): void
     {
-        $sut = new PrintfulApiClient(Credentials::$apiKey);
+        $sut = new PrintfulApiClient();
 
         $sut->setOauthToken(Credentials::$oAuthToken);
 

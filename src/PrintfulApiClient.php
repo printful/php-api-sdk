@@ -43,16 +43,15 @@ class PrintfulApiClient
     public $curlTimeout = 20;
 
     /**
-     * @param string $key Printful Store API key
      * @throws \Printful\Exceptions\PrintfulException if the library failed to initialize
      */
-    public function __construct($key)
+    public function __construct(?string $key = null, ?string $oauthToken = null)
     {
-        if (strlen($key) < 32) {
-            throw new PrintfulException('Missing or invalid Printful store key!');
+        if ($key && strlen($key) < 32) {
+            throw new PrintfulException('Invalid Printful store key!');
         }
-
         $this->key = $key;
+        $this->oauthToken = $oauthToken;
     }
 
     /**
@@ -212,7 +211,7 @@ class PrintfulApiClient
      */
     private function setCredentials($curl): void
     {
-        if ($this->oauthToken === null) {
+        if ($this->oauthToken === '') {
             curl_setopt($curl, CURLOPT_USERPWD, $this->key);
         } else {
             curl_setopt($curl, CURLOPT_HTTPHEADER, ["Authorization: Bearer $this->oauthToken" ]);
