@@ -18,6 +18,9 @@ class PrintfulApiClientTest extends TestCase
     public function testGet_returnsWithNoAuthErrors($key): void
     {
         $sut = new PrintfulApiClient($key);
+
+        $this->overrideUrl($sut);
+
         $sut->get('orders', [
             'offset' => 0,
             'limit' => 10,
@@ -34,5 +37,12 @@ class PrintfulApiClientTest extends TestCase
         yield 'Bearer OAuth Token' => [
             Credentials::$oAuthToken
         ];
+    }
+
+    private function overrideUrl(PrintfulApiClient $sut): void
+    {
+        if (Credentials::$apiUrlOverride) {
+            $sut->url = Credentials::$apiUrlOverride;
+        }
     }
 }

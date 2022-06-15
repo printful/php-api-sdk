@@ -14,7 +14,7 @@ class PrintfulApiClient
      * Printful API key
      * @var string
      */
-    private $key = '';
+    private $key;
 
     private $lastResponseRaw;
 
@@ -154,7 +154,12 @@ class PrintfulApiClient
 
         $curl = curl_init($this->url . $url);
 
-        curl_setopt($curl, CURLOPT_USERPWD, $this->key);
+        if ($this->hasOldApiKey()) {
+            curl_setopt($curl, CURLOPT_USERPWD, $this->key);
+        } else {
+            curl_setopt($curl, CURLOPT_HTTPHEADER, ['Authorization: Bearer ' . $this->key]);
+        }
+
         curl_setopt($curl, CURLOPT_CUSTOMREQUEST, $method);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true);
@@ -193,5 +198,10 @@ class PrintfulApiClient
             throw $e;
         }
         return $response['result'];
+    }
+
+    private function hasOldApiKey(): bool
+    {
+        return (bool)preg_match('/^\w+-\w+-\w+:\w+-\w+$/', $this->key);
     }
 }
