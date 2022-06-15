@@ -12,3 +12,19 @@ API endpoint documentation can be found here: https://www.printful.com/docs
 Using composer, run `composer require printful/php-api-sdk`
 
 Check out **example** and **test** directories for more specific usage examples.
+
+
+# OAuth
+[OAuth 2.0](https://developers.printful.com/docs/#section/Authentication:~:text=OAuth%202.0%20is%20the%20preferred%20way%20of%20doing%20authorization%20in%20Printful%20API.)
+is the preferred way of doing authorization in Printful API. Read more about how to acquire and
+use an access token in our docs: https://developers.printful.com/docs/#section/Authentication
+
+In order to use OAuth through the SDK you can set you can pass it in as the second argument to the constructor of the client
+```php
+$client = new PrintfulApiClient('', $myOauthToken)
+```
+Or you can set the token after client has already been constructed
+```php
+$client = new PrintfulApiClient()
+$client->setOauthToken($myOauthToken)
+```
