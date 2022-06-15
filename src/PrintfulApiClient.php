@@ -16,6 +16,12 @@ class PrintfulApiClient
      */
     private $key;
 
+    /**
+     * Printful OAuth token
+     * @var string
+     */
+    private $oauthToken;
+
     private $lastResponseRaw;
 
     private $lastResponse;
@@ -131,6 +137,11 @@ class PrintfulApiClient
         return $this->lastResponse;
     }
 
+    public function setOauthToken(string $token)
+    {
+        $this->oauthToken = $token;
+    }
+
     /**
      * Internal request implementation
      * @param string $method POST, GET, etc.
@@ -196,20 +207,15 @@ class PrintfulApiClient
         return $response['result'];
     }
 
-    private function hasOldApiKey(): bool
-    {
-        return (bool)preg_match('/^\w+-\w+-\w+:\w+-\w+$/', $this->key);
-    }
-
     /**
      * @param $curl resource
      */
     private function setCredentials($curl): void
     {
-        if ($this->hasOldApiKey()) {
+        if ($this->oauthToken === null) {
             curl_setopt($curl, CURLOPT_USERPWD, $this->key);
         } else {
-            curl_setopt($curl, CURLOPT_HTTPHEADER, ['Authorization: Bearer ' . $this->key]);
+            curl_setopt($curl, CURLOPT_HTTPHEADER, ["Authorization: Bearer $this->oauthToken" ]);
         }
     }
 }

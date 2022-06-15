@@ -12,12 +12,12 @@ use Printful\Tests\TestCase;
 class PrintfulApiClientTest extends TestCase
 {
     /**
-     * @dataProvider credentialProvider
      * @throws \Printful\Exceptions\PrintfulException
+     * @throws \Printful\Exceptions\PrintfulApiException
      */
-    public function testGet_returnsWithNoAuthErrors($key): void
+    public function testGet_withApiKey_returnsWithNoAuthErrors(): void
     {
-        $sut = new PrintfulApiClient($key);
+        $sut = new PrintfulApiClient(Credentials::$apiKey);
 
         $this->overrideUrl($sut);
 
@@ -28,15 +28,23 @@ class PrintfulApiClientTest extends TestCase
         ]);
     }
 
-    public function credentialProvider(): iterable
+    /**
+     * @throws \Printful\Exceptions\PrintfulException
+     * @throws \Printful\Exceptions\PrintfulApiException
+     */
+    public function testGet_withOauthToken_returnsWithNoAuthErrors(): void
     {
-        yield 'Basic Api Key' => [
-            Credentials::$apiKey
-        ];
+        $sut = new PrintfulApiClient(Credentials::$apiKey);
 
-        yield 'Bearer OAuth Token' => [
-            Credentials::$oAuthToken
-        ];
+        $sut->setOauthToken(Credentials::$oAuthToken);
+
+        $this->overrideUrl($sut);
+
+        $sut->get('orders', [
+            'offset' => 0,
+            'limit' => 10,
+            'status' => null,
+        ]);
     }
 
     private function overrideUrl(PrintfulApiClient $sut): void
