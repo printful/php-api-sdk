@@ -43,9 +43,11 @@ class PrintfulApiClient
     public $curlTimeout = 20;
 
     /**
+     * @param ?string $key
+     * @param ?string $oauthToken
      * @throws \Printful\Exceptions\PrintfulException if the library failed to initialize
      */
-    public function __construct(?string $key = null, ?string $oauthToken = null)
+    public function __construct($key = null, $oauthToken = null)
     {
         if ($key === null && $oauthToken === null) {
             throw new PrintfulException('Missing credentials, please provide a store key or an OAuth token!');
@@ -210,7 +212,7 @@ class PrintfulApiClient
      * @param $curl resource
      * @throws PrintfulException
      */
-    private function setCredentials($curl): void
+    private function setCredentials($curl)
     {
         if ($this->oauthToken !== null) {
             curl_setopt($curl, CURLOPT_HTTPHEADER, ["Authorization: Bearer $this->oauthToken" ]);
