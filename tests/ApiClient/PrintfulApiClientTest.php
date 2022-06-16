@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Printful\Tests\ApiClient;
 
 
+use Printful\Exceptions\PrintfulException;
 use Printful\PrintfulApiClient;
 use Printful\Tests\Credentials;
 use Printful\Tests\TestCase;
@@ -34,9 +35,7 @@ class PrintfulApiClientTest extends TestCase
      */
     public function testGet_withOauthToken_returnsWithNoAuthErrors(): void
     {
-        $sut = new PrintfulApiClient();
-
-        $sut->setOauthToken(Credentials::$oAuthToken);
+        $sut = new PrintfulApiClient(Credentials::$apiKey, Credentials::$oAuthToken);
 
         $this->overrideUrl($sut);
 
@@ -45,6 +44,12 @@ class PrintfulApiClientTest extends TestCase
             'limit' => 10,
             'status' => null,
         ]);
+    }
+
+    public function testConstruct_withNoCredentials_throwsException(): void
+    {
+        $this->expectException(PrintfulException::class);
+        new PrintfulApiClient();
     }
 
     private function overrideUrl(PrintfulApiClient $sut): void

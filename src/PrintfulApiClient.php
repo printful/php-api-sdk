@@ -47,9 +47,14 @@ class PrintfulApiClient
      */
     public function __construct(?string $key = null, ?string $oauthToken = null)
     {
+        if ($key === null && $oauthToken === null) {
+            throw new PrintfulException('Missing credentials, please provide a store key or an OAuth token!');
+        }
+
         if ($key && strlen($key) < 32) {
             throw new PrintfulException('Invalid Printful store key!');
         }
+
         $this->key = $key;
         $this->oauthToken = $oauthToken;
     }
@@ -136,11 +141,6 @@ class PrintfulApiClient
         return $this->lastResponse;
     }
 
-    public function setOauthToken(string $token): void
-    {
-        $this->oauthToken = $token;
-    }
-
     /**
      * Internal request implementation
      * @param string $method POST, GET, etc.
@@ -212,10 +212,10 @@ class PrintfulApiClient
      */
     private function setCredentials($curl): void
     {
-        if ($this->oauthToken === null) {
-            curl_setopt($curl, CURLOPT_USERPWD, $this->key);
-        } else if ($this->key === null) {
+        if ($this->oauthToken !== null) {
             curl_setopt($curl, CURLOPT_HTTPHEADER, ["Authorization: Bearer $this->oauthToken" ]);
+        } else if ($this->key !== null) {
+            curl_setopt($curl, CURLOPT_USERPWD, $this->key);
         } else {
             throw new PrintfulException('Either OAuth token or store key must be set to make this request.');
         }
