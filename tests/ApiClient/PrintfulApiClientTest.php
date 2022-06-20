@@ -1,9 +1,6 @@
 <?php
 
-declare(strict_types=1);
-
 namespace Printful\Tests\ApiClient;
-
 
 use Printful\Exceptions\PrintfulException;
 use Printful\PrintfulApiClient;
@@ -16,7 +13,7 @@ class PrintfulApiClientTest extends TestCase
      * @throws \Printful\Exceptions\PrintfulException
      * @throws \Printful\Exceptions\PrintfulApiException
      */
-    public function testGet_withApiKey_returnsWithNoAuthErrors(): void
+    public function testGet_withApiKey_returnsWithNoAuthErrors()
     {
         $sut = new PrintfulApiClient(Credentials::$apiKey);
 
@@ -33,7 +30,7 @@ class PrintfulApiClientTest extends TestCase
      * @throws \Printful\Exceptions\PrintfulException
      * @throws \Printful\Exceptions\PrintfulApiException
      */
-    public function testGet_withOauthToken_returnsWithNoAuthErrors(): void
+    public function testGet_withOauthToken_returnsWithNoAuthErrors()
     {
         $sut = new PrintfulApiClient(Credentials::$apiKey, Credentials::$oAuthToken);
 
@@ -46,13 +43,13 @@ class PrintfulApiClientTest extends TestCase
         ]);
     }
 
-    public function testConstruct_withNoCredentials_throwsException(): void
+    public function testConstruct_withNoCredentials_throwsException()
     {
         $this->expectException(PrintfulException::class);
         new PrintfulApiClient();
     }
 
-    private function overrideUrl(PrintfulApiClient $sut): void
+    private function overrideUrl(PrintfulApiClient $sut)
     {
         if (Credentials::$apiUrlOverride) {
             $sut->url = Credentials::$apiUrlOverride;
