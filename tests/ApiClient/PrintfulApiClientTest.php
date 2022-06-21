@@ -32,7 +32,7 @@ class PrintfulApiClientTest extends TestCase
      */
     public function testGet_withOauthToken_returnsWithNoAuthErrors()
     {
-        $sut = new PrintfulApiClient(Credentials::$apiKey, Credentials::$oAuthToken);
+        $sut = new PrintfulApiClient(null, Credentials::$oAuthToken);
 
         $this->overrideUrl($sut);
 
