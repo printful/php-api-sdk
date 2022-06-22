@@ -10,15 +10,19 @@ use Printful\Exceptions\PrintfulException;
  */
 class PrintfulApiClient
 {
+    const TYPE_LEGACY_STORE_KEY = 'legacy-store-key';
+    const TYPE_OAUTH_TOKEN = 'oauth-token';
+    const DEFAULT_KEY = self::TYPE_LEGACY_STORE_KEY;
+
     /**
      * Printful API key
-     * @var string
+     * @var string|null
      */
     private $key;
 
     /**
      * Printful OAuth token
-     * @var string
+     * @var string|null
      */
     private $oauthToken;
 
@@ -43,22 +47,35 @@ class PrintfulApiClient
     public $curlTimeout = 20;
 
     /**
-     * @param ?string $key
-     * @param ?string $oauthToken
+     * @param string $key
      * @throws \Printful\Exceptions\PrintfulException if the library failed to initialize
      */
-    public function __construct($key = null, $oauthToken = null)
+    public function __construct($key, $type = self::DEFAULT_KEY)
     {
-        if ($key === null && $oauthToken === null) {
-            throw new PrintfulException('Missing credentials, please provide a store key or an OAuth token!');
-        }
-
-        if ($key && strlen($key) < 32) {
+        if ($type === self::TYPE_LEGACY_STORE_KEY && strlen($key) < 32) {
             throw new PrintfulException('Invalid Printful store key!');
         }
 
-        $this->key = $key;
-        $this->oauthToken = $oauthToken;
+        $this->key = $type === self::TYPE_LEGACY_STORE_KEY ? $key : null;
+        $this->oauthToken = $type === self::TYPE_OAUTH_TOKEN ? $key : null;
+    }
+
+    /**
+     * @param string $key
+     * @throws PrintfulException
+     */
+    public static function createOauthClient($key)
+    {
+        return new self($key, self::TYPE_OAUTH_TOKEN);
+    }
+
+    /**
+     * @param string $key
+     * @throws PrintfulException
+     */
+    public static function createLegacyStoreKeyClient($key)
+    {
+        return new self($key, self::TYPE_LEGACY_STORE_KEY);
     }
 
     /**
@@ -215,8 +232,8 @@ class PrintfulApiClient
     private function setCredentials($curl)
     {
         if ($this->oauthToken !== null) {
-            curl_setopt($curl, CURLOPT_HTTPHEADER, ["Authorization: Bearer $this->oauthToken" ]);
-        } else if ($this->key !== null) {
+            curl_setopt($curl, CURLOPT_HTTPHEADER, ["Authorization: Bearer $this->oauthToken"]);
+        } elseif ($this->key !== null) {
             curl_setopt($curl, CURLOPT_USERPWD, $this->key);
         } else {
             throw new PrintfulException('Either OAuth token or store key must be set to make this request.');

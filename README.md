@@ -18,21 +18,23 @@ Check out **example** and **test** directories for more specific usage examples.
 is the preferred way of doing authorization in Printful API. Read more about how to acquire and
 use an access token in our docs: https://developers.printful.com/docs/#section/Authentication
 
-In order to use OAuth through the SDK you can set you can pass it in as the second argument to the constructor of the client
+You can create an OAuth enabled APIClient using the following factory method:
 ```php
-$client = new PrintfulApiClient(null, $myOauthToken)
+...
+use Printful\PrintfulApiClient;
+... 
+$client = PrintfulApiClient::createOauthClient('my-oauth-token')
 ```
 
-You can still use the old store keys
+You can still use the old store keys, like this:
+```php
+...
+use Printful\PrintfulApiClient;
+... 
+$client = PrintfulApiClient::createLegacyStoreKeyClient('my-legacy-store-key')
+```
+or, by using the constructor like this:
 ```php
 $client = new PrintfulApiClient($storeKey)
 ```
-But theses are being phased out and will no longer work after
-September 30th, 2022.
-
-If you pass in both a store key and an OAuth token, the OAuth
-token will take precedence.
-```php
-// $myOauthToken will be used when making requests, not $storeKey
-$client = new PrintfulApiClient($storeKey, $myOauthToken)
-```
+However, please note that legacy keys will be phased out on September 30th, 2022.

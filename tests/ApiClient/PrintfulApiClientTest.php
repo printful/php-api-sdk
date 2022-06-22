@@ -9,21 +9,24 @@ use Printful\Tests\TestCase;
 
 class PrintfulApiClientTest extends TestCase
 {
+
     /**
      * @throws \Printful\Exceptions\PrintfulException
      * @throws \Printful\Exceptions\PrintfulApiException
      */
     public function testGet_withApiKey_returnsWithNoAuthErrors()
     {
-        $sut = new PrintfulApiClient(Credentials::$apiKey);
+        $sut = PrintfulApiClient::createLegacyStoreKeyClient(Credentials::$apiKey);
 
         $this->overrideUrl($sut);
 
-        $sut->get('orders', [
+        $result = $sut->get('orders', [
             'offset' => 0,
             'limit' => 10,
             'status' => null,
         ]);
+
+        self::assertNotNull($result);
     }
 
     /**
@@ -32,21 +35,34 @@ class PrintfulApiClientTest extends TestCase
      */
     public function testGet_withOauthToken_returnsWithNoAuthErrors()
     {
-        $sut = new PrintfulApiClient(null, Credentials::$oAuthToken);
+        $sut = PrintfulApiClient::createOauthClient(Credentials::$oAuthToken);
 
         $this->overrideUrl($sut);
 
+        $result = $sut->get('orders', [
+            'offset' => 0,
+            'limit' => 10,
+            'status' => null,
+        ]);
+        self::assertNotNull($result);
+    }
+
+    /**
+     * @throws \Printful\Exceptions\PrintfulException
+     * @throws \Printful\Exceptions\PrintfulApiException
+     */
+    public function testGet_withInvalidCredentials_throwsApiException()
+    {
+        $sut = PrintfulApiClient::createOauthClient('invalid key');
+
+        $this->overrideUrl($sut);
+
+        $this->expectException(PrintfulException::class);
         $sut->get('orders', [
             'offset' => 0,
             'limit' => 10,
             'status' => null,
         ]);
-    }
-
-    public function testConstruct_withNoCredentials_throwsException()
-    {
-        $this->expectException(PrintfulException::class);
-        new PrintfulApiClient();
     }
 
     private function overrideUrl(PrintfulApiClient $sut)
