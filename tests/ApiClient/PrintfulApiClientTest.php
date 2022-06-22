@@ -17,7 +17,7 @@ class PrintfulApiClientTest extends TestCase
     public function testGet_withApiKey_returnsWithNoAuthErrors()
     {
         if (Credentials::$legacyStoreKey === '') {
-            $this->markTestSkipped('You need apiKey to be set for this test to run');
+            $this->markTestSkipped('You need apiKey to be set in Credentials.php for this test to run');
         }
 
         $sut = PrintfulApiClient::createLegacyStoreKeyClient(Credentials::$legacyStoreKey);
@@ -39,6 +39,10 @@ class PrintfulApiClientTest extends TestCase
      */
     public function testGet_withOauthToken_returnsWithNoAuthErrors()
     {
+        if (Credentials::$oAuthToken === '') {
+            $this->markTestSkipped('You need oAuthToken to be set in Credentials.php for this test to run');
+        }
+
         $sut = PrintfulApiClient::createOauthClient(Credentials::$oAuthToken);
 
         $this->overrideUrl($sut);
