@@ -18,7 +18,7 @@ class PrintfulApiClient
      * Printful API key
      * @var string|null
      */
-    private $key;
+    private $legacyStoreKey;
 
     /**
      * Printful OAuth token
@@ -56,7 +56,7 @@ class PrintfulApiClient
             throw new PrintfulException('Invalid Printful store key!');
         }
 
-        $this->key = $type === self::TYPE_LEGACY_STORE_KEY ? $key : null;
+        $this->legacyStoreKey = $type === self::TYPE_LEGACY_STORE_KEY ? $key : null;
         $this->oauthToken = $type === self::TYPE_OAUTH_TOKEN ? $key : null;
     }
 
@@ -233,8 +233,8 @@ class PrintfulApiClient
     {
         if ($this->oauthToken !== null) {
             curl_setopt($curl, CURLOPT_HTTPHEADER, ["Authorization: Bearer $this->oauthToken"]);
-        } elseif ($this->key !== null) {
-            curl_setopt($curl, CURLOPT_USERPWD, $this->key);
+        } elseif ($this->legacyStoreKey !== null) {
+            curl_setopt($curl, CURLOPT_USERPWD, $this->legacyStoreKey);
         } else {
             throw new PrintfulException('Either OAuth token or store key must be set to make this request.');
         }
