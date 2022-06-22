@@ -16,7 +16,11 @@ class PrintfulApiClientTest extends TestCase
      */
     public function testGet_withApiKey_returnsWithNoAuthErrors()
     {
-        $sut = PrintfulApiClient::createLegacyStoreKeyClient(Credentials::$apiKey);
+        if (Credentials::$legacyStoreKey === '') {
+            $this->markTestSkipped('You need apiKey to be set for this test to run');
+        }
+
+        $sut = PrintfulApiClient::createLegacyStoreKeyClient(Credentials::$legacyStoreKey);
 
         $this->overrideUrl($sut);
 
