@@ -48,6 +48,7 @@ class PrintfulApiClient
 
     /**
      * @param string $key
+     * @param string $type // OAuth token or Legacy Store Key
      * @throws \Printful\Exceptions\PrintfulException if the library failed to initialize
      */
     public function __construct($key, $type = self::DEFAULT_KEY)
@@ -61,21 +62,21 @@ class PrintfulApiClient
     }
 
     /**
-     * @param string $key
+     * @param string $oAuthToken
      * @throws PrintfulException
      */
-    public static function createOauthClient($key)
+    public static function createOauthClient($oAuthToken)
     {
-        return new self($key, self::TYPE_OAUTH_TOKEN);
+        return new self($oAuthToken, self::TYPE_OAUTH_TOKEN);
     }
 
     /**
-     * @param string $key
+     * @param string $legacyStoreKey
      * @throws PrintfulException
      */
-    public static function createLegacyStoreKeyClient($key)
+    public static function createLegacyStoreKeyClient($legacyStoreKey)
     {
-        return new self($key, self::TYPE_LEGACY_STORE_KEY);
+        return new self($legacyStoreKey, self::TYPE_LEGACY_STORE_KEY);
     }
 
     /**
@@ -226,7 +227,7 @@ class PrintfulApiClient
     }
 
     /**
-     * @param $curl resource
+     * @param resource $curl
      * @throws PrintfulException
      */
     private function setCredentials($curl)

@@ -24,7 +24,7 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase
 
         if (Credentials::$oAuthToken !== '') {
             $this->api = PrintfulApiClient::createOauthClient(Credentials::$oAuthToken);
-        } elseif  (Credentials::$legacyStoreKey !== ''){
+        } elseif (Credentials::$legacyStoreKey !== '') {
             $this->api = PrintfulApiClient::createLegacyStoreKeyClient(Credentials::$legacyStoreKey);
         } else {
             throw new \Exception('Printful test credentials are not set. Please enter a valid $oAuthToken or $legacyStoreKey in your tests/Credentials.php file');

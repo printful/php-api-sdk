@@ -9,7 +9,6 @@ use Printful\Tests\TestCase;
 
 class PrintfulApiClientTest extends TestCase
 {
-
     /**
      * @throws \Printful\Exceptions\PrintfulException
      * @throws \Printful\Exceptions\PrintfulApiException
