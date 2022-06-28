@@ -48,7 +48,7 @@ class PrintfulApiClient
 
     /**
      * @param string $key
-     * @param string $type // OAuth token or Legacy Store Key
+     * @param string $type // PrintfulApiClient::TYPE_LEGACY_STORE_KEY or PrintfulApiClient::TYPE_OAUTH_TOKEN
      * @throws \Printful\Exceptions\PrintfulException if the library failed to initialize
      */
     public function __construct($key, $type = self::DEFAULT_KEY)
