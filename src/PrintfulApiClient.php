@@ -10,11 +10,21 @@ use Printful\Exceptions\PrintfulException;
  */
 class PrintfulApiClient
 {
+    const TYPE_LEGACY_STORE_KEY = 'legacy-store-key';
+    const TYPE_OAUTH_TOKEN = 'oauth-token';
+    const DEFAULT_KEY = self::TYPE_LEGACY_STORE_KEY;
+
     /**
      * Printful API key
-     * @var string
+     * @var string|null
      */
-    private $key = '';
+    private $legacyStoreKey;
+
+    /**
+     * Printful OAuth token
+     * @var string|null
+     */
+    private $oauthToken;
 
     private $lastResponseRaw;
 
@@ -37,16 +47,36 @@ class PrintfulApiClient
     public $curlTimeout = 20;
 
     /**
-     * @param string $key Printful Store API key
+     * @param string $key
+     * @param string $type // PrintfulApiClient::TYPE_LEGACY_STORE_KEY or PrintfulApiClient::TYPE_OAUTH_TOKEN
      * @throws \Printful\Exceptions\PrintfulException if the library failed to initialize
      */
-    public function __construct($key)
+    public function __construct($key, $type = self::DEFAULT_KEY)
     {
-        if (strlen($key) < 32) {
-            throw new PrintfulException('Missing or invalid Printful store key!');
+        if ($type === self::TYPE_LEGACY_STORE_KEY && strlen($key) < 32) {
+            throw new PrintfulException('Invalid Printful store key!');
         }
 
-        $this->key = $key;
+        $this->legacyStoreKey = $type === self::TYPE_LEGACY_STORE_KEY ? $key : null;
+        $this->oauthToken = $type === self::TYPE_OAUTH_TOKEN ? $key : null;
+    }
+
+    /**
+     * @param string $oAuthToken
+     * @throws PrintfulException
+     */
+    public static function createOauthClient($oAuthToken)
+    {
+        return new self($oAuthToken, self::TYPE_OAUTH_TOKEN);
+    }
+
+    /**
+     * @param string $legacyStoreKey
+     * @throws PrintfulException
+     */
+    public static function createLegacyStoreKeyClient($legacyStoreKey)
+    {
+        return new self($legacyStoreKey, self::TYPE_LEGACY_STORE_KEY);
     }
 
     /**
@@ -154,7 +184,8 @@ class PrintfulApiClient
 
         $curl = curl_init($this->url . $url);
 
-        curl_setopt($curl, CURLOPT_USERPWD, $this->key);
+        $this->setCredentials($curl);
+
         curl_setopt($curl, CURLOPT_CUSTOMREQUEST, $method);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true);
@@ -193,5 +224,20 @@ class PrintfulApiClient
             throw $e;
         }
         return $response['result'];
+    }
+
+    /**
+     * @param resource $curl
+     * @throws PrintfulException
+     */
+    private function setCredentials($curl)
+    {
+        if ($this->oauthToken !== null) {
+            curl_setopt($curl, CURLOPT_HTTPHEADER, ["Authorization: Bearer $this->oauthToken"]);
+        } elseif ($this->legacyStoreKey !== null) {
+            curl_setopt($curl, CURLOPT_USERPWD, $this->legacyStoreKey);
+        } else {
+            throw new PrintfulException('Either OAuth token or store key must be set to make this request.');
+        }
     }
 }
